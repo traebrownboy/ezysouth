@@ -54,12 +54,12 @@ if(!executablePath)throw new Error('Chrome/Chromium not found for layout audit')
           await new Promise(r=>setTimeout(r,80));
           const metrics=await customer.evaluate(({hero})=>{
             const doc=document.documentElement,site=document.querySelector('.site'),img=document.querySelector('.ezy-project-card img'),quote=document.querySelector('#ezysouth-quote'),heroEl=document.querySelector('.hero'),h1=heroEl?.querySelector('h1');
-            const r=el=>el?el.getBoundingClientRect():null;
+            const r=el=>{if(!el)return null;const x=el.getBoundingClientRect();return {x:x.x,y:x.y,width:x.width,height:x.height,right:x.right,bottom:x.bottom}};
             const pseudo=hero==='split'?getComputedStyle(heroEl,'::after'):null;
             return {scrollWidth:doc.scrollWidth,viewport:innerWidth,site:r(site),img:r(img),quote:r(quote),hero:r(heroEl),h1:r(h1),splitPseudoColumn:pseudo?.gridColumnStart||''};
           },{hero});
           assert(metrics.scrollWidth<=metrics.viewport+2,`${layout}/${hero}/${viewport.name} horizontal overflow: ${metrics.scrollWidth}px > ${metrics.viewport}px`);
-          assert(metrics.site&&metrics.site.width<=metrics.viewport+2,`${layout}/${hero}/${viewport.name} site wider than viewport`);
+          assert(metrics.site&&metrics.site.width<=metrics.viewport+2,`${layout}/${hero}/${viewport.name} site wider than viewport: ${metrics.site?.width}px`);
           assert(metrics.img&&metrics.img.width<=metrics.site.width+2,`${layout}/${hero}/${viewport.name} project image wider than site`);
           if(viewport.name==='mobile')assert(metrics.img.height<=300,`${layout}/${hero}/mobile project image too tall: ${metrics.img.height}px`);
           if(viewport.name==='desktop')assert(metrics.img.height<=430,`${layout}/${hero}/desktop project image too tall: ${metrics.img.height}px`);
