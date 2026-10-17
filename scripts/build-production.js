@@ -1,0 +1,12 @@
+const fs=require('fs');
+const path=require('path');
+const root=process.cwd();
+let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const anchor of ['</head>','</body>','function exportSite()','id="live-leads-list"'])if(!html.includes(anchor))throw new Error('EzySouth build failed: missing '+anchor);
+const css=fs.readFileSync(path.join(root,'scripts','v7-growth.css'),'utf8');
+const core=fs.readFileSync(path.join(root,'scripts','v7-growth-core.js'),'utf8');
+const jobflow=fs.readFileSync(path.join(root,'scripts','v7-jobflow.js'),'utf8');
+html=html.replace('</head>','<style id="ezy-v7-style">'+css+'</style>\n</head>');
+html=html.replace('</body>','<script id="ezy-v7-growth-core">'+core+'</script>\n<script id="ezy-v7-jobflow">'+jobflow+'</script>\n</body>');
+html=html.replaceAll('V6.5.1 · Public Beta','V7.0 · Growth Loop Beta').replace('EzySouth Web V6.5 Guided Launch','EzySouth Web V7.0 Growth Loop');
+const out=path.join(root,'dist');fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'index.html'),html);console.log('EzySouth V7 build complete:',Buffer.byteLength(html),'bytes');
