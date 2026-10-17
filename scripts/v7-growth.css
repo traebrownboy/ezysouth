@@ -41,7 +41,8 @@
 @media(max-width:760px){
   .site{max-width:100%!important}.site .site-nav{min-height:58px}.site .site-nav span{max-width:62%;font-size:14px}.site .site-nav a{font-size:11px!important;padding:9px 10px!important}
   .site .hero h1{font-size:clamp(31px,10vw,48px)}
-  .site.hero-split .hero{grid-template-columns:1fr!important;row-gap:26px}.site.hero-split .hero>*{grid-column:1}.site.hero-split .hero::after{grid-column:1;grid-row:auto;min-height:220px;height:auto;aspect-ratio:16/10}
+  .site.hero-split .hero{grid-template-columns:1fr!important;row-gap:20px}.site.hero-split .hero>*{grid-column:1}.site.hero-split .hero::after{grid-column:1;grid-row:auto;min-height:190px;height:auto;aspect-ratio:16/10}
+  .site.layout-minimal.hero-split .hero,.site.layout-premium.hero-split .hero{padding-block:48px!important}
   .site.hero-photo .hero{min-height:390px}
   .site .service-list,.site .gallery-grid,.site .review-grid,.site .trust-grid,.site .ezy-project-grid,.site .compare-list{grid-template-columns:1fr;justify-content:stretch}
   .site .gallery-grid img{aspect-ratio:4/3}.site .ezy-project-card img{aspect-ratio:4/3;max-height:280px}
