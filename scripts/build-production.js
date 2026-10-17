@@ -8,6 +8,8 @@ const core=fs.readFileSync(path.join(root,'scripts','v7-growth-core.js'),'utf8')
 const jobflow=fs.readFileSync(path.join(root,'scripts','v7-jobflow.js'),'utf8');
 // V7 promotes Completed to a real JobFlow status in both demo and live renderers.
 html=html.replaceAll("['New','Quote needed','Quote sent','Won','Lost']","['New','Quote needed','Quote sent','Won','Completed','Lost']");
+// Export every customer-site style block, including V7 polish, instead of only the first legacy style tag.
+html=html.replace("document.querySelector('style').textContent","[...document.querySelectorAll('style')].map(s=>s.textContent).join('\\n')");
 html=html.replace('</head>','<style id="ezy-v7-style">'+css+'</style>\n</head>');
 const bodyClose=html.lastIndexOf('</body>');
 if(bodyClose<0)throw new Error('EzySouth build failed: real closing </body> not found');
