@@ -20,6 +20,7 @@ jobs:
           node --check scripts/v7-growth-core.js
           node --check scripts/v7-jobflow.js
           node --check scripts/v7-smoke-test.js
+          node --check scripts/v7-layout-browser-test.js
       - name: Build production site
         run: node scripts/build-production.js
       - name: Verify V7 output
@@ -28,7 +29,9 @@ jobs:
           grep -q 'ezy-v7-growth-core' dist/index.html
           grep -q 'ezy-v7-jobflow' dist/index.html
           grep -q 'V7.0 · Growth Loop Beta' dist/index.html
-      - name: Install smoke-test browser runtime
-        run: npm install --no-save jsdom@25
-      - name: Run V7 browser smoke test
+      - name: Install browser test runtime
+        run: npm install --no-save jsdom@25 puppeteer-core@24
+      - name: Run V7 functional smoke test
         run: node scripts/v7-smoke-test.js
+      - name: Run all-layout browser audit
+        run: node scripts/v7-layout-browser-test.js
