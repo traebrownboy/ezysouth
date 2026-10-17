@@ -1,0 +1,12 @@
+/* V7.0 JobFlow -> Website Growth Loop */
+.ezy-growth-panel{margin:20px 0;padding:18px;border:2px solid #9fd6bd;border-radius:16px;background:linear-gradient(135deg,#f0fff8,#f8fbff)}
+.ezy-growth-panel h3{margin:0 0 7px}.ezy-growth-grid{display:grid;gap:10px;margin-top:12px}
+.ezy-growth-job{border:1px solid #d5e5dd;border-radius:12px;background:#fff;padding:14px}.ezy-growth-job p{white-space:pre-line;margin:8px 0;color:#58677a}
+.ezy-growth-badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#dff5e8;color:#236142;font-size:11px;font-weight:850;letter-spacing:.04em}
+.site .ezy-project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.site .ezy-project-card{overflow:hidden;border:1px solid #dfe6e3;border-radius:var(--card-radius,16px);background:var(--card-bg,#f5f7f8)}
+.site .ezy-project-card img{width:100%;height:190px;object-fit:cover;display:block}
+.site .ezy-project-copy{padding:18px}.site .ezy-project-copy h3{margin:0 0 6px;font-size:20px}.site .ezy-project-copy p{margin:8px 0;line-height:1.55}
+.site .ezy-project-location{font-size:12px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.ezy-showcase-list{display:grid;gap:9px;margin-top:12px}.ezy-showcase-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px;border:1px solid #dce5e1;border-radius:10px;background:#fff}.ezy-showcase-row small{display:block;color:#6b7788;margin-top:3px}
+@media(max-width:620px){.site .ezy-project-card img{height:165px}.ezy-showcase-row{align-items:stretch;flex-direction:column}}
