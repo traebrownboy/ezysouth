@@ -6,6 +6,8 @@ for(const anchor of ['</head>','</body>','function exportSite()','id="live-leads
 const css=fs.readFileSync(path.join(root,'scripts','v7-growth.css'),'utf8');
 const core=fs.readFileSync(path.join(root,'scripts','v7-growth-core.js'),'utf8');
 const jobflow=fs.readFileSync(path.join(root,'scripts','v7-jobflow.js'),'utf8');
+// V7 promotes Completed to a real JobFlow status in both demo and live renderers.
+html=html.replaceAll("['New','Quote needed','Quote sent','Won','Lost']","['New','Quote needed','Quote sent','Won','Completed','Lost']");
 html=html.replace('</head>','<style id="ezy-v7-style">'+css+'</style>\n</head>');
 const bodyClose=html.lastIndexOf('</body>');
 if(bodyClose<0)throw new Error('EzySouth build failed: real closing </body> not found');
