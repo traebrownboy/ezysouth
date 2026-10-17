@@ -7,6 +7,7 @@ function wait(ms){return new Promise(r=>setTimeout(r,ms))}
 (async()=>{
   const html=fs.readFileSync('dist/index.html','utf8');
   const prompts=['Bathroom renovation','Invercargill','Completed bathroom renovation with a clean finish.'];
+  assert(html.includes("['New','Quote needed','Quote sent','Won','Completed','Lost']"),'Completed is not a native JobFlow status in the production build');
   const dom=new JSDOM(html,{
     url:'https://preview.test/',
     runScripts:'dangerously',
@@ -34,7 +35,7 @@ function wait(ms){return new Promise(r=>setTimeout(r,ms))}
   fake.className='lead';fake.innerHTML='<select><option>New</option></select>';
   live.replaceChildren(fake);
   await wait(30);
-  assert([...fake.querySelector('select').options].some(o=>o.value==='Completed'),'Completed status was not injected into JobFlow');
+  assert([...fake.querySelector('select').options].some(o=>o.value==='Completed'),'Completed status was not available in JobFlow');
 
   const service=w.document.getElementById('services');
   service.value='Bathroom renovations\nHot water cylinders';
@@ -61,6 +62,6 @@ function wait(ms){return new Promise(r=>setTimeout(r,ms))}
   assert(!exported.includes('PRIVATE CUSTOMER'),'Customer name leaked into public website');
   assert(!exported.includes('021 SECRET'),'Customer contact leaked into public website');
 
-  console.log('V7 smoke test passed: QuoteFlow, Completed status, project proof and privacy checks OK');
+  console.log('V7 smoke test passed: native Completed status, QuoteFlow, project proof and privacy checks OK');
   dom.window.close();
 })().catch(err=>{console.error(err.stack||err);process.exit(1)});
