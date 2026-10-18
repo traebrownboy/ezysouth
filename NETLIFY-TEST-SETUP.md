@@ -7,7 +7,7 @@
 - **EzySouth Web Builder:** https://ezysouth-jobflow-test.netlify.app/web.html
 - **JobFlow:** https://ezysouth-jobflow-test.netlify.app/jobflow.html
 
-This site is a **separate Netlify project** deploying GitHub branch `jobflow-netlify-test`. It uses isolated existing Supabase project `anldjuaqlpowwodlphqf` and intentionally **cannot publish customer websites**. Main/production branch, `https://ezysouth.netlify.app/`, and production Supabase project remain untouched. All customer/test data in staging should be fictional.
+This site is a **separate Netlify project** deploying GitHub branch `jobflow-netlify-test`. It uses isolated existing Supabase project `anldjuaqlpowwodlphqf`, and its one-click **Publish test website** action now creates shareable, noindex staging previews using separate private HTML storage. It **does not** publish to customer-facing Netlify domains or production hosting. Main/production branch, `https://ezysouth.netlify.app/`, and production Supabase project remain untouched. All customer/test data in staging should be fictional.
 
 ## Unified homepage login
 
@@ -39,7 +39,7 @@ GitHub's staging CI now exercises `node scripts/jobflow-auth-flow-test.js` with 
 
 ## Product navigation
 
-The signed-in homepage offers two premium workspaces: **EzySouth Web** and **JobFlow by EzySouth**. Each workspace has a prominent **Return to homepage** link, plus a cross-product link. The website builder's primary tabs are Build website, Design Studio, Save & manage, and Connect JobFlow; legacy quick commands and local drafts are under **More tools**. Disabled publishing and direct Netlify-token controls are hidden from ordinary staging navigation.
+The signed-in homepage offers two premium workspaces: **EzySouth Web** and **JobFlow by EzySouth**. Each workspace has a prominent **Return to homepage** link, plus a cross-product link. The website builder's primary tabs are Build website, Design Studio, Save & manage, and **Publish & JobFlow**; legacy quick commands and local drafts are under **More tools**. Safe staging preview publishing is enabled, while direct Netlify-token and real production-hosting controls remain hidden.
 
 ## Website preset consistency (Coastal Clean benchmark)
 
@@ -56,11 +56,33 @@ The style-specific CSS is in the original inline stylesheet, which both the Desi
 
 **Manual responsive acceptance pending:** from the staging `/web.html` Build website → Design screen, cycle Coastal Clean → Modern Studio → Trade Pro → Midnight Luxe at mobile and desktop widths. Check that the page structure doesn't jump, text remains legible on the dark themes, contact form isn't clipped, exported HTML matches preview, and existing cloud project content survives reloading. Also verify that selecting a custom advanced layout still works.
 
+## One-click staging publishing (restored)
+
+The **Publish test website** button now works within the isolated test system. It is deliberately separate from the existing production Netlify publishing backend.
+
+1. Open the existing staging cloud website in **Save & manage**. Keep fictional or consented public-safe details only.
+2. Open **Publish & JobFlow**, tap **Save & enable JobFlow** if you want to test the embedded enquiry form.
+3. Tick the test-publication confirmation and tap **🚀 Publish test website**.
+4. The page displays its status and a **public test URL** at `https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/staging-public-site/<website-uuid>`. The UUID never changes when the business name changes.
+5. Change the website design and tap **Publish updates to test website** again. It reuses the exact same preview link, including when restoring from offline.
+6. Use **Take offline** or **Remove preview** to block the publicly served HTML while **reserving the same URL** for next time. Cloud website data is kept.
+7. Open the published URL on a second device and test the quote form with **fictional customer details only**. The staging `submit-enquiry` service should put the record in the matching JobFlow inbox when enquiries are enabled.
+
+### Staging publishing security
+- Staging owner-authenticated Edge Function `publish-website` publishes HTML to a **private, server-only** Storage bucket `ezysouth-staging-published`; no browser client has a Storage policy granting access.
+- A separate, anonymous read-only Edge Function `staging-public-site` serves **only** websites marked `live` in the existing `website_deployments` table; offline/removed sites display a safe offline page. Requests include `noindex`, `no-store` and a visible private-beta banner.
+- The public preview is served under a different origin than the Netlify workspace, and a Content Security Policy sandboxes user-created HTML into an opaque origin. It cannot read another user's EzySouth login.
+- Public `submit-enquiry` validates the enabled website, published staging status, honey-pot, basic input sizes and per-client request limits. It stores records only into the **staging** JobFlow inbox.
+- Source and tests live in `staging/functions/publish-website/`, `staging/functions/staging-public-site/`, `staging/functions/submit-enquiry/`, `scripts/jobflow-preview-smoke.js`, and the staged Storage migration `database/migrations/20261018_staging_publish_bucket.sql`.
+- Staging uses no Netlify publishing token and **never** modifies or provisions any customer-facing Netlify sites or domains.
+
+**Pending real-browser acceptance:** live authenticated publish/republish, verifying exact same URL, offline/restore, exported layout/photo parity, stage quote form to JobFlow inbox and separate-account isolation. GitHub's static checks and Edge deploy status do not replace these interactive checks.
+
 ## EzySouth → JobFlow → EzySouth acceptance test
 
 1. Sign into JobFlow using your **staging** account and create a fictional business/customer.
 2. Open EzySouth Web via the homepage, create or open a fictional website, then **Save & manage → Save current website to cloud**.
-3. In **Connect JobFlow**, choose **Save & enable JobFlow**.
+3. In **Publish & JobFlow**, choose **Save & enable JobFlow**.
 4. Return to JobFlow and choose **Simulate incoming website enquiry**. Confirm it appears in your inbox.
 5. Mark the test enquiry **Completed** and choose **Send to Website**. Enter fictional, public-safe project title and description.
 6. Select up to **four approved project photos** from the device. The photo picker shows previews and lets you remove choices. Images are converted/resized to JPEG (max 1600px) before upload, with a per-object 3 MB storage limit.
@@ -87,7 +109,7 @@ The style-specific CSS is in the original inline stylesheet, which both the Desi
 
 ## Automated quality gates
 
-`node scripts/jobflow-preview-smoke.js` validates staging routes, two apps, navigation, photo upload code, JS syntax, production isolation and disabled production publishing. Workflow `.github/workflows/jobflow-preview-check.yml` runs it on the staging branch. The preexisting V7 build check continues to run. SQL database tests live under `database/tests/`.
+`node scripts/jobflow-preview-smoke.js` validates staging routes, the two apps, navigation, photo uploads, JS syntax, and publication without production dependencies. Workflow `.github/workflows/jobflow-preview-check.yml` runs it on the staging branch. The preexisting V7 build check continues to run. SQL database tests live under `database/tests/`.
 
 ## Release blockers: do not merge staging PR #5
 
