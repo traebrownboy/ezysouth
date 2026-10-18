@@ -101,12 +101,12 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
  const STATUSES=['New','Quote needed','Quote sent','Won','Completed','Lost'];
  const el=id=>document.getElementById(id);
  const status=message=>{el('message').textContent=message};
- let client=null,user=null,sites=[],inbox=[],features=[],editing=null,business=null,customers=[],jobs=[];
+ let client=null,user=null,sites=[],inbox=[],features=[],editing=null,business=null,customers=[],jobs=[],businessError='';
  if(!window.supabase?.createClient){status('Cannot load secure account library. Check your connection and reload.');return}
  client=window.supabase.createClient(PROJECT_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
  async function requireOk(query){const {data,error}=await query;if(error)throw error;return data}
  async function checkUser(){
-  const {data,error}=await client.auth.getUser();if(error&&error.message!=='Auth session missing!')throw error;
+  const {data,error}=await client.auth.getUser();if(error&&!/auth session missing/i.test(error.message||''))throw error;
   user=data?.user||null;
   el('auth-panel').hidden=!!user;el('app').hidden=!user;
   if(!user){sites=[];inbox=[];features=[];business=null;customers=[];jobs=[];el('enquiry-list').replaceChildren();el('customers-panel').hidden=true;el('jobs-panel').hidden=true;return}
@@ -194,12 +194,13 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
  }
 
  async function loadBusiness(){
-  business=null;customers=[];jobs=[];
+  business=null;customers=[];jobs=[];businessError='';
   const {data:row,error}=await client.from('jobflow_businesses')
     .select('id,name,location').eq('owner_id',user.id).maybeSingle();
   if(error){
    const missing=['42P01','PGRST205'].includes(error.code);
-   el('biz-info').textContent=missing?'Standalone business cloud storage needs the JobFlow database migration before it can save records.':'Could not load business: '+error.message;
+   businessError=missing?'Standalone business cloud storage needs the JobFlow database migration before it can save records.':'Could not load business: '+error.message;
+   el('biz-info').textContent=businessError;
    el('customers-panel').hidden=true;el('jobs-panel').hidden=true;
    return;
   }
@@ -214,7 +215,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
   const name=el('biz-name'),location=el('biz-location');
   if(document.activeElement!==name)name.value=business?.name||'';
   if(document.activeElement!==location)location.value=business?.location||'';
-  el('biz-info').textContent=business?'✓ Business saved securely. '+customers.length+' customers and '+jobs.length+' manually created jobs.':'Create a business workspace to manage customers and standalone jobs. No website required.';
+  el('biz-info').textContent=businessError|| (business?'✓ Business saved securely. '+customers.length+' customers and '+jobs.length+' manually created jobs.':'Create a business workspace to manage customers and standalone jobs. No website required.');
   el('customers-panel').hidden=!business;el('jobs-panel').hidden=!business;
   const list=el('customer-list');list.replaceChildren();
   const selected=el('job-customer').value;const picker=el('job-customer');
