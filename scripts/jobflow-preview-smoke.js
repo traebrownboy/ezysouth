@@ -103,6 +103,14 @@ check('staging-only publishing and stable preview links are connected',()=>{
  contains(publisher,"const STAGING_HOST = 'staging-edge-hosted'");
  contains(publisher,"const publicUrl = (id: string) => PROJECT + '/functions/v1/staging-public-site/' + id");
  contains(publisher,"site.owner_id!==identity.user.id");
+ contains(publisher,"'Access-Control-Allow-Origin': '*'");
+ contains(publisher,"if(req.method==='OPTIONS') return new Response(null,{status:204,headers:cors})");
+ assert.ok(!publisher.includes('validOrigin('),'Publisher must not reject preflight based on fragile Netlify aliases');
+ contains(publisher,"deployed.netlify_site_id!==STAGING_HOST+':'+id");
+ contains(publisher,"netlify_site_id:STAGING_HOST+':'+id");
+ contains(server,"deployment.netlify_site_id!==STAGING_HOST+':'+id");
+ contains(enquiries,"deployResult.data?.netlify_site_id!==HOST+':'+id");
+
  contains(publisher,"['publish','unpublish','remove']");
  contains(publisher,"contentType:'text/html',cacheControl:'0',upsert:true");
  contains(server,"'Content-Security-Policy'");
