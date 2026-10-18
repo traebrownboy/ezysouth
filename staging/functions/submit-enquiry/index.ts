@@ -40,7 +40,7 @@ Deno.serve(async req=>{
    db.from('website_deployments').select('publish_status,netlify_site_id').eq('website_id',id).maybeSingle()
   ]);
   if(siteResult.error||deployResult.error)return answer({error:'Could not check test website.'},503);
-  if(!siteResult.data?.accepting_enquiries || deployResult.data?.publish_status!=='live' || deployResult.data?.netlify_site_id!==HOST)
+  if(!siteResult.data?.accepting_enquiries || deployResult.data?.publish_status!=='live' || deployResult.data?.netlify_site_id!==HOST+':'+id)
    return answer({error:'This test website is not accepting enquiries right now.'},409);
   const ip=(req.headers.get('cf-connecting-ip')||req.headers.get('x-real-ip')||req.headers.get('x-forwarded-for')?.split(',')[0]||'unidentified').slice(0,100);
   const ua=(req.headers.get('user-agent')||'').slice(0,130);
