@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#102c25">
-<meta name="description" content="Choose EzySouth Web or JobFlow, two connected workspaces to create websites and run your business.">
+<meta name="description" content="One EzySouth login to build your website and manage jobs. Choose EzySouth Web or JobFlow from a single workspace.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://anldjuaqlpowwodlphqf.supabase.co wss://anldjuaqlpowwodlphqf.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
 <title>EzySouth · Your business, connected</title>
 <style>
 :root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#173329;background:#f8faf8;font-synthesis:none}
@@ -16,7 +17,24 @@ a{color:inherit;text-decoration:none}a:focus-visible{outline:3px solid #2d9465;o
 .header{height:88px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand{font-weight:880;font-size:1.45rem;letter-spacing:-.075em;display:inline-flex;gap:10px;align-items:center}
 .mark{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:#123d2d;color:#a9efba;box-shadow:0 6px 16px #164f2b26;font-size:1.4rem}
-.header-right{font-size:.81rem;font-weight:800;letter-spacing:.045em;color:#276548;background:#e9f4ed;border:1px solid #d0e6d7;padding:9px 13px;border-radius:100px}
+.header-right{font-size:.74rem;font-weight:800;letter-spacing:.035em;color:#276548;background:#e9f4ed;border:1px solid #d0e6d7;padding:9px 13px;border-radius:100px}
+.header-account{display:flex;align-items:center;gap:11px;justify-content:flex-end;flex-wrap:wrap}
+.header-account a,.header-account button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:11px;white-space:nowrap;padding:10px 15px;text-decoration:none;font-size:.84rem;font-weight:820}
+.header-account .login-link{background:#e8f2e9;border:1px solid #d1e5d7;color:#246446}
+.header-account .signup-link{color:#fff;background:#175c3b;box-shadow:0 5px 14px #12563222}
+.header-account .logout{background:#e9f2ed;border:1px solid #d5e5d9;color:#315f46}
+.header-account .login-link:hover{background:#d7eadb}.header-account .signup-link:hover{background:#104a30}
+.account-signed-in{display:flex;gap:10px;align-items:center;justify-content:flex-end;max-width:100%}
+.account-signed-in .email-wrap{display:flex;flex-direction:column;align-items:flex-end;max-width:265px;min-width:0}
+.account-signed-in .email-wrap strong{font-size:.77rem;color:#2d6047}
+.account-signed-in .email-wrap span{font-size:.76rem;color:#6b806e;display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.home-account-strip{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px auto 0;font-size:.89rem;color:#557261}
+.home-account-strip a{font-size:.85rem;font-weight:810;color:#236f49;background:#eaf4ed;border:1px solid #d5e8da;border-radius:9px;padding:7px 11px}
+.home-account-strip.signed{background:#e9f5ec;border:1px solid #d2e8d7;max-width:max-content;border-radius:100px;padding:9px 15px;color:#215e3e}
+.home-account-strip .account-check{color:#26925d;font-weight:900}
+.account-alert{margin:10px auto 0;text-align:center;max-width:630px;color:#9c4930;font-size:.86rem}
+@media(max-width:760px){.header-right{display:none}.header-account{gap:7px}.header-account a,.header-account button{font-size:.77rem;min-height:39px;padding:8px 10px}.account-signed-in .email-wrap{max-width:118px}.account-signed-in .email-wrap span{font-size:.68rem}.account-signed-in .email-wrap strong{font-size:.68rem}.home-account-strip{font-size:.81rem}}
+
 .hero{text-align:center;max-width:770px;margin:49px auto 50px}
 .eyebrow{font-size:.76rem;font-weight:860;color:#21774e;letter-spacing:.15em;text-transform:uppercase;margin:0 0 17px}
 h1{font-weight:850;font-size:clamp(2.75rem,6.4vw,5.2rem);line-height:1.06;letter-spacing:-.078em;margin:0 0 22px;color:#112d23}
@@ -90,13 +108,31 @@ footer strong{color:#405d49}
 <div class="top-strip">🧪 PRIVATE BETA PREVIEW · Fictional customer data only</div>
 <header class="wrap header">
  <a class="brand" href="./index.html" aria-label="EzySouth homepage"><span class="mark" aria-hidden="true">✦</span> EzySouth</a>
- <span class="header-right">ONE CONNECTED WORKSPACE</span>
+ <div class="header-account" aria-label="EzySouth account">
+  <span class="header-right" id="header-workspace-tag">ONE CONNECTED WORKSPACE</span>
+  <div id="home-signed-out" class="header-account">
+   <a class="login-link" href="./login.html" id="home-login-link">Log in</a>
+   <a class="signup-link" href="./login.html?mode=register">Get started →</a>
+  </div>
+  <div id="home-signed-in" class="account-signed-in" hidden>
+   <div class="email-wrap"><strong>Signed in</strong><span id="home-email" title="Current EzySouth account"></span></div>
+   <button class="logout" id="home-sign-out" type="button">Sign out</button>
+  </div>
+ </div>
 </header>
 <main class="wrap">
  <section class="hero" aria-labelledby="hero-title">
   <p class="eyebrow">Built for real business</p>
   <h1 id="hero-title">Good business starts<br>with the <span>right tools.</span></h1>
   <p class="subtitle">A better website. A better way to manage the work. Two connected tools that make running your business feel simpler.</p>
+  <div class="home-account-strip" id="home-account-invite">
+   <span>One secure login for both tools.</span>
+   <a href="./login.html">Log in to EzySouth →</a>
+  </div>
+  <div class="home-account-strip signed" id="home-account-ready" hidden>
+   <span class="account-check">✓</span><span>You're signed in. Choose your workspace below.</span>
+  </div>
+  <p class="account-alert" id="home-auth-error" role="status" aria-live="polite" hidden></p>
  </section>
  <section aria-labelledby="choose-title">
   <p id="choose-title" class="choice-label">Choose where you'd like to start</p>
@@ -117,12 +153,61 @@ footer strong{color:#405d49}
    </a>
   </div>
  </section>
- <p class="footnote"><span class="linked">↔</span> Your website and JobFlow can work together using the same account.</p>
+ <p class="footnote"><span class="linked">↔</span> One account for both workspaces. Your websites, customers and jobs stay connected.</p>
  <section class="workflow">
   <div><strong>One connected journey.</strong><p>A customer contacts your website. You manage the job in JobFlow. You choose which completed projects and approved photos appear on your website.</p></div>
   <a href="./jobflow.html">Explore JobFlow →</a>
  </section>
 </main>
 <footer class="wrap"><strong>✦ EzySouth</strong><span>Private test environment. Publishing disabled. © 2026 EzySouth.</span></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+ 'use strict';
+ const STAGING_URL='https://anldjuaqlpowwodlphqf.supabase.co';
+ const STAGING_KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
+ const el=id=>document.getElementById(id);
+ const client=window.supabase?.createClient?.(STAGING_URL,STAGING_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ function render(user){
+  const signedIn=!!user;
+  el('home-signed-out').hidden=signedIn;
+  el('home-signed-in').hidden=!signedIn;
+  el('home-account-invite').hidden=signedIn;
+  el('home-account-ready').hidden=!signedIn;
+  el('header-workspace-tag').hidden=signedIn;
+  el('home-email').textContent=signedIn?(user.email||'EzySouth account'):'';
+ }
+ function notify(text){
+  const label=el('home-auth-error');
+  label.textContent=text||'';
+  label.hidden=!text;
+ }
+ async function refresh(){
+  if(!client)return;
+  const {data,error}=await client.auth.getUser();
+  if(error&&!/auth session missing/i.test(error.message||'')){
+   throw error;
+  }
+  render(data?.user||null);
+ }
+ if(!client){notify('Account sign-in is temporarily unavailable. Please try the Log in page or reload.');return}
+ el('home-sign-out').addEventListener('click',async()=>{
+  const button=el('home-sign-out');
+  if(button.disabled)return;
+  button.disabled=true;button.textContent='Signing out…';notify('');
+  try{
+   const {error}=await client.auth.signOut();
+   if(error)throw error;
+   render(null);
+  }catch(e){notify('Could not sign out: '+(e?.message||String(e)));}
+  finally{button.disabled=false;button.textContent='Sign out'}
+ });
+ client.auth.onAuthStateChange((event,session)=>{
+  if(event==='SIGNED_OUT')setTimeout(()=>render(null),0);
+  else if(event==='SIGNED_IN'||event==='TOKEN_REFRESHED')setTimeout(()=>refresh().catch(e=>notify(e.message)),0);
+ });
+ refresh().catch(e=>notify('Could not check your sign-in: '+e.message));
+})();
+</script>
 </body>
 </html>
