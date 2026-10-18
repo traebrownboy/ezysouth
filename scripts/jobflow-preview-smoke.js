@@ -88,6 +88,7 @@ check('photo approval, resizing, CORS and 4-image support',()=>{
 check('staging-only publishing and stable preview links are connected',()=>{
  const publisher=read('staging/functions/publish-website/index.ts');
  const server=read('staging/functions/staging-public-site/index.ts');
+ const viewer=read('netlify-preview/published.html');
  const enquiries=read('staging/functions/submit-enquiry/index.ts');
  const migration=read('database/migrations/20261018_staging_publish_bucket.sql');
  contains(files.web,'id="ezysouth-oneclick"');
@@ -114,12 +115,26 @@ check('staging-only publishing and stable preview links are connected',()=>{
  contains(publisher,"['publish','unpublish','remove']");
  contains(publisher,"contentType:'text/html',cacheControl:'0',upsert:true");
  contains(server,"'Content-Security-Policy'");
+ // Public URLs must remain unchanged; Supabase's forced text/plain MIME
+ // cannot be navigated as a rendered HTML page on Safari.
+ contains(server,"const VIEWER='https://ezysouth-jobflow-test.netlify.app/published.html'");
+ contains(server,"'Location':VIEWER+'?site='+encodeURIComponent(id)");
+ contains(server,"return rawResult({status:'live',html})");
+ contains(server,"'Access-Control-Allow-Origin':'*'");
+ assert.ok(!server.includes("return new Response(served,{status:200,headers:secureHeaders})"),'Direct HTML is rendered as source on Supabase Edge Functions');
+ // Published websites run in an opaque-origin iframe, never inside the app.
+ contains(viewer,'sandbox="allow-scripts allow-forms allow-popups"');
+ contains(viewer,'frame.srcdoc=result.html');
+ contains(viewer,"credentials:'omit'");
+ assert.ok(!viewer.includes('allow-same-origin'),'User website must not receive app login storage access');
+ contains(viewer,"+'?raw=1'");
  contains(server,"sandbox allow-scripts allow-forms allow-popups");
  contains(server,"deployment.publish_status!=='live'");
  contains(enquiries,"publish_status");
  contains(enquiries,"client_hash");
  contains(migration,"'ezysouth-staging-published'");
  contains(migration,"public=false");
+ assert.ok(fs.existsSync(path.join(root,'netlify-preview','published.html')));
  const config=read('netlify.toml');
  contains(config,'publish = "netlify-preview"');
  assert.ok(!config.includes('build-production.js'),'Wrong Netlify config');
