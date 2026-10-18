@@ -64,6 +64,16 @@ input:focus,select:focus,textarea:focus{border-color:#429875;outline:3px solid #
 .photos-note{font-size:.85rem;color:#536b5f}
 .photo-count{display:inline-block;font-size:.78rem;color:#287252;font-weight:750;margin-top:8px}
 @media(max-width:650px){.top-inner{align-items:stretch}.top-links{gap:7px}.top-links a{font-size:.77rem;padding:9px 10px}.top-links .micro{display:none}.panel{padding:18px}.stat{padding:14px}.modal-content{padding:19px}.portfolio-photo img{height:102px}}
+
+.auth-invite{padding:16px 0 12px}
+.auth-invite p{font-size:.91rem;line-height:1.65;color:#64786b;margin:8px 0 18px}
+.auth-invite .auth-actions{display:flex;gap:10px;flex-wrap:wrap}
+.auth-invite .auth-actions a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:46px;font-weight:800}
+.auth-invite .auth-actions a.btn{color:#fff}
+.auth-invite .auth-actions a.btn.secondary{color:#1a6143}
+.auth-direct{border-top:1px solid #e2ece5;margin-top:24px;padding-top:16px}
+.auth-direct summary{font-size:.84rem;color:#526d5a;cursor:pointer;font-weight:750}
+.auth-direct form{margin-top:18px}
 </style>
 </head>
 <body><div class="staging-notice">🧪 PRIVATE BETA PREVIEW · Test accounts and fictional details only</div>
@@ -72,10 +82,14 @@ input:focus,select:focus,textarea:focus{border-color:#429875;outline:3px solid #
  <div class="intro"><p class="eyebrow">Your business workspace</p><h1>Run the work. Show the results.</h1><p class="muted">Keep enquiries, customers and jobs organised. When a job is finished, add approved photos and share the best work straight to your EzySouth website.</p></div>
  <div id="message" aria-live="polite"></div>
  <section id="auth-panel" class="panel formwidth">
-  <h2>Sign in to JobFlow</h2><p class="muted micro">Use the same EzySouth Cloud email and password as the Website Builder. No website is required to create an account.</p>
+  <h2>One login. All your tools.</h2>
+  <div class="auth-invite"><p>Use your EzySouth account to open JobFlow and your website without signing in twice.</p>
+   <div class="auth-actions"><a class="btn" href="./login.html?next=jobflow">Log in with EzySouth →</a><a class="btn secondary" href="./login.html?mode=register">Create account</a></div></div>
+  <details class="auth-direct"><summary>Use the direct sign-in form instead</summary>
   <form id="auth-form"><label for="auth-email">Email</label><input id="auth-email" type="email" autocomplete="email" required maxlength="254">
   <label for="auth-password">Password</label><input id="auth-password" type="password" autocomplete="current-password" required minlength="6">
   <div class="controls"><button class="btn" type="submit">Sign in</button><button class="btn secondary" type="button" id="sign-up">Create account</button></div></form>
+  </details>
  </section>
  <section id="app" hidden>
   <div class="controls"><span id="account-label" class="muted micro"></span><button type="button" id="sign-out" class="btn secondary small">Sign out</button><button type="button" id="refresh" class="btn secondary small">↻ Refresh enquiries</button></div>
