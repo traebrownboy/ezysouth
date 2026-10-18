@@ -28,7 +28,7 @@ with check (
   and (storage.foldername(name))[1] = (select auth.uid())::text
   and exists (
     select 1 from public.websites w
-    where w.id::text=(storage.foldername(name))[2]
+    where w.id::text=(storage.foldername(storage.objects.name))[2]
       and w.owner_id=(select auth.uid())
   )
 );
@@ -40,7 +40,7 @@ using (
   and (storage.foldername(name))[1] = (select auth.uid())::text
   and exists (
     select 1 from public.websites w
-    where w.id::text=(storage.foldername(name))[2]
+    where w.id::text=(storage.foldername(storage.objects.name))[2]
       and w.owner_id=(select auth.uid())
   )
 );
@@ -52,7 +52,7 @@ using (
   and (storage.foldername(name))[1] = (select auth.uid())::text
   and exists (
     select 1 from public.websites w
-    where w.id::text=(storage.foldername(name))[2]
+    where w.id::text=(storage.foldername(storage.objects.name))[2]
       and w.owner_id=(select auth.uid())
   )
 );
