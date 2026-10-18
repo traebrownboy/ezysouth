@@ -85,12 +85,40 @@ check('photo approval, resizing, CORS and 4-image support',()=>{
  contains(files.web,'portfolio-preview-images');
  contains(files.job,'img-src \'self\' data: blob: https://anldjuaqlpowwodlphqf.supabase.co');
 });
-check('publishing remains disabled in isolated staging',()=>{
- contains(files.web,'Publishing disabled in staging.');
- contains(files.web,'#ezysouth-publish-panel,#ezy-advanced-publishing{display:none!important}');
+check('staging-only publishing and stable preview links are connected',()=>{
+ const publisher=read('staging/functions/publish-website/index.ts');
+ const server=read('staging/functions/staging-public-site/index.ts');
+ const enquiries=read('staging/functions/submit-enquiry/index.ts');
+ const migration=read('database/migrations/20261018_staging_publish_bucket.sql');
+ contains(files.web,'id="ezysouth-oneclick"');
+ contains(files.web,'id="ezysouth-publish-confirm"');
+ contains(files.web,'#ezy-advanced-publishing{display:none!important}');
+ contains(files.web,'await saveCloud(false)');
+ contains(files.web,"await loadShowcases(cloudId)");
+ contains(files.web,"'/functions/v1/publish-website'");
+ contains(files.web,"'/functions/v1/publish-website?website_id='");
+ assert.ok(!files.web.includes('Publishing disabled in staging.'),'Dead publish stub still present');
+ assert.ok(!files.web.includes("Live-site actions disabled in staging."),'Dead unpublish stub still present');
+ contains(publisher,"const PROJECT = 'https://anldjuaqlpowwodlphqf.supabase.co'");
+ contains(publisher,"const STAGING_HOST = 'staging-edge-hosted'");
+ contains(publisher,"const publicUrl = (id: string) => PROJECT + '/functions/v1/staging-public-site/' + id");
+ contains(publisher,"site.owner_id!==identity.user.id");
+ contains(publisher,"['publish','unpublish','remove']");
+ contains(publisher,"contentType:'text/html',cacheControl:'0',upsert:true");
+ contains(server,"'Content-Security-Policy'");
+ contains(server,"sandbox allow-scripts allow-forms allow-popups");
+ contains(server,"deployment.publish_status!=='live'");
+ contains(enquiries,"publish_status");
+ contains(enquiries,"client_hash");
+ contains(migration,"'ezysouth-staging-published'");
+ contains(migration,"public=false");
  const config=read('netlify.toml');
  contains(config,'publish = "netlify-preview"');
  assert.ok(!config.includes('build-production.js'),'Wrong Netlify config');
+ for(const v of [publisher,server,enquiries]){
+  assert.ok(!v.includes('ezcmfbaoivdwkgayznbt'),'Production project reference in staging function');
+  assert.ok(!v.includes('NETLIFY_TOKEN'),'Netlify production credentials accidentally required');
+ }
 });
 check('security migrations are present',()=>{
  const migration=read('database/migrations/20261018_jobflow_photos.sql');
