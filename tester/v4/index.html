@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>EzySouth Product Lab | JobFlow V4 Website Handoff</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18332b;background:#f4f8f6;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #75bb9f;outline-offset:2px}
+.shell{max-width:1120px;margin:auto;padding:24px 20px 72px}
+.topbar{display:flex;align-items:center;gap:16px;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid #dce9e2;flex-wrap:wrap}
+.brand{font-size:1.35rem;font-weight:850;letter-spacing:-.035em}.brand span{color:#198661}.nav{display:flex;gap:5px;flex-wrap:wrap}
+.nav button,.nav a{border:0;background:transparent;color:#446359;padding:9px 15px;border-radius:10px;font-weight:650;text-decoration:none;display:inline-block}.nav a:hover,.nav button:hover{background:#e4eee9}
+.nav button.active{background:#dcede6;color:#11664a}
+.tag{font-size:.75rem;letter-spacing:.05em;font-weight:800;text-transform:uppercase;color:#08724f;background:#d6f1e4;border:1px solid #9ed9bd;display:inline-block;padding:7px 11px;border-radius:999px}
+.hero{padding:52px 0 24px;max-width:790px}h1{font-size:clamp(2rem,5vw,3.55rem);letter-spacing:-.055em;line-height:1.08;margin:16px 0}h2{font-size:1.65rem;letter-spacing:-.035em;margin:0}h3{font-size:1.12rem;margin:0}.muted{color:#5e756c}p{margin:8px 0}.hero p{font-size:1.11rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card,.panel{background:#fff;border:1px solid #dce8e1;border-radius:20px;box-shadow:0 7px 26px rgba(16,54,40,.04)}
+.card{padding:27px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}.card p{flex:1}.icon{width:52px;height:52px;display:grid;place-items:center;background:#e7f5ed;border-radius:14px;font-size:1.5rem}
+.button{display:inline-block;text-decoration:none;border:0;padding:11px 18px;border-radius:10px;background:#168358;color:#fff;font-weight:750}.button:hover{background:#106d49}
+.button.secondary{background:#e5f3ec;color:#14583e}.button.secondary:hover{background:#d0e8d9}
+.button.quiet{background:#fff;border:1px solid #cedfd5;color:#2b5b46}
+.chip{font-size:.76rem;font-weight:800;color:#4d705c;background:#e9f4ed;padding:5px 9px;border-radius:7px}
+.subnav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0}
+.bar{height:1px;background:#dfebe3;margin:24px 0}.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:20px;border:1px dashed #9dbdab;border-radius:16px;background:#eff9f3}
+.pill{padding:8px 13px;border-radius:9px;background:#fff;font-weight:700;border:1px solid #dae9df;font-size:.89rem}
+.arrow{color:#218a60;font-weight:800}.feature{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:22px 0}.panel{padding:25px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
+.kpi{border:1px solid #dce8e1;border-radius:14px;background:#fff;padding:17px}.kpi strong{font-size:1.65rem;display:block}.kpi span{color:#547165;font-size:.87rem}
+.list-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.filter-set{display:flex;flex-wrap:wrap;gap:7px}
+.filter-set button{background:#fff;border:1px solid #cadbd1;color:#35684e;border-radius:9px;padding:7px 11px;font-size:.85rem;font-weight:700}
+.filter-set button.active{background:#176f4f;color:#fff}
+.job-list{display:grid;gap:11px}.job{background:#fff;border:1px solid #dae8df;border-radius:13px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.job small{color:#597569;display:block}.job .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+label{font-size:.9rem;font-weight:700;display:block;margin:12px 0 5px}.field{width:100%;border:1px solid #bed4c6;background:#fff;border-radius:9px;padding:10px 12px;color:#19392a}
+textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668075}.notice{background:#fff8e6;border:1px solid #e9d7a9;border-radius:12px;padding:14px;color:#745b29;margin:24px 0}
+.status{color:#0d6c46;font-weight:700;min-height:23px}.section[hidden]{display:none!important}
+.footer{color:#688174;font-size:.83rem;border-top:1px solid #dbe8e0;margin-top:42px;padding-top:18px}
+@media(max-width:700px){.shell{padding:18px 14px 48px}.hero{padding-top:32px}.grid,.feature{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.card,.panel{padding:20px}.nav button{padding:8px 10px}}
+
+/* JobFlow standalone workspace prototype V3 */
+.jf-intro{padding:30px 0 8px}.jf-intro h1{margin:10px 0}
+.jf-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.jf-setup{max-width:730px;margin:16px auto 12px}.jf-setup .panel{padding:30px}
+.jf-setup-header{display:flex;align-items:center;gap:12px;margin-bottom:17px}
+.jf-field-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.jf-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.jf-actions button{min-height:43px}
+.jf-banner{padding:20px;background:linear-gradient(125deg,#e7f8ee,#f5fff9);border:1px solid #c2e7d1;border-radius:17px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:18px 0}
+.jf-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 18px}
+.jf-tabs button{background:#fff;border:1px solid #d4e5db;color:#326349;border-radius:10px;padding:11px 19px;font-weight:750}
+.jf-tabs button.active{background:#167652;color:#fff;border-color:#167652}
+.jf-item{border:1px solid #dce8e0;border-radius:13px;background:#fff;padding:16px;margin:10px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.jf-item strong{display:block;font-size:1rem}.jf-item small{display:block;color:#60776b;margin:3px 0;overflow-wrap:anywhere}
+.jf-item .right{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.jf-item button,.jf-item select{font-size:.84rem}
+.jf-badge{display:inline-block;background:#e0f2e7;color:#216845;border-radius:99px;font-size:.74rem;padding:4px 9px;font-weight:750}
+.jf-note{font-size:.84rem;color:#637a6d}
+.jf-empty{padding:25px;background:#f5faf7;border:1px dashed #c7ddce;border-radius:12px;color:#496554}
+.jf-panel-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.jf-panel-header h2{font-size:1.33rem}
+.jf-metric-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}
+.jf-label{font-weight:750;font-size:.86rem;color:#3c6751}
+.jf-confirm{color:#266a4a;font-weight:700;margin-top:11px;min-height:20px}
+.jf-hidden[hidden],.jf-tab-panel[hidden],#jf-setup[hidden],#jf-app[hidden],#jf-edit-panel[hidden]{display:none!important}
+.jf-safety{margin:20px 0 0}
+.jf-profile{margin-top:18px}
+.jf-section-title{margin:0 0 5px}
+.jf-inline-select{max-width:180px}
+.jf-inline-select.field{width:auto}
+@media(max-width:770px){.jf-layout,.jf-field-row{grid-template-columns:1fr}.jf-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.jf-setup .panel{padding:20px}.jf-item .right{width:100%}.jf-inline-select{flex:1}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand">Ezy<span>South</span> <small class="muted" style="font-size:.65em;font-weight:550">PRODUCT LAB</small></div>
+  <nav class="nav" aria-label="Product prototype navigation">
+    <button type="button" class="active" data-view="home" aria-current="page">Workspace</button>
+    <a href="https://ezysouth.netlify.app/" rel="noreferrer" aria-label="Open live EzySouth Web website builder">EzySouth Web ↗</a>
+    <button type="button" data-view="jobflow">JobFlow</button>
+  </nav>
+</header>
+<main>
+<section class="section" id="view-home">
+  <div class="hero"><span class="tag">JobFlow V3 · no live data</span><h1>Two products.<br>One better way to run a business.</h1><p class="muted">EzySouth Web builds your online presence. JobFlow helps you manage the work that follows. Use either, or connect both in a future release.</p></div>
+  <div class="grid">
+    <article class="card"><span class="icon" aria-hidden="true">🌐</span><span class="chip">Product 01</span><h2>EzySouth Web</h2><p class="muted">Open the real EzySouth Web website builder. This takes you to our existing public beta in the same browser tab.</p><a class="button" href="https://ezysouth.netlify.app/" rel="noreferrer" aria-label="Go to the real EzySouth Web website builder">Explore EzySouth Web →</a></article>
+    <article class="card"><span class="icon" aria-hidden="true">🧰</span><span class="chip">Product 02</span><h2>JobFlow <small class="muted" style="font-size:.5em">by EzySouth</small></h2><p class="muted">Enquiries, customer jobs, quotes and communication. Create a business workspace, add customers and organise jobs. Fictional demo data only.</p><button class="button" type="button" data-open="jobflow">Try standalone JobFlow →</button></article>
+  </div>
+  <div class="bar"></div><h2>Better together, independent by design.</h2>
+  <div class="flow" aria-label="Planned connected flow"><span class="pill">Website enquiry</span><span class="arrow">→</span><span class="pill">JobFlow inbox</span><span class="arrow">→</span><span class="pill">Quote</span><span class="arrow">→</span><span class="pill">Completed job</span></div>
+  <p class="hint">Connection flow is a product plan, not an active integration in this prototype.</p>
+</section>
+<section class="section" id="view-jobflow" hidden>
+  <div class="subnav"><button class="button quiet" type="button" data-open="home">← EzySouth workspace</button><span class="tag">JobFlow V3 · Standalone demo</span></div>
+  <div class="jf-safety notice"><strong>Tester only:</strong> use invented business and customer details. Nothing here is saved online, sent to customers or shared with EzySouth Web. Reloading clears everything.</div>
+  <div id="jf-setup" class="jf-setup">
+    <div class="jf-intro"><span class="chip">Step 1 · Create your workspace</span><h1>JobFlow, built around your business.</h1><p class="muted">No website needed. Try managing jobs and customers independently.</p></div>
+    <div class="panel">
+      <div class="jf-setup-header"><span class="icon" aria-hidden="true">🏢</span><div><h2>Create a sample business</h2><p class="jf-note">Use a made-up business name for testing.</p></div></div>
+      <form id="jf-setup-form">
+        <label for="jf-business-name">Business name</label>
+        <input class="field" id="jf-business-name" name="business-name" required minlength="2" maxlength="80" placeholder="e.g. Southland Handy Services" autocomplete="off">
+        <div class="jf-field-row">
+          <div><label for="jf-business-type">Business type</label><select class="field" id="jf-business-type" required>
+          <option value="">Choose an industry</option><option>Property maintenance</option><option>Landscaping</option><option>Cleaning</option><option>Plumbing</option><option>Electrical</option><option>Building</option><option>General services</option><option>Other</option>
+          </select></div>
+          <div><label for="jf-business-location">Service area</label><input class="field" id="jf-business-location" required maxlength="80" placeholder="e.g. Invercargill" autocomplete="off"></div>
+        </div>
+        <div class="jf-actions"><button class="button" type="submit">Create JobFlow workspace →</button><button class="button secondary" type="button" id="jf-open-sample">Try a pre-filled example</button></div>
+      </form>
+      <p class="jf-note">Sample-only, no login, no real customer records, no paid services.</p>
+    </div>
+  </div>
+  <div id="jf-app" hidden>
+    <div class="jf-banner"><div><span class="chip">Independent workspace</span><h2 id="jf-business-title" class="jf-profile">Sample business</h2><p id="jf-business-meta" class="muted"></p></div><div class="jf-actions"><button class="button quiet" type="button" id="jf-edit-business">Edit business</button><button class="button quiet" type="button" id="jf-start-over">Start over</button></div></div>
+    <section class="panel" id="jf-edit-panel" hidden aria-label="Edit business">
+      <h3>Edit demo business</h3><form id="jf-edit-form">
+      <div class="jf-field-row"><div><label for="jf-edit-name">Business name</label><input id="jf-edit-name" class="field" required minlength="2" maxlength="80"></div><div><label for="jf-edit-location">Service area</label><input id="jf-edit-location" class="field" required maxlength="80"></div></div>
+      <label for="jf-edit-type">Industry</label><select id="jf-edit-type" class="field"><option>Property maintenance</option><option>Landscaping</option><option>Cleaning</option><option>Plumbing</option><option>Electrical</option><option>Building</option><option>General services</option><option>Other</option></select>
+      <div class="jf-actions"><button class="button" type="submit">Save changes</button><button class="button quiet" type="button" id="jf-cancel-edit">Cancel</button></div></form>
+    </section>
+    <div class="jf-metric-grid" aria-label="JobFlow dashboard statistics">
+      <div class="kpi"><strong id="jf-total-jobs">0</strong><span>All jobs</span></div>
+      <div class="kpi"><strong id="jf-new-jobs">0</strong><span>New</span></div>
+      <div class="kpi"><strong id="jf-quotes">0</strong><span>Quote sent</span></div>
+      <div class="kpi"><strong id="jf-done">0</strong><span>Completed</span></div>
+      <div class="kpi"><strong id="jf-total-customers">0</strong><span>Customers</span></div>
+    </div>
+    <nav class="jf-tabs" aria-label="JobFlow workspace sections">
+      <button type="button" class="active" data-jf-tab="jobs" aria-pressed="true">🧰 Jobs</button>
+      <button type="button" data-jf-tab="customers" aria-pressed="false">👤 Customers</button>
+    </nav>
+    <div class="jf-tab-panel jf-layout" id="jf-tab-jobs">
+      <section class="panel">
+        <div class="jf-panel-header"><h2>Jobs & website enquiries</h2><button type="button" class="button secondary" id="jf-load-examples">Load sample data</button><button type="button" class="button secondary" id="jf-fake-inquiry">Simulate incoming website enquiry</button></div>
+        <p class="muted">Create jobs and move them through your workflow.</p>
+        <label for="jf-filter">Filter jobs</label><select id="jf-filter" class="field" aria-label="Filter demo jobs">
+          <option>All</option><option>New</option><option>Quote needed</option><option>Quote sent</option><option>Won</option><option>In progress</option><option>Completed</option><option>Lost</option>
+        </select>
+        <div id="jf-job-list" aria-live="polite"></div>
+      </section>
+      <aside class="panel">
+        <h2 class="jf-section-title">Create a job</h2><p class="jf-note">Add a fictional customer first, then assign work.</p>
+        <form id="jf-job-form">
+          <label for="jf-job-customer">Customer</label><select id="jf-job-customer" class="field" required><option value="">Select a customer</option></select>
+          <label for="jf-job-title">Job description</label><input id="jf-job-title" class="field" required maxlength="120" placeholder="e.g. Deck repairs">
+          <label for="jf-job-notes">Notes (optional)</label><textarea id="jf-job-notes" class="field" maxlength="500" placeholder="Demo job details only"></textarea>
+          <div class="jf-actions"><button class="button" type="submit">Add job</button><button class="button quiet" type="button" data-jf-goto="customers">Add customer →</button></div>
+        </form>
+        <p id="jf-job-message" class="jf-confirm" role="status"></p>
+      </aside>
+    </div>
+    <div class="panel" id="jf-handoff">
+      <h2>🌐 Completed work → Website Builder</h2>
+      <p class="muted"><strong>Offline tester only.</strong> Choose a completed job and write a public description. Only that approved description appears in the website preview below. Real customers and live sites are untouched.</p>
+      <form id="jf-feature-form">
+        <label for="jf-feature-job">Completed job</label><select id="jf-feature-job" class="field" required><option value="">Choose a completed job</option></select>
+        <label for="jf-feature-title">Public project title</label><input id="jf-feature-title" class="field" required minlength="4" maxlength="100" placeholder="e.g. Fence repair in Southland">
+        <label for="jf-feature-summary">Public description</label><textarea id="jf-feature-summary" class="field" required minlength="10" maxlength="600" placeholder="e.g. Repaired and repainted a timber boundary fence"></textarea>
+        <label class="muted"><input type="checkbox" id="jf-feature-consent" required> I have permission to publicly feature this work, without private customer information.</label>
+        <div class="jf-actions"><button class="button" type="submit">Send to website preview →</button></div>
+      </form>
+      <p id="jf-feature-message" class="jf-confirm" role="status"></p>
+      <h3>Mock website showcase</h3><div id="jf-feature-preview"></div>
+      <p class="muted">Review and publish in EzySouth Web only after the real integration is deployed. This tester cannot sync or publish.</p>
+    </div>
+    <div class="jf-tab-panel jf-layout" id="jf-tab-customers" hidden>
+      <section class="panel">
+        <div class="jf-panel-header"><h2>Customers</h2><span class="jf-badge">Fictional only</span></div>
+        <p class="muted">Every customer belongs to this sample business workspace.</p>
+        <div id="jf-customer-list" aria-live="polite"></div>
+      </section>
+      <aside class="panel">
+        <h2 class="jf-section-title">Add a customer</h2>
+        <form id="jf-customer-form">
+          <label for="jf-customer-name">Fictional customer name</label><input id="jf-customer-name" class="field" required maxlength="80" placeholder="e.g. Alex Example">
+          <label for="jf-customer-contact">Demo contact note (optional)</label><input id="jf-customer-contact" class="field" maxlength="120" placeholder="e.g. Preferred contact: email">
+          <div class="jf-actions"><button class="button" type="submit">Add customer</button><button class="button quiet" type="button" data-jf-goto="jobs">View jobs →</button></div>
+        </form>
+        <p id="jf-customer-message" class="jf-confirm" role="status"></p>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="footer">JobFlow V4 · Fictional website enquiry / completed project handoff tester · No real data or publishing</footer>
+</div>
+<script>
+(function(){
+  'use strict';
+  // Standalone, fictional-only, in-memory demo. Never call real services here.
+  var stages=['New','Quote needed','Quote sent','Won','In progress','Completed','Lost'];
+  var business=null,customers=[],jobs=[],features=[],nextCustomer=1,nextJob=1001,jobFilter='All',jobTab='jobs';
+  function byId(id){return document.getElementById(id)}
+  function trim(id){return byId(id).value.trim()}
+  function setText(id,value){byId(id).textContent=String(value)}
+  function view(name){
+    if(['home','jobflow'].indexOf(name)<0)return;
+    document.querySelectorAll('.section').forEach(function(s){s.hidden=s.id!=='view-'+name});
+    document.querySelectorAll('button[data-view]').forEach(function(b){
+      var yes=b.dataset.view===name;
+      b.classList.toggle('active',yes);
+      if(yes)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+    });
+    if(name==='jobflow')render();
+    window.scrollTo(0,0);
+  }
+  function msg(id,text){setText(id,text)}
+  function setTab(tab){
+    if(['jobs','customers'].indexOf(tab)<0)return;
+    jobTab=tab;
+    document.querySelectorAll('[data-jf-tab]').forEach(function(b){
+      var yes=b.dataset.jfTab===tab;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes));
+    });
+    byId('jf-tab-jobs').hidden=tab!=='jobs';
+    byId('jf-tab-customers').hidden=tab!=='customers';
+    render();
+  }
+  function reset(){
+    business=null;customers=[];jobs=[];features=[];nextCustomer=1;nextJob=1001;jobFilter='All';jobTab='jobs';
+    byId('jf-setup-form').reset();
+    byId('jf-customer-form').reset();byId('jf-job-form').reset();
+    byId('jf-filter').value='All';
+    byId('jf-edit-panel').hidden=true;
+    msg('jf-job-message','');msg('jf-customer-message','');
+    render();
+  }
+  function saveBusiness(name,type,location){
+    if(name.length<2||!type||!location)return false;
+    business={name:name,type:type,location:location};render();return true;
+  }
+  function addCustomer(name,contact){
+    if(!business||!name||customers.length>=100)return false;
+    customers.push({id:nextCustomer++,name:name,contact:contact||''});render();return true;
+  }
+  function addJob(customerId,title,note){
+    if(!business||!title||jobs.length>=100||!customers.some(function(c){return c.id===customerId}))return false;
+    jobs.unshift({id:nextJob++,customerId:customerId,title:title,note:note||'',status:'New'});render();return true;
+  }
+  function count(status){return jobs.filter(function(j){return j.status===status}).length}
+  function customerName(id){
+    var customer=customers.find(function(c){return c.id===id});
+    return customer?customer.name:'Unknown customer';
+  }
+  function node(tag,cls,text){
+    var e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;
+  }
+  function empty(box,text){box.appendChild(node('p','jf-empty',text))}
+  function renderCustomers(){
+    var list=byId('jf-customer-list');list.replaceChildren();
+    if(!customers.length)empty(list,'No customers yet. Add a fictional customer using the form.');
+    customers.forEach(function(c){
+      var row=node('article','jf-item'),details=node('div'),name=node('strong','',c.name);
+      var note=node('small','',c.contact||'No contact note');
+      var cnt=node('small','',jobs.filter(function(j){return j.customerId===c.id}).length+' linked jobs');
+      details.append(name,note,cnt);
+      var buttons=node('div','right'),remove=node('button','button quiet','Remove');
+      remove.type='button';remove.setAttribute('aria-label','Remove '+c.name);
+      remove.addEventListener('click',function(){
+        if(jobs.some(function(j){return j.customerId===c.id})){
+          msg('jf-customer-message','Cannot remove this customer while jobs are linked. Remove their jobs first.');return;
+        }
+        if(!window.confirm('Remove sample customer '+c.name+'?'))return;
+        customers=customers.filter(function(x){return x.id!==c.id});
+        msg('jf-customer-message','Sample customer removed.');render();
+      });
+      buttons.append(remove);row.append(details,buttons);list.append(row);
+    });
+  }
+  function renderJobs(){
+    var list=byId('jf-job-list');list.replaceChildren();
+    byId('jf-filter').value=jobFilter;
+    var shown=jobs.filter(function(j){return jobFilter==='All'||j.status===jobFilter});
+    if(!shown.length)empty(list, jobs.length?'No jobs match this filter.':'No jobs yet. Add a fictional customer and create a job, or load sample data.');
+    shown.forEach(function(j){
+      var row=node('article','jf-item'),detail=node('div'),title=node('strong','',j.title),owner=node('small','',customerName(j.customerId)+' · #JF-'+j.id),
+          note=node('small','',j.note||'No notes');
+      detail.append(title,owner,note);
+      var controls=node('div','right'),sel=node('select','field jf-inline-select'),del=node('button','button quiet','Delete');
+      sel.setAttribute('aria-label','Status for job '+j.id);
+      stages.forEach(function(st){var opt=node('option','',st);opt.value=st;sel.append(opt)});
+      sel.value=j.status;
+      sel.addEventListener('change',function(){
+        j.status=sel.value;if(j.status!=='Completed')features=features.filter(function(f){return f.jobId!==j.id});msg('jf-job-message','Sample job status updated to '+j.status+'.');render();
+      });
+      del.type='button';del.setAttribute('aria-label','Delete job '+j.id);
+      del.addEventListener('click',function(){
+        if(!window.confirm('Delete fictional job #JF-'+j.id+'?'))return;
+        jobs=jobs.filter(function(x){return x.id!==j.id});features=features.filter(function(f){return f.jobId!==j.id});
+        msg('jf-job-message','Sample job deleted.');render();
+      });
+      controls.append(sel);
+      if(j.status==='Completed'){
+        var share=node('button','button secondary','Send to Website →');share.type='button';
+        share.addEventListener('click',function(){byId('jf-feature-job').value=String(j.id);fillFeature();byId('jf-handoff').scrollIntoView({behavior:'smooth',block:'start'});});
+        controls.append(share);
+      }
+      controls.append(del);row.append(detail,controls);list.append(row);
+    });
+    var picker=byId('jf-job-customer'),current=picker.value;
+    picker.replaceChildren();
+    var placeholder=node('option','','Select a customer');placeholder.value='';picker.append(placeholder);
+    customers.forEach(function(c){var opt=node('option','',c.name);opt.value=String(c.id);picker.append(opt)});
+    picker.value=customers.some(function(c){return String(c.id)===current})?current:'';
+  }
+  function render(){
+    byId('jf-setup').hidden=!!business;byId('jf-app').hidden=!business;
+    if(!business)return;
+    setText('jf-business-title',business.name);setText('jf-business-meta',business.type+' · '+business.location);
+    setText('jf-total-jobs',jobs.length);setText('jf-new-jobs',count('New'));setText('jf-quotes',count('Quote sent'));
+    setText('jf-done',count('Completed'));setText('jf-total-customers',customers.length);
+    document.querySelectorAll('[data-jf-tab]').forEach(function(b){
+      var active=b.dataset.jfTab===jobTab;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
+    });
+    byId('jf-tab-jobs').hidden=jobTab!=='jobs';byId('jf-tab-customers').hidden=jobTab!=='customers';
+    renderCustomers();renderJobs();renderFeatures();
+  }
+  function sampleBusiness(){
+    business={name:'Southland Handy Services (Demo)',type:'Property maintenance',location:'Invercargill'};
+    customers=[
+      {id:1,name:'Mia Example',contact:'Prefers email (fictional)'},
+      {id:2,name:'James Example',contact:'Preferred contact: phone (fictional)'},
+      {id:3,name:'Aroha Example',contact:'Contact note: demo only'}
+    ];
+    jobs=[
+      {id:1001,customerId:1,title:'Garden tidy-up',note:'New customer enquiry',status:'New'},
+      {id:1002,customerId:2,title:'Deck repairs',note:'Quote requested',status:'Quote needed'},
+      {id:1003,customerId:3,title:'Driveway cleaning',note:'Awaiting reply',status:'Quote sent'},
+      {id:1004,customerId:1,title:'Fence painting',note:'Finished work',status:'Completed'}
+    ];
+    features=[];nextCustomer=4;nextJob=1005;jobFilter='All';jobTab='jobs';byId('jf-filter').value='All';
+    msg('jf-job-message','Sample business and fictional work loaded.');render();
+  }
+  function fillFeature(){
+    var id=Number(byId('jf-feature-job').value),saved=features.find(function(f){return f.jobId===id});
+    byId('jf-feature-title').value=saved?saved.title:'';
+    byId('jf-feature-summary').value=saved?saved.summary:'';
+    byId('jf-feature-consent').checked=false;
+  }
+  function renderFeatures(){
+    var picker=byId('jf-feature-job'),id=picker.value;
+    picker.replaceChildren();
+    var first=node('option','','Choose a completed job');first.value='';picker.append(first);
+    jobs.filter(function(j){return j.status==='Completed'}).forEach(function(j){
+      var o=node('option','',j.title+' (#JF-'+j.id+')');o.value=String(j.id);picker.append(o);
+    });
+    picker.value=jobs.some(function(j){return j.status==='Completed'&&String(j.id)===id})?id:'';
+    var box=byId('jf-feature-preview');box.replaceChildren();
+    if(!features.length)empty(box,'No featured work yet. Mark a sample job Completed and choose Send to Website.');
+    features.filter(function(f){return jobs.some(function(j){return j.id===f.jobId&&j.status==='Completed'})}).forEach(function(f){
+      var row=node('article','jf-item'),details=node('div'),heading=node('strong','',f.title),paragraph=node('small','',f.summary),remove=node('button','button quiet','Remove');
+      remove.type='button';remove.addEventListener('click',function(){features=features.filter(function(x){return x.jobId!==f.jobId});render()});
+      details.append(heading,paragraph);row.append(details,remove);box.append(row);
+    });
+  }
+  byId('jf-feature-job').addEventListener('change',fillFeature);
+  byId('jf-feature-form').addEventListener('submit',function(e){
+    e.preventDefault();var id=Number(byId('jf-feature-job').value);
+    var j=jobs.find(function(x){return x.id===id}),title=trim('jf-feature-title'),description=trim('jf-feature-summary');
+    if(!j||j.status!=='Completed'||title.length<4||description.length<10||!byId('jf-feature-consent').checked){
+      msg('jf-feature-message','Only completed jobs with approved, public descriptions can be sent.');return;
+    }
+    features=features.filter(function(f){return f.jobId!==id});
+    features.push({jobId:id,title:title,summary:description});
+    msg('jf-feature-message','✓ Added to fictional website preview. Nothing has been published or synced.');
+    render();
+  });
+  byId('jf-fake-inquiry').addEventListener('click',function(){
+    if(!business)return;
+    if(customers.length>=100||jobs.length>=100)return;
+    var c={id:nextCustomer++,name:'Website Customer (Fictional)',contact:'test@example.invalid'};
+    customers.push(c);
+    jobs.unshift({id:nextJob++,customerId:c.id,title:'Website enquiry: driveway tidy-up',note:'Simulation from a pretend published website.',status:'New'});
+    jobFilter='All';jobTab='jobs';msg('jf-job-message','✓ Simulated enquiry arrived in JobFlow. No real web submission.');render();
+  });
+  document.querySelectorAll('[data-open],[data-view]').forEach(function(button){
+    button.addEventListener('click',function(){view(button.dataset.open||button.dataset.view)});
+  });
+  document.querySelectorAll('[data-jf-tab]').forEach(function(button){
+    button.addEventListener('click',function(){setTab(button.dataset.jfTab)});
+  });
+  document.querySelectorAll('[data-jf-goto]').forEach(function(button){
+    button.addEventListener('click',function(){setTab(button.dataset.jfGoto)});
+  });
+  byId('jf-setup-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=saveBusiness(trim('jf-business-name'),trim('jf-business-type'),trim('jf-business-location'));
+    if(ok){setTab('customers');msg('jf-customer-message','Workspace created. Start by adding a fictional customer.')}
+  });
+  byId('jf-open-sample').addEventListener('click',sampleBusiness);
+  byId('jf-load-examples').addEventListener('click',function(){
+    if((jobs.length||customers.length)&&!window.confirm('Replace your fictional customers and jobs with the sample set?'))return;
+    sampleBusiness();
+  });
+  byId('jf-start-over').addEventListener('click',function(){
+    if(!window.confirm('Discard this demo business, customers and jobs?'))return;reset();
+  });
+  byId('jf-edit-business').addEventListener('click',function(){
+    byId('jf-edit-name').value=business.name;byId('jf-edit-type').value=business.type;
+    byId('jf-edit-location').value=business.location;byId('jf-edit-panel').hidden=false;
+    byId('jf-edit-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+  byId('jf-cancel-edit').addEventListener('click',function(){byId('jf-edit-panel').hidden=true});
+  byId('jf-edit-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(saveBusiness(trim('jf-edit-name'),trim('jf-edit-type'),trim('jf-edit-location')))byId('jf-edit-panel').hidden=true;
+  });
+  byId('jf-customer-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!addCustomer(trim('jf-customer-name'),trim('jf-customer-contact'))){
+      msg('jf-customer-message','Could not add customer. Maximum 100 sample customers.');return;
+    }
+    this.reset();msg('jf-customer-message','Fictional customer added.');
+  });
+  byId('jf-job-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var success=addJob(Number(trim('jf-job-customer')),trim('jf-job-title'),trim('jf-job-notes'));
+    if(!success){msg('jf-job-message','Choose an existing customer and enter a job title (maximum 100 jobs).');return}
+    this.reset();msg('jf-job-message','Fictional job added.');render();
+  });
+  byId('jf-filter').addEventListener('change',function(){jobFilter=this.value;renderJobs()});
+  render();
+})();
+</script>
+</body>
+</html>
