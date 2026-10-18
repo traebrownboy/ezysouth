@@ -41,6 +41,21 @@ GitHub's staging CI now exercises `node scripts/jobflow-auth-flow-test.js` with 
 
 The signed-in homepage offers two premium workspaces: **EzySouth Web** and **JobFlow by EzySouth**. Each workspace has a prominent **Return to homepage** link, plus a cross-product link. The website builder's primary tabs are Build website, Design Studio, Save & manage, and Connect JobFlow; legacy quick commands and local drafts are under **More tools**. Disabled publishing and direct Netlify-token controls are hidden from ordinary staging navigation.
 
+## Website preset consistency (Coastal Clean benchmark)
+
+All four named style presets now share **Coastal Clean's proven responsive structure**:
+
+- **Coastal Clean:** airy blue/sea-green styling, modern sans typography.
+- **Modern Studio:** warm minimal neutrals, restrained editorial headings.
+- **Trade Pro:** dark trade-style hero/navigation, strong readable headings and warm orange accents.
+- **Midnight Luxe:** dark luxury surfaces with elegant editorial headings and gold accents.
+
+**Identical across the four:** standard single-column hero, header/nav proportions, balanced vertical spacing, soft 22px cards, service-card grids, content order, section paddings, and mobile breakpoints. These values are defined once in `coastalPresetStructure` and inherited by `premiumPresets`. Old saved website designs tagged with one of the four named presets are harmonised on preview/render **without deleting business text, photos, reviews, or other data**. Designs intentionally marked `custom` keep their advanced overrides.
+
+The style-specific CSS is in the original inline stylesheet, which both the Design Studio and guided device preview clone, and `exportSite()` includes in downloadable HTML. This avoids discrepancies between the three rendering surfaces. CI runs `node scripts/jobflow-preset-consistency-test.js` to prevent unexpected layout divergence.
+
+**Manual responsive acceptance pending:** from the staging `/web.html` Build website → Design screen, cycle Coastal Clean → Modern Studio → Trade Pro → Midnight Luxe at mobile and desktop widths. Check that the page structure doesn't jump, text remains legible on the dark themes, contact form isn't clipped, exported HTML matches preview, and existing cloud project content survives reloading. Also verify that selecting a custom advanced layout still works.
+
 ## EzySouth → JobFlow → EzySouth acceptance test
 
 1. Sign into JobFlow using your **staging** account and create a fictional business/customer.
