@@ -1,48 +1,53 @@
-# JobFlow staging: isolated, fail-closed deployment
+# EzySouth / JobFlow free staging (18 October 2026)
 
-**State (2026-10-18):** staging front-end prepared in GitHub; Supabase branch has **NOT** been created or billed; staging frontend has **NOT** been hosted. All Supabase references point to `staging-not-configured.invalid` until a fresh branch is approved. Production does not read these files.
+## LIVE STAGING URLS
 
-## What you can safely test now
-The existing fictional-data V4 simulator remains available at:
-https://raw.githack.com/traebrownboy/ezysouth/jobflow-v4-tester/tester/v4/index.html
+- **JobFlow staging (first-party Supabase):** https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/jobflow-staging
+- **EzySouth Web staging (first-party Supabase):** https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/ezysouth-staging
 
-That proxy is a *third-party, PUBLIC* preview service. **Do not enter real business/customer details, and never sign into Supabase through raw.githack.com.**
+These are **publicly reachable staging login pages**, not production customer websites. The Supabase connector reports both Edge Functions as ACTIVE, but an independent real-device/browser smoke test of the links is still required.
 
-## Activate the real staging system (requires approval)
-1. Get user approval for the quoted Supabase branch cost. Supabase quoted **US$0.01344 per hour**, usage charges may be additional. A running branch accrues charges until it is deleted. Delete it promptly after testing.
-2. Create a Supabase branch named `jobflow-integration-staging` from project `ezcmfbaoivdwkgayznbt`. Branch data must stay empty/synthetic; never import production customer records.
-3. Verify the branch contains the production baseline tables `websites`, `enquiries`, `builder_state`, etc. Branches created from migration history might not contain objects previously created without tracked migrations. If missing, repair the branch **only**, never main production.
-4. Apply the SQL schema in `database/migrations/20261018_jobflow_showcases.sql` **to the staging branch only**. It adds four RLS-protected tables: JobFlow businesses, customers, jobs and approved showcase projects.
-5. Fetch the branch's *publishable* public key (`sb_publishable_...`) and project URL. Update **both** `staging/index.html` and `staging/jobflow.html` by replacing:
-   - `https://staging-not-configured.invalid` with the branch URL
-   - `staging-publishable-key-not-configured` with the **branch publishable key only**
-   - Never insert a secret key, `service_role`, token, private password or production key.
-6. Set up a **new, separate Netlify site** using GitHub repo `traebrownboy/ezysouth`, branch `feature/jobflow-staging-safety`, and **publish directory `staging`**, with no custom production domain. Do not point the existing `ezysouth.netlify.app` site at this branch. The `_headers` file sets noindex/no-store response headers.
-7. In the staging branch's Supabase Auth URL configuration, set the new staging Netlify URL as the Site URL and add `https://<your-staging-site>.netlify.app/**` as an allowed redirect. Do not use the production site for test email confirmations.
-8. Use **two new fake staging email accounts** in two separate private browser sessions. Verify sign-up/login on `/jobflow.html` and `/index.html`.
-9. Run `database/tests/jobflow_staging_rls.sql` only against the staging branch database. It wraps fabricated auth accounts and rows in a transaction and rolls all data back. A `FAIL:` SQL exception indicates a failing security test. Inspect failed assertions before changing any policy.
-10. Run the test matrix below. Use synthetic name/contact records only. The branch's existing public `submit-enquiry` function should be verified using a synthetic EzySouth website; if the function is missing or secrets not set, do not silently fall back to the production endpoint.
+### Database
 
-## Test matrix
-- A new JobFlow business saves without any website.
-- Create a private customer and linked job, change the job to Completed, reload to verify saving.
-- Owner A owns Website A, Owner B owns Website B. Neither sees the other person's private enquiries/customers/jobs or approved showcase entries.
-- A public staging form submits a fake enquiry (using the staging project's `submit-enquiry` Edge Function only); it appears in A's JobFlow inbox. Website B sees none of A's data.
-- Set enquiry status to **Completed**. Before completion, **Send to Website** must not be offered and database RLS rejects it even if bypassing the UI.
-- Approve a new public **title and description**; customer name/contact/original message must not appear in `jobflow_showcases` or static exports.
-- Open Website A in EzySouth Web, refresh and see only A's completed/approved showcase description, review before publication.
-- Publishing, unpublishing, removing a live site and manual Netlify deployment are **deliberately disabled in staging**. Test the resulting exported HTML locally only; do not publish staging-generated sites through production Netlify.
-- Remove featured draft; verify it disappears on refresh. Changing the underlying enquiry away from Completed also removes it from the builder preview.
-- Security advisor for staging reports no new public RLS exposure.
+Uses a previously empty existing Supabase project: `anldjuaqlpowwodlphqf`. Its free project slot was already occupied before this work. **No additional project or paid database branch created.** All synthetic test users and test enquiry data were rolled back by the security test.
 
-## Stop conditions
-Do not deploy the live feature branch to production until all of the above passes. If a test fails, preserve live service unchanged. A real customer beta transition additionally needs a controlled migration/release plan and rollback, and clean separation between test and production credentials.
+Proposed tables were applied only to that staging project:
+- `websites`, `enquiries`, `builder_state`, `website_deployments`, `enquiry_rate_limits` (matching the minimum production baseline)
+- `jobflow_businesses`, `jobflow_customers`, `jobflow_jobs`, `jobflow_showcases` (the new secure JobFlow schema)
 
-## Static-copy safety
-- `staging/index.html` is a copy of the candidate EzySouth Web Builder with one-click publishing, unpublishing and direct Netlify deployment disabled. The source still contains dormant handlers; these intentionally return before any network write.
-- `staging/jobflow.html` is the candidate authenticated JobFlow UI with a fail-closed endpoint placeholder.
-- Both staging pages send email confirmation users back to the staging URL, provided the Supabase Auth redirect allowlist includes it.
-- Do not load the staging files on the existing production hostname: browser localStorage and authentication sessions are scoped to the origin. A dedicated Netlify staging domain is required.
+Security: Every public table has RLS enabled. Live owner-isolation test in `database/tests/jobflow_staging_rls.sql` **PASSED** on the staging Supabase project. A pre-existing public EXECUTE permission on `public.rls_auto_enable()` was also revoked in staging following a security advisor warning. Remaining two advisor INFO findings are intended no-policy service-only tables.
 
-## Cost control
-Once staging QA is complete, **delete the Supabase branch** and retire the staging Netlify site to stop additional charges. No recurring monitoring or automatic teardown has been created; the operator must perform the deletion.
+### How to test (fictional details only)
+
+1. Open the **JobFlow staging link** on your iPhone. Sign up with an email you control and a unique test password. Do **not** use a production customer password.
+2. Supabase may require email verification. If the confirmation redirect goes to the wrong URL, add these two exact URLs in the **staging Supabase** dashboard under **Authentication > URL Configuration > Redirect URLs**:
+   - `https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/jobflow-staging`
+   - `https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/ezysouth-staging`
+   This setting cannot currently be changed through the available connector.
+3. Sign in and create a fictional JobFlow business, customer and manual job. Refresh the browser: data should persist in the staging cloud database.
+4. Tap **EzySouth Web Builder**, sign in using the **same staging account**, create a fake website and **Save to Cloud**. The user may need to open it from the Cloud tab if newly created.
+5. Return to JobFlow, tap **Refresh enquiries**. The connected fake website should appear. Enquiries from real published websites are **not** imported.
+6. Add staging fake enquiries for that website through the staging-specific testing flow or database test data. Mark one Completed; check **Send to Website** only appears on completed enquiries.
+7. Approve a public title and summary, then open the fake website in Web Builder and refresh Completed Work. Verify the summary appears, with no private name/contact/message.
+
+**Caution:** Publishing, unpublishing, removal, and direct Netlify deployments remain deliberately disabled in staged Website Builder. There is no path from staging to the live EzySouth project.
+
+### Security/quality checks already performed
+- Supabase RLS transaction with synthetic owners, websites, enquiries, customers, jobs and showcase records: **PASSED**.
+- SQL test checks two-tenant isolation, Completed-only handoff, cross-business foreign keys and anonymous restrictions; the test uses BEGIN/ROLLBACK to avoid leaving synthetic records.
+- A staged security advisor scan detected and resolved public EXECUTE of `public.rls_auto_enable()`.
+- All staged HTML JavaScript parsed, staging client configuration contains only the staging project's public publishable key; no production API URL or key, and no service-role secret, in the public pages.
+- Both Edge Functions deploy as public **static HTML handlers** with no server database reads/writes and no secret exposure. The private data API remains behind Auth and RLS.
+- Earlier V4 fictional-only DOM tester: https://raw.githack.com/traebrownboy/ezysouth/jobflow-v4-tester/tester/v4/index.html
+
+### Remaining steps
+- User iPhone smoke test of both Edge Function URLs, signup, confirmation link, login, cross-navigation and save/reload.
+- Full browser-to-Supabase integrated test with two separate authorised fictional users.
+- Optionally add staging-only simulated incoming enquiry tool (not production) to exercise the public form pipeline without publishing a website.
+- Check the separate free GitHub Actions PostgreSQL test at https://github.com/traebrownboy/ezysouth/actions; it was committed but connector cannot currently confirm a push-triggered run result.
+- No real customer beta release until final staging acceptance and controlled production migration.
+
+### Project isolation
+- **Production Supabase:** `ezcmfbaoivdwkgayznbt`; existing EzySouth main site `https://ezysouth.netlify.app` **untouched**.
+- **Free staging Supabase:** `anldjuaqlpowwodlphqf`; contains only new staging tables and any test records a user deliberately creates.
+- **Feature code:** `feature/jobflow-staging-safety`; GitHub `main` unchanged.
