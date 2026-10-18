@@ -65,7 +65,18 @@ textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668
 <section class="section" id="view-jobflow" hidden>
   <div class="subnav"><button class="button quiet" type="button" data-open="home">← Workspace</button><span class="tag">JobFlow · sample data only</span></div>
   <div class="hero" style="padding-top:10px"><h1>Work organised. Customers happier.</h1><p class="muted">A first look at JobFlow as its own product, without creating an EzySouth website. Every entry on this screen is fictional. Your changes stay inside this browser page and disappear when you reload.</p></div>
-  <div class="kpis" aria-label="Demo enquiry totals">
+  <section class="panel" style="margin-bottom:20px" aria-labelledby="business-title">
+<h2 id="business-title">Your JobFlow workspace</h2><p class="muted">Set up a fictional business to try JobFlow independently. This demo never connects to EzySouth Web or saves business data.</p>
+<form id="business-form">
+<div class="grid">
+<div><label for="business-name">Business name</label><input class="field" id="business-name" maxlength="80" required placeholder="e.g. Southern Repairs" autocomplete="off"></div>
+<div><label for="business-type">Business type</label><input class="field" id="business-type" maxlength="80" required placeholder="e.g. Property maintenance" autocomplete="off"></div>
+<div><label for="business-location">Location</label><input class="field" id="business-location" maxlength="80" placeholder="e.g. Southland" autocomplete="off"></div>
+<div style="display:flex;align-items:end"><button class="button" type="submit">Create demo workspace</button></div>
+</div></form><p id="business-summary" class="status" role="status">No demo business created yet.</p>
+<button id="business-reset" class="button quiet" type="button">Clear business</button>
+</section>
+<div class="kpis" aria-label="Demo enquiry totals">
     <div class="kpi"><strong id="count-all">0</strong><span>All enquiries</span></div>
     <div class="kpi"><strong id="count-new">0</strong><span>New</span></div>
     <div class="kpi"><strong id="count-quoted">0</strong><span>Quote sent</span></div>
@@ -149,6 +160,15 @@ function render(){
 }
 document.querySelectorAll('[data-open],[data-view]').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.open||b.dataset.view)})});
 document.querySelectorAll('[data-filter]').forEach(function(b){b.addEventListener('click',function(){currentFilter=b.dataset.filter;render()})});
+byId('business-form').addEventListener('submit',function(e){
+e.preventDefault();
+var name=byId('business-name').value.trim(),type=byId('business-type').value.trim(),location=byId('business-location').value.trim();
+if(!name||!type)return;
+byId('business-summary').textContent='Demo workspace: '+name+' · '+type+(location?' · '+location:'')+'. No account or website required.';
+});
+byId('business-reset').addEventListener('click',function(){
+byId('business-form').reset();byId('business-summary').textContent='No demo business created yet.';
+});
 byId('demo-form').addEventListener('submit',function(e){
   e.preventDefault();
   var customer=byId('customer').value.trim(),service=byId('service').value.trim(),note=byId('note').value.trim();
