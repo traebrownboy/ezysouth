@@ -1,0 +1,74 @@
+name: JobFlow free PostgreSQL security tests
+
+on:
+  push:
+    branches:
+      - feature/jobflow-staging-safety
+    paths:
+      - .github/workflows/jobflow-free-security.yml
+      - database/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-rls:
+    name: Verify JobFlow tenant isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: jobflow_security_test
+        options: >-
+          --health-cmd "pg_isready -U postgres -d jobflow_security_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+        ports:
+          - 5432:5432
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: jobflow_security_test
+    steps:
+      - name: Fetch candidate code
+        uses: actions/checkout@v4
+
+      - name: Ensure Postgres client installed
+        run: |
+          if ! command -v psql >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y postgresql-client
+          fi
+          psql --version
+
+      - name: Prepare disposable Supabase-compatible test schema
+        run: psql -X -v ON_ERROR_STOP=1 -f database/tests/jobflow_free_postgres_bootstrap.sql
+
+      - name: Apply proposed JobFlow additive schema (test DB only)
+        run: psql -X -v ON_ERROR_STOP=1 -f database/migrations/20261018_jobflow_showcases.sql
+
+      - name: Prove owner isolation and completed-only handoff
+        run: psql -X -v ON_ERROR_STOP=1 -f database/tests/jobflow_staging_rls.sql
+
+      - name: Verify test rollback left no synthetic records
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -c "
+            DO \$\$
+            BEGIN
+              IF (SELECT COUNT(*) FROM public.jobflow_businesses) <> 0 OR
+                 (SELECT COUNT(*) FROM public.jobflow_customers) <> 0 OR
+                 (SELECT COUNT(*) FROM public.jobflow_jobs) <> 0 OR
+                 (SELECT COUNT(*) FROM public.jobflow_showcases) <> 0 OR
+                 (SELECT COUNT(*) FROM public.enquiries) <> 0 OR
+                 (SELECT COUNT(*) FROM auth.users) <> 0
+              THEN RAISE EXCEPTION 'FAIL: synthetic records persisted after rollback'; END IF;
+            END
+            \$\$;
+          "
