@@ -37,5 +37,44 @@ async function test(label,fn){await fn();console.log('PASS '+label);count++}
   assert.equal(r.status,404,'Unknown staging website should not resolve');
   assert.match(r.headers.get('x-robots-tag')||'',/noindex/);
  });
+ await test('viewer is real HTML with an opaque-origin sandbox',async()=>{
+  const r=await fetch(domain+'/published.html?site='+fake,{
+   redirect:'manual',signal:AbortSignal.timeout(15000)
+  });
+  assert.equal(r.status,200,'Netlify must serve the viewer as a proper HTML page');
+  assert.match(r.headers.get('content-type')||'',/^text\/html/i,'Safari needs HTML MIME');
+  const html=await r.text();
+  assert.ok(html.includes('sandbox="allow-scripts allow-forms allow-popups"'));
+  assert.ok(!html.includes('allow-same-origin'));
+  assert.ok(html.includes('frame.srcdoc=result.html'));
+ });
+ await test('unknown website cannot expose raw published HTML',async()=>{
+  const r=await call('staging-public-site/'+fake+'?raw=1',{headers:{Origin:domain}});
+  assert.equal(r.status,404);
+  assert.equal(r.headers.get('access-control-allow-origin'),'*');
+  const body=await r.json();
+  assert.equal(body.status,'missing');
+ });
+ // This existing staging website is a disposable test fixture. We do not
+ // mutate or log its published content. If the owner later deletes it, the
+ // other tests still enforce safe public rendering.
+ const sample='125fd706-e6d6-48f5-a6fd-6e6ff5e1911a';
+ await test('legacy publish link navigates to safe HTML viewer, not raw code',async()=>{
+  const r=await call('staging-public-site/'+sample);
+  if(r.status===404)return;
+  assert.equal(r.status,302,'Old shareable link should redirect');
+  assert.equal(r.headers.get('location'),domain+'/published.html?site='+sample);
+ });
+ await test('sandbox viewer can fetch live HTML payload without browser credentials',async()=>{
+  const r=await call('staging-public-site/'+sample+'?raw=1',{headers:{Origin:domain}});
+  if(r.status===404)return;
+  assert.ok([200,409].includes(r.status),'Only live/offline preview states expected');
+  assert.equal(r.headers.get('access-control-allow-origin'),'*');
+  const result=await r.json();
+  if(r.status===200){
+    assert.equal(result.status,'live');
+    assert.ok(/^\\s*<!doctype html>/i.test(result.html),'Raw payload must contain full HTML');
+  }else assert.ok(['unpublished','removed','draft'].includes(result.status));
+ });
  console.log('\n'+count+' non-destructive network checks passed');
 })().catch(err=>{console.error(err);process.exitCode=1});
