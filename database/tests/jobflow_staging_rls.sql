@@ -14,7 +14,8 @@ INSERT INTO public.websites(id,owner_id,name,content) VALUES
 INSERT INTO public.enquiries(id,website_id,customer_name,customer_contact,message,status) VALUES
  ('a5555555-5555-4555-8555-555555555555','a3333333-3333-4333-8333-333333333333','Synthetic A1','private-a@example.invalid','Completed fictional fence project', 'Completed'),
  ('a6666666-6666-4666-8666-666666666666','a3333333-3333-4333-8333-333333333333','Synthetic A2','private-a2@example.invalid','Unfinished fictional painting project', 'New'),
- ('b7777777-7777-4777-8777-777777777777','b4444444-4444-4444-8444-444444444444','Synthetic B1','private-b@example.invalid','Completed fictional roof project', 'Completed');
+ ('b7777777-7777-4777-8777-777777777777','b4444444-4444-4444-8444-444444444444','Synthetic B1','private-b@example.invalid','Completed fictional roof project', 'Completed'),
+ ('b8888888-8888-4888-8888-888888888888','b4444444-4444-4444-8444-444444444444','Synthetic B2','private-b2@example.invalid','Another completed fictional roof project', 'Completed');
 
 INSERT INTO public.jobflow_businesses(id,owner_id,name,location) VALUES
  ('a8888888-8888-4888-8888-888888888888','a1111111-1111-4111-8111-111111111111','Stage Business A','Southland'),
@@ -77,10 +78,9 @@ BEGIN
  denied:=false;
  BEGIN
    INSERT INTO public.jobflow_showcases(website_id,enquiry_id,title,summary)
-   VALUES('b4444444-4444-4444-8444-444444444444','b7777777-7777-4777-8777-777777777777',
+   VALUES('b4444444-4444-4444-8444-444444444444','b8888888-8888-4888-8888-888888888888',
       'Someone Else Work','Account A must not be allowed to feature another tenant.');
  EXCEPTION WHEN insufficient_privilege THEN denied:=true;
-          WHEN unique_violation THEN denied:=true; -- duplicate could arise before policy evaluation
  END;
  IF NOT denied THEN RAISE EXCEPTION 'FAIL: cross-owner showcase inserted'; END IF;
 
