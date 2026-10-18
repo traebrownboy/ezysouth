@@ -53,6 +53,27 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
     <p class="muted micro">Only you can see customer names, contact details and the original messages. This inbox requires a secure login.</p>
     <div id="enquiry-list"></div>
   </section>
+  <section class="panel">
+   <h2>My JobFlow business</h2><p class="muted micro">This workspace belongs to your JobFlow account and works even if you do not own a website.</p>
+   <form id="business-form" class="formwidth"><label for="biz-name">Business name</label><input id="biz-name" maxlength="120" minlength="2" required placeholder="e.g. Southland Property Services">
+    <label for="biz-location">Service area (optional)</label><input id="biz-location" maxlength="120" placeholder="e.g. Invercargill and Bluff">
+    <button class="btn" type="submit" id="biz-save">Save business workspace</button></form>
+   <p class="muted micro" id="biz-info">Set up your first JobFlow business to start managing customers and jobs without a website.</p>
+  </section>
+  <section class="panel" id="customers-panel" hidden>
+   <h2>Customers</h2><form id="customer-form"><label for="customer-name">Name</label><input id="customer-name" maxlength="120" minlength="2" required>
+    <label for="customer-contact">Contact</label><input id="customer-contact" maxlength="200" minlength="3" required placeholder="Email or phone">
+    <button type="submit" class="btn">Add customer</button></form>
+   <div id="customer-list"></div>
+  </section>
+  <section class="panel" id="jobs-panel" hidden>
+   <h2>Standalone jobs</h2><p class="muted micro">Track work that did not start as a website enquiry. These jobs stay separate from inbound website enquiries.</p>
+   <form id="job-form"><label for="job-customer">Customer</label><select id="job-customer" required><option value="">Choose a customer</option></select>
+    <label for="job-title">Job title</label><input id="job-title" maxlength="160" minlength="3" required placeholder="e.g. Fix boundary fence">
+    <label for="job-notes">Notes</label><textarea id="job-notes" maxlength="3000" rows="2"></textarea>
+    <button type="submit" class="btn">Add job</button></form>
+   <div id="job-list"></div>
+  </section>
   <section class="panel"><h2>Completed work for your website</h2>
     <p class="muted">After finishing a job, mark it <strong>Completed</strong> and select <strong>Send to Website</strong>. Write a short public-facing project title and summary. They will appear in the builder's Completed Work preview after you refresh. Nothing is published automatically.</p>
     <p class="notice warn micro">Never publish a customer's original enquiry, contact details, location or photos without permission. Only the title and summary you expressly approve are sent to the builder.</p>
@@ -80,7 +101,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
  const STATUSES=['New','Quote needed','Quote sent','Won','Completed','Lost'];
  const el=id=>document.getElementById(id);
  const status=message=>{el('message').textContent=message};
- let client=null,user=null,sites=[],inbox=[],features=[],editing=null;
+ let client=null,user=null,sites=[],inbox=[],features=[],editing=null,business=null,customers=[],jobs=[];
  if(!window.supabase?.createClient){status('Cannot load secure account library. Check your connection and reload.');return}
  client=window.supabase.createClient(PROJECT_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
  async function requireOk(query){const {data,error}=await query;if(error)throw error;return data}
@@ -88,7 +109,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
   const {data,error}=await client.auth.getUser();if(error&&error.message!=='Auth session missing!')throw error;
   user=data?.user||null;
   el('auth-panel').hidden=!!user;el('app').hidden=!user;
-  if(!user){sites=[];inbox=[];features=[];el('enquiry-list').replaceChildren();return}
+  if(!user){sites=[];inbox=[];features=[];business=null;customers=[];jobs=[];el('enquiry-list').replaceChildren();el('customers-panel').hidden=true;el('jobs-panel').hidden=true;return}
   el('account-label').textContent='Signed in: '+(user.email||'account');
   await load();
  }
@@ -98,6 +119,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
  }
  async function load(){
   if(!user)return;
+  await loadBusiness();
   const current=el('website-filter').value;
   sites=await requireOk(client.from('websites').select('id,name,accepting_enquiries').order('updated_at',{ascending:false}).limit(100));
   const filter=el('website-filter');filter.replaceChildren();
@@ -129,6 +151,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
   el('count-open').textContent=String(inbox.filter(x=>!['Completed','Lost'].includes(x.status)).length);
   el('count-complete').textContent=String(inbox.filter(x=>x.status==='Completed').length);
   if(!filtered.length){const p=document.createElement('p');p.className='muted';p.textContent=sites.length?'No enquiries match these filters.':'Create or connect an EzySouth website to start receiving customer enquiries.';box.append(p)}
+  renderBusiness();
   for(const item of filtered){
    const site=sites.find(s=>s.id===item.website_id);
    const stored=features.find(f=>f.enquiry_id===item.id);
@@ -169,6 +192,94 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
    card.append(head,privateBox,buttons);box.append(card);
   }
  }
+
+ async function loadBusiness(){
+  business=null;customers=[];jobs=[];
+  const {data:row,error}=await client.from('jobflow_businesses')
+    .select('id,name,location').eq('owner_id',user.id).maybeSingle();
+  if(error){
+   const missing=['42P01','PGRST205'].includes(error.code);
+   el('biz-info').textContent=missing?'Standalone business cloud storage needs the JobFlow database migration before it can save records.':'Could not load business: '+error.message;
+   el('customers-panel').hidden=true;el('jobs-panel').hidden=true;
+   return;
+  }
+  business=row;
+  if(!business)return;
+  customers=await requireOk(client.from('jobflow_customers')
+   .select('id,name,contact').eq('business_id',business.id).order('created_at',{ascending:false}).limit(300));
+  jobs=await requireOk(client.from('jobflow_jobs')
+   .select('id,customer_id,title,notes,status,created_at').eq('business_id',business.id).order('created_at',{ascending:false}).limit(300));
+ }
+ function renderBusiness(){
+  const name=el('biz-name'),location=el('biz-location');
+  if(document.activeElement!==name)name.value=business?.name||'';
+  if(document.activeElement!==location)location.value=business?.location||'';
+  el('biz-info').textContent=business?'✓ Business saved securely. '+customers.length+' customers and '+jobs.length+' manually created jobs.':'Create a business workspace to manage customers and standalone jobs. No website required.';
+  el('customers-panel').hidden=!business;el('jobs-panel').hidden=!business;
+  const list=el('customer-list');list.replaceChildren();
+  const selected=el('job-customer').value;const picker=el('job-customer');
+  picker.replaceChildren(new Option('Choose a customer',''));
+  for(const customer of customers){
+   picker.append(new Option(customer.name,customer.id));
+   const row=document.createElement('div');row.className='lead';
+   const title=document.createElement('strong');title.textContent=customer.name;
+   const p=document.createElement('p');p.className='muted micro';p.textContent=customer.contact;
+   const remove=document.createElement('button');remove.className='btn danger small';remove.type='button';remove.textContent='Delete customer';
+   remove.addEventListener('click',()=>busy(async()=>{
+    if(jobs.some(j=>j.customer_id===customer.id))throw Error('Delete linked jobs first to protect job history.');
+    if(!confirm('Delete this customer?'))return;
+    await requireOk(client.from('jobflow_customers').delete().eq('id',customer.id).eq('business_id',business.id).select('id'));
+    await load();status('Customer removed.');
+   }));
+   row.append(title,p,remove);list.append(row);
+  }
+  picker.value=customers.some(c=>c.id===selected)?selected:'';
+  const jobList=el('job-list');jobList.replaceChildren();
+  for(const job of jobs){
+   const customer=customers.find(c=>c.id===job.customer_id);
+   const card=document.createElement('div');card.className='lead';
+   const title=document.createElement('strong');title.textContent=job.title;
+   const detail=document.createElement('p');detail.className='muted detail';detail.textContent=(customer?.name||'Customer')+' · '+(job.notes||'No notes');
+   const actions=document.createElement('div');actions.className='lead-actions';
+   const sel=document.createElement('select');sel.setAttribute('aria-label','Status of '+job.title);
+   for(const st of STATUSES)sel.append(new Option(st,st));sel.value=job.status;
+   sel.addEventListener('change',()=>busy(async()=>{
+    await requireOk(client.from('jobflow_jobs').update({status:sel.value,updated_at:new Date().toISOString()})
+      .eq('id',job.id).eq('business_id',business.id).select('id'));
+    await load();status('Job status saved.');
+   }));
+   const del=document.createElement('button');del.type='button';del.className='btn danger small';del.textContent='Delete job';
+   del.addEventListener('click',()=>busy(async()=>{
+    if(!confirm('Delete this manually created job?'))return;
+    await requireOk(client.from('jobflow_jobs').delete().eq('id',job.id).eq('business_id',business.id).select('id'));
+    await load();status('Job deleted.');
+   }));
+   actions.append(sel,del);card.append(title,detail,actions);jobList.append(card);
+  }
+ }
+ el('business-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  const name=el('biz-name').value.trim(),location=el('biz-location').value.trim();
+  if(name.length<2||name.length>120||location.length>120)throw Error('Check business name and service area.');
+  const values={owner_id:user.id,name,location,updated_at:new Date().toISOString()};
+  await requireOk(client.from('jobflow_businesses').upsert(values,{onConflict:'owner_id'}).select('id'));
+  await load();status('✓ JobFlow business saved.');
+ })});
+ el('customer-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  if(!business)throw Error('Create your business workspace first.');
+  const name=el('customer-name').value.trim(),contact=el('customer-contact').value.trim();
+  if(name.length<2||name.length>120||contact.length<3||contact.length>200)throw Error('Check customer name and contact.');
+  await requireOk(client.from('jobflow_customers').insert({business_id:business.id,name,contact}).select('id'));
+  el('customer-form').reset();await load();status('✓ Customer saved.');
+ })});
+ el('job-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  if(!business)throw Error('Create your business workspace first.');
+  const customerId=el('job-customer').value;
+  if(!customers.some(c=>c.id===customerId))throw Error('Choose a customer.');
+  const title=el('job-title').value.trim(),notes=el('job-notes').value.trim();
+  if(title.length<3||title.length>160||notes.length>3000)throw Error('Check title and notes.');
+  await requireOk(client.from('jobflow_jobs').insert({business_id:business.id,customer_id:customerId,title,notes}).select('id'));
+  el('job-form').reset();await load();status('✓ Job saved.');
+ })});
  function openFeature(item,stored){
   if(item.status!=='Completed')return;
   editing={item,stored};const site=sites.find(s=>s.id===item.website_id);
