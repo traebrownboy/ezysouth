@@ -217,6 +217,10 @@ input:focus,select:focus,textarea:focus{border-color:#429875;outline:3px solid #
     if(next!=='Completed'&&stored){
      if(!confirm('This enquiry is featured in the Website Builder. Remove its showcase draft before changing the job away from Completed?')){select.value=item.status;return}
      await requireOk(client.from('jobflow_showcases').delete().eq('id',stored.id).select('id'));
+     if(stored.image_paths?.length){
+      const cleanup=await client.storage.from(PHOTO_BUCKET).remove(stored.image_paths);
+      if(cleanup.error)status('Portfolio draft removed; photo cleanup could not finish: '+cleanup.error.message);
+     }
     }
     await requireOk(client.from('enquiries').update({status:next}).eq('id',item.id).eq('website_id',item.website_id).select('id'));
     await load();
