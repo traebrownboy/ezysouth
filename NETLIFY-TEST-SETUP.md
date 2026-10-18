@@ -78,6 +78,21 @@ The **Publish test website** button now works within the isolated test system. I
 
 **Pending real-browser acceptance:** live authenticated publish/republish, verifying exact same URL, offline/restore, exported layout/photo parity, stage quote form to JobFlow inbox and separate-account isolation. GitHub's static checks and Edge deploy status do not replace these interactive checks.
 
+## Published website HTML rendering hotfix (18 October)
+
+**What happened:** Supabase Edge Functions served user-uploaded `text/html` responses as **`text/plain`**, even when the Edge Function set `Content-Type: text/html`. On iPhone Safari, the published URL therefore displayed raw HTML source code rather than the rendered website. The published site was successfully stored and was not corrupted.
+
+**Fix without changing any existing published URLs or cloud projects:**
+
+1. The unchanged original URL `https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/staging-public-site/<website_uuid>` now responds **HTTP 302** to `https://ezysouth-jobflow-test.netlify.app/published.html?site=<website_uuid>`.
+2. The new `netlify-preview/published.html` is a real HTML document served by Netlify and shows a premium EzySouth private-beta banner.
+3. The viewer fetches the saved HTML via a restricted read-only `?raw=1` JSON endpoint. The original 1.2 MB+ HTML stays safely stored in the **private** staging Storage bucket. No new publication or URL change is needed.
+4. The viewer inserts HTML into an **`iframe srcdoc` with `sandbox="allow-scripts allow-forms allow-popups"`**, explicitly **without** `allow-same-origin`, giving user-created scripts an opaque origin with no access to EzySouth's login session, cookies or top-level document.
+5. Offline/removed site records still return the expected inactive state inside the viewer. Unknown UUIDs return 404.
+6. Automated staging-network checks verify the live old-URL HTTP 302, the anonymous read-only JSON payload for the published sample site and the account/ownership safeguards. GitHub's JS/HTML static checks verify the new viewer code and its sandbox.
+
+**Outstanding live browser test:** open the *existing* link from the builder in Safari and confirm it displays the full website rather than code; reload; try the form with fictional details; try a second phone. GitHub's external runner received intermittent **Netlify 401/503** on the Netlify domain, so anonymous public browser access and actual mobile rendering have not yet been confirmed, even though GitHub's backend network tests passed. If a phone also receives 401/503, review Netlify site access/protection and deploy availability, not Supabase HTML storage. Do not call this public-ready until independently verified.
+
 ## EzySouth → JobFlow → EzySouth acceptance test
 
 1. Sign into JobFlow using your **staging** account and create a fictional business/customer.
