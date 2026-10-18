@@ -38,7 +38,7 @@ Deno.serve(async req=>{
     .select('publish_status,netlify_site_id')
     .eq('website_id',id).maybeSingle();
   if(queryError)return page('Preview temporarily unavailable','Try again in a moment.',503);
-  if(!deployment||deployment.netlify_site_id!==STAGING_HOST)return page('Preview not found','This site has not been published.',404);
+  if(!deployment||deployment.netlify_site_id!==STAGING_HOST+':'+id)return page('Preview not found','This site has not been published.',404);
   if(deployment.publish_status==='unpublished')return page('Website temporarily offline','The original address is reserved. The owner may publish it again.');
   if(deployment.publish_status==='removed')return page('Website removed','This preview has been taken offline. Its address is reserved.');
   if(deployment.publish_status!=='live')return page('Website is updating','Try again in a moment.',503);
