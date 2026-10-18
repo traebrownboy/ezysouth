@@ -312,7 +312,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
  el('sign-up').addEventListener('click',()=>busy(async()=>{
   const email=el('auth-email').value.trim(),password=el('auth-password').value;
   if(!email||password.length<6)throw Error('Enter your email and a password of at least 6 characters.');
-  const {data,error}=await client.auth.signUp({email,password});if(error)throw error;
+  const {data,error}=await client.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});if(error)throw error;
   if(data.session){await checkUser();status('✓ Your account is ready. You can connect an EzySouth website whenever you wish.')}
   else status('Account created. Check your email for a confirmation link, then sign in.');
  }));
