@@ -19,7 +19,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .hero{padding:52px 0 24px;max-width:790px}h1{font-size:clamp(2rem,5vw,3.55rem);letter-spacing:-.055em;line-height:1.08;margin:16px 0}h2{font-size:1.65rem;letter-spacing:-.035em;margin:0}h3{font-size:1.12rem;margin:0}.muted{color:#5e756c}p{margin:8px 0}.hero p{font-size:1.11rem}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card,.panel{background:#fff;border:1px solid #dce8e1;border-radius:20px;box-shadow:0 7px 26px rgba(16,54,40,.04)}
 .card{padding:27px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}.card p{flex:1}.icon{width:52px;height:52px;display:grid;place-items:center;background:#e7f5ed;border-radius:14px;font-size:1.5rem}
-.button{border:0;padding:11px 18px;border-radius:10px;background:#168358;color:#fff;font-weight:750}.button:hover{background:#106d49}
+.button{display:inline-block;text-decoration:none;border:0;padding:11px 18px;border-radius:10px;background:#168358;color:#fff;font-weight:750}.button:hover{background:#106d49}
 .button.secondary{background:#e5f3ec;color:#14583e}.button.secondary:hover{background:#d0e8d9}
 .button.quiet{background:#fff;border:1px solid #cedfd5;color:#2b5b46}
 .chip{font-size:.76rem;font-weight:800;color:#4d705c;background:#e9f4ed;padding:5px 9px;border-radius:7px}
@@ -55,7 +55,7 @@ textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668
 <section class="section" id="view-home">
   <div class="hero"><span class="tag">Interactive tester · no live data</span><h1>Two products.<br>One better way to run a business.</h1><p class="muted">EzySouth Web builds your online presence. JobFlow helps you manage the work that follows. Use either, or connect both in a future release.</p></div>
   <div class="grid">
-    <article class="card"><span class="icon" aria-hidden="true">🌐</span><span class="chip">Product 01</span><h2>EzySouth Web</h2><p class="muted">A simple website builder for real local businesses, with live site publishing in the existing beta.</p><button class="button" type="button" data-open="web">Explore EzySouth Web →</button></article>
+    <article class="card"><span class="icon" aria-hidden="true">🌐</span><span class="chip">Product 01</span><h2>EzySouth Web</h2><p class="muted">A simple website builder for real local businesses, with live site publishing in the existing beta.</p><a class="button" href="https://ezysouth.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Explore EzySouth Web website builder (opens a new tab)">Explore EzySouth Web → ↗</a></article>
     <article class="card"><span class="icon" aria-hidden="true">🧰</span><span class="chip">Product 02</span><h2>JobFlow <small class="muted" style="font-size:.5em">by EzySouth</small></h2><p class="muted">Enquiries, customer jobs, quotes and communication. This version shows a standalone fictional-data demo.</p><button class="button" type="button" data-open="jobflow">Try JobFlow demo →</button></article>
   </div>
   <div class="bar"></div><h2>Better together, independent by design.</h2>
@@ -66,7 +66,8 @@ textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668
   <div class="subnav"><button class="button quiet" type="button" data-open="home">← Workspace</button><span class="tag">EzySouth Web · product preview</span></div>
   <div class="hero"><h1>Your business, online.</h1><p class="muted">EzySouth Web is our existing website-building product. Its beta continues independently of this prototype.</p></div>
   <div class="grid"><div class="panel"><h3>Build & design</h3><p class="muted">Edit business details, sections and visual styles.</p></div><div class="panel"><h3>Publish when ready</h3><p class="muted">Keep existing customer website publishing separate from this experiment.</p></div></div>
-  <div class="notice">This prototype does not publish, modify, connect to, or open any real customer website.</div>
+  <div class="notice">The tester itself does not publish websites or share customer data with JobFlow. The button below opens the existing live EzySouth Web beta in a new tab. Publishing from the real builder is still possible if you choose to do it there.</div>
+  <p><a class="button" href="https://ezysouth.netlify.app/" target="_blank" rel="noopener noreferrer">Open Website Builder → ↗</a></p>
   <button class="button secondary" type="button" data-open="jobflow">Try JobFlow instead →</button>
 </section>
 <section class="section" id="view-jobflow" hidden>
