@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>EzySouth | Two-product tester V2</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18332b;background:#f4f8f6;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #75bb9f;outline-offset:2px}
+.shell{max-width:1120px;margin:auto;padding:24px 20px 72px}
+.topbar{display:flex;align-items:center;gap:16px;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid #dce9e2;flex-wrap:wrap}
+.brand{font-size:1.35rem;font-weight:850;letter-spacing:-.035em}.brand span{color:#198661}.nav{display:flex;gap:5px;flex-wrap:wrap}
+.nav button,.nav a{border:0;background:transparent;color:#446359;padding:9px 15px;border-radius:10px;font-weight:650;text-decoration:none;display:inline-block}.nav a:hover,.nav button:hover{background:#e4eee9}
+.nav button.active{background:#dcede6;color:#11664a}
+.tag{font-size:.75rem;letter-spacing:.05em;font-weight:800;text-transform:uppercase;color:#08724f;background:#d6f1e4;border:1px solid #9ed9bd;display:inline-block;padding:7px 11px;border-radius:999px}
+.hero{padding:52px 0 24px;max-width:790px}h1{font-size:clamp(2rem,5vw,3.55rem);letter-spacing:-.055em;line-height:1.08;margin:16px 0}h2{font-size:1.65rem;letter-spacing:-.035em;margin:0}h3{font-size:1.12rem;margin:0}.muted{color:#5e756c}p{margin:8px 0}.hero p{font-size:1.11rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card,.panel{background:#fff;border:1px solid #dce8e1;border-radius:20px;box-shadow:0 7px 26px rgba(16,54,40,.04)}
+.card{padding:27px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}.card p{flex:1}.icon{width:52px;height:52px;display:grid;place-items:center;background:#e7f5ed;border-radius:14px;font-size:1.5rem}
+.button{display:inline-block;text-decoration:none;border:0;padding:11px 18px;border-radius:10px;background:#168358;color:#fff;font-weight:750}.button:hover{background:#106d49}
+.button.secondary{background:#e5f3ec;color:#14583e}.button.secondary:hover{background:#d0e8d9}
+.button.quiet{background:#fff;border:1px solid #cedfd5;color:#2b5b46}
+.chip{font-size:.76rem;font-weight:800;color:#4d705c;background:#e9f4ed;padding:5px 9px;border-radius:7px}
+.subnav{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0}
+.bar{height:1px;background:#dfebe3;margin:24px 0}.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:20px;border:1px dashed #9dbdab;border-radius:16px;background:#eff9f3}
+.pill{padding:8px 13px;border-radius:9px;background:#fff;font-weight:700;border:1px solid #dae9df;font-size:.89rem}
+.arrow{color:#218a60;font-weight:800}.feature{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:22px 0}.panel{padding:25px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
+.kpi{border:1px solid #dce8e1;border-radius:14px;background:#fff;padding:17px}.kpi strong{font-size:1.65rem;display:block}.kpi span{color:#547165;font-size:.87rem}
+.list-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.filter-set{display:flex;flex-wrap:wrap;gap:7px}
+.filter-set button{background:#fff;border:1px solid #cadbd1;color:#35684e;border-radius:9px;padding:7px 11px;font-size:.85rem;font-weight:700}
+.filter-set button.active{background:#176f4f;color:#fff}
+.job-list{display:grid;gap:11px}.job{background:#fff;border:1px solid #dae8df;border-radius:13px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.job small{color:#597569;display:block}.job .right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+label{font-size:.9rem;font-weight:700;display:block;margin:12px 0 5px}.field{width:100%;border:1px solid #bed4c6;background:#fff;border-radius:9px;padding:10px 12px;color:#19392a}
+textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668075}.notice{background:#fff8e6;border:1px solid #e9d7a9;border-radius:12px;padding:14px;color:#745b29;margin:24px 0}
+.status{color:#0d6c46;font-weight:700;min-height:23px}.section[hidden]{display:none!important}
+.footer{color:#688174;font-size:.83rem;border-top:1px solid #dbe8e0;margin-top:42px;padding-top:18px}
+@media(max-width:700px){.shell{padding:18px 14px 48px}.hero{padding-top:32px}.grid,.feature{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.card,.panel{padding:20px}.nav button{padding:8px 10px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand">Ezy<span>South</span> <small class="muted" style="font-size:.65em;font-weight:550">PRODUCT LAB</small></div>
+  <nav class="nav" aria-label="Product prototype navigation">
+    <button type="button" class="active" data-view="home" aria-current="page">Workspace</button>
+    <a href="https://ezysouth.netlify.app/" rel="noreferrer" aria-label="Open live EzySouth Web website builder">EzySouth Web ↗</a>
+    <button type="button" data-view="jobflow">JobFlow</button>
+  </nav>
+</header>
+<main>
+<section class="section" id="view-home">
+  <div class="hero"><span class="tag">Tester V2 · no live customer data</span><h1>Two products.<br>One better way to run a business.</h1><p class="muted">EzySouth Web builds your online presence. JobFlow helps you manage the work that follows. Use either, or connect both in a future release.</p></div>
+  <div class="grid">
+    <article class="card"><span class="icon" aria-hidden="true">🌐</span><span class="chip">Product 01</span><h2>EzySouth Web</h2><p class="muted">Open the real EzySouth Web website builder. This takes you to our existing public beta in the same browser tab.</p><a class="button" href="https://ezysouth.netlify.app/" rel="noreferrer" aria-label="Go to the real EzySouth Web website builder">Explore EzySouth Web →</a></article>
+    <article class="card"><span class="icon" aria-hidden="true">🧰</span><span class="chip">Product 02</span><h2>JobFlow <small class="muted" style="font-size:.5em">by EzySouth</small></h2><p class="muted">Enquiries, customer jobs, quotes and communication. Try a standalone fictional-data demo, without affecting the live builder.</p><button class="button" type="button" data-open="jobflow">Try JobFlow demo →</button></article>
+  </div>
+  <div class="bar"></div><h2>Better together, independent by design.</h2>
+  <div class="flow" aria-label="Planned connected flow"><span class="pill">Website enquiry</span><span class="arrow">→</span><span class="pill">JobFlow inbox</span><span class="arrow">→</span><span class="pill">Quote</span><span class="arrow">→</span><span class="pill">Completed job</span></div>
+  <p class="hint">Connection flow is a product plan, not an active integration in this prototype.</p>
+</section>
+<section class="section" id="view-jobflow" hidden>
+  <div class="subnav"><button class="button quiet" type="button" data-open="home">← Workspace</button><span class="tag">JobFlow · sample data only</span></div>
+  <div class="hero" style="padding-top:10px"><h1>Work organised. Customers happier.</h1><p class="muted">A first look at JobFlow as its own product, without creating an EzySouth website. Every entry on this screen is fictional. Your changes stay inside this browser page and disappear when you reload.</p></div>
+  <div class="kpis" aria-label="Demo enquiry totals">
+    <div class="kpi"><strong id="count-all">0</strong><span>All enquiries</span></div>
+    <div class="kpi"><strong id="count-new">0</strong><span>New</span></div>
+    <div class="kpi"><strong id="count-quoted">0</strong><span>Quote sent</span></div>
+    <div class="kpi"><strong id="count-completed">0</strong><span>Completed</span></div>
+  </div>
+  <div class="feature">
+    <section class="panel" aria-labelledby="enquiries-title">
+      <div class="list-controls"><h2 id="enquiries-title">Enquiries</h2><button class="button quiet" type="button" id="reset-demo">Reset demo</button></div>
+      <div class="filter-set" role="group" aria-label="Filter demo enquiries">
+        <button type="button" data-filter="All" class="active" aria-pressed="true">All</button>
+        <button type="button" data-filter="New" aria-pressed="false">New</button>
+        <button type="button" data-filter="Quote needed" aria-pressed="false">Quote needed</button>
+        <button type="button" data-filter="Quote sent" aria-pressed="false">Quote sent</button>
+        <button type="button" data-filter="Completed" aria-pressed="false">Completed</button>
+      </div>
+      <div id="job-list" class="job-list" aria-live="polite" style="margin-top:18px"></div>
+    </section>
+    <aside class="panel" aria-labelledby="new-title">
+      <h2 id="new-title">Add a sample enquiry</h2><p class="muted">Create a fake enquiry and move it through the workflow. Do not enter real customer details.</p>
+      <form id="demo-form">
+        <label for="customer">Fictional customer name</label><input id="customer" class="field" type="text" maxlength="80" required placeholder="e.g. Taylor Example" autocomplete="off">
+        <label for="service">Job / service</label><input id="service" class="field" type="text" maxlength="120" required placeholder="e.g. Repair a fence" autocomplete="off">
+        <label for="note">Notes (optional)</label><textarea id="note" class="field" maxlength="400" placeholder="Demo details only"></textarea>
+        <p class="hint">No email or SMS sending. No database connection. No real quote acceptance.</p>
+        <button class="button" type="submit">Add sample enquiry</button>
+      </form>
+      <p class="status" id="demo-message" role="status"></p>
+    </aside>
+  </div>
+  <div class="notice"><strong>Not a production product.</strong> This is a browser-only usability prototype. Do not enter real customer details. Sign-in, business accounts, secure storage, external enquiries, quotes, SMS and email are not yet connected here.</div>
+</section>
+</main>
+<footer class="footer">EzySouth Product Lab V2 · Website Builder link opens the live beta · JobFlow uses fictional data only · Existing sites unaffected</footer>
+</div>
+<script>
+(function(){
+'use strict';
+var statuses=['New','Quote needed','Quote sent','Won','Completed','Lost'];
+var seed=[
+  {id:1001,customer:'Mia Example',service:'Garden tidy-up',note:'Sample request from a fictional customer.',status:'New'},
+  {id:1002,customer:'James Example',service:'Deck repairs',note:'Sample job needing a quote.',status:'Quote needed'},
+  {id:1003,customer:'Aroha Example',service:'Driveway cleaning',note:'Sample quoted work.',status:'Quote sent'},
+  {id:1004,customer:'Sam Example',service:'Fence painting',note:'Sample finished job.',status:'Completed'}
+];
+var jobs=seed.map(function(j){return Object.assign({},j)});
+var currentFilter='All',nextId=1005;
+function byId(id){return document.getElementById(id)}
+function show(name){
+  if(['home','jobflow'].indexOf(name)<0)return;
+  document.querySelectorAll('.section').forEach(function(s){s.hidden=s.id!=='view-'+name});
+  document.querySelectorAll('button[data-view]').forEach(function(b){
+    var active=b.dataset.view===name;b.classList.toggle('active',active);
+    if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+  });
+  if(name==='jobflow')render();
+  window.scrollTo(0,0);
+}
+function count(status){return jobs.filter(function(j){return j.status===status}).length}
+function render(){
+  byId('count-all').textContent=jobs.length;
+  byId('count-new').textContent=count('New');
+  byId('count-quoted').textContent=count('Quote sent');
+  byId('count-completed').textContent=count('Completed');
+  document.querySelectorAll('button[data-filter]').forEach(function(b){
+    var yes=b.dataset.filter===currentFilter;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes));
+  });
+  var list=byId('job-list');list.replaceChildren();
+  var shown=jobs.filter(function(j){return currentFilter==='All'||j.status===currentFilter});
+  if(!shown.length){var empty=document.createElement('p');empty.className='muted';empty.textContent='No demo enquiries in this category.';list.append(empty);return}
+  shown.forEach(function(j){
+    var row=document.createElement('article');row.className='job';
+    var detail=document.createElement('div'),title=document.createElement('strong'),sub=document.createElement('small');
+    title.textContent=j.customer+' · '+j.service;sub.textContent='#JF-'+j.id+(j.note?' · '+j.note:'');
+    detail.append(title,sub);
+    var tools=document.createElement('div');tools.className='right';
+    var sel=document.createElement('select');sel.className='field';sel.style.width='auto';sel.setAttribute('aria-label','Status for '+j.customer);
+    statuses.forEach(function(s){var opt=document.createElement('option');opt.value=s;opt.textContent=s;sel.append(opt)});
+    sel.value=j.status;sel.addEventListener('change',function(){j.status=sel.value;render()});
+    tools.append(sel);row.append(detail,tools);list.append(row);
+  });
+}
+document.querySelectorAll('[data-open],[data-view]').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.open||b.dataset.view)})});
+document.querySelectorAll('[data-filter]').forEach(function(b){b.addEventListener('click',function(){currentFilter=b.dataset.filter;render()})});
+byId('demo-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var customer=byId('customer').value.trim(),service=byId('service').value.trim(),note=byId('note').value.trim();
+  if(!customer||!service)return;
+  jobs.unshift({id:nextId++,customer:customer,service:service,note:note,status:'New'});
+  currentFilter='All';render();this.reset();byId('demo-message').textContent='Sample enquiry added. Nothing was sent or saved.';
+});
+byId('reset-demo').addEventListener('click',function(){
+  jobs=seed.map(function(j){return Object.assign({},j)});nextId=1005;currentFilter='All';
+  byId('demo-message').textContent='Demo reset to fictional examples.';render();
+});
+render();
+})();
+</script>
+</body>
+</html>
