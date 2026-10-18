@@ -675,16 +675,14 @@ render();renderLeads();renderChat();
    }
  }
  async function refreshPublishState(){
-   if(!user||!cloudId){renderPublishState('draft',{message:'Save or open a cloud project to check publishing status.'});return;}
-   const {data:session,error:sessionError}=await client.auth.getSession();
-   if(sessionError||!session?.session?.access_token)return;
-   const response=await fetch(url+'/functions/v1/publish-website?website_id='+encodeURIComponent(cloudId),{
-     method:'GET',
-     headers:{'Authorization':'Bearer '+session.session.access_token,'apikey':publishable}
-   });
-   const result=await response.json().catch(()=>({}));
-   if(!response.ok)return;
-   renderPublishState(result.status||'draft',result);
+   // In staging there is intentionally no publish-website function. Calling it
+   // causes an HTTP 404 on CORS preflight, making successful cloud saves appear
+   // to fail and preventing JobFlow enquiries from being enabled.
+   if(!user||!cloudId){
+     renderPublishState('draft',{message:'Sign in and save a test cloud website to use JobFlow.'});
+     return;
+   }
+   renderPublishState('draft',{message:'Staging preview only. Publishing is disabled; cloud saves and JobFlow enquiries are available.'});
  }
  async function publishEzySouth(){el('ezysouth-oneclick-status').textContent='Publishing disabled in staging. Preview and local export only.';return;
    const btn=el('ezysouth-oneclick'),status=el('ezysouth-oneclick-status');
