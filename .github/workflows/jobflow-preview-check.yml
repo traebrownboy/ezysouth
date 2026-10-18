@@ -7,6 +7,7 @@ on:
       - 'netlify-preview/**'
       - 'database/**'
       - 'scripts/jobflow-preview-smoke.js'
+      - 'scripts/jobflow-auth-flow-test.js'
       - '.github/workflows/jobflow-preview-check.yml'
       - 'netlify.toml'
   pull_request:
@@ -15,6 +16,7 @@ on:
       - 'netlify-preview/**'
       - 'database/**'
       - 'scripts/jobflow-preview-smoke.js'
+      - 'scripts/jobflow-auth-flow-test.js'
       - '.github/workflows/jobflow-preview-check.yml'
   workflow_dispatch:
 
@@ -32,3 +34,5 @@ jobs:
           node-version: 22
       - name: Check inline scripts and preview routes
         run: node scripts/jobflow-preview-smoke.js
+      - name: Simulate unified login, session reuse and password recovery
+        run: node scripts/jobflow-auth-flow-test.js
