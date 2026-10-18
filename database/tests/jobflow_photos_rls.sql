@@ -54,9 +54,11 @@ BEGIN
  END;
  IF NOT denied THEN RAISE EXCEPTION 'FAIL: account A uploaded under account B folder'; END IF;
 
- DELETE FROM storage.objects WHERE id='f8888888-8888-4888-8888-888888888888';
- GET DIAGNOSTICS affected=ROW_COUNT;
- IF affected<>0 THEN RAISE EXCEPTION 'FAIL: account A deleted account B photo'; END IF;
+ -- Storage blocks direct SQL deletes even for valid owners; deletion must be
+ -- exercised through the Storage API in browser acceptance tests.
+ IF (SELECT count(*) FROM storage.objects WHERE bucket_id='jobflow-portfolio' AND name LIKE 'f2222222%')<>0 THEN
+   RAISE EXCEPTION 'FAIL: account A can see account B photo metadata';
+ END IF;
 
  INSERT INTO public.jobflow_showcases(website_id,enquiry_id,title,summary,image_paths) VALUES
  ('f3333333-3333-4333-8333-333333333333','f5555555-5555-4555-8555-555555555555',
@@ -74,5 +76,5 @@ BEGIN
  IF NOT denied THEN RAISE EXCEPTION 'FAIL: limit of four images per completed job not enforced'; END IF;
 END $checks$;
 RESET ROLE;
-SELECT 'PASS: storage upload tenant ownership, cross-tenant read/delete, approved photo paths and four-photo limit' AS photos_security_result;
+SELECT 'PASS: storage upload tenant ownership, cross-tenant metadata isolation, approved photo paths and four-photo limit' AS photos_security_result;
 ROLLBACK;
