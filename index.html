@@ -710,6 +710,9 @@ render();renderLeads();renderChat();
      const {data:site,error:siteError}=await client.from('websites').select('accepting_enquiries').eq('id',cloudId).single();
      if(siteError)throw siteError;
      window.ezyLiveSiteId=site.accepting_enquiries?cloudId:null;
+     // Always reload approved completed work before publishing, even when the cloud
+     // project was restored without opening it. Never silently omit featured work.
+     await loadShowcases(cloudId);
      const html=exportSite();
      status.textContent='Sending website to secure EzySouth publishing service…';renderPublishState('publishing',{message:'Sending your website to EzySouth hosting…'});
      const {data:session,error:sessionError}=await client.auth.getSession();
