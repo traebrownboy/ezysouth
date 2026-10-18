@@ -9,7 +9,7 @@ alter policy jobflow_showcases_insert_completed on public.jobflow_showcases
      select 1 from unnest(image_paths) as photo(path)
      where photo.path !~ (
        '^' || (select auth.uid())::text || '/' || website_id::text ||
-       '/[a-f0-9-]{36}\\.jpg$'
+       '/[a-f0-9-]{36}[.]jpg$'
      )
    )
  );
@@ -22,7 +22,7 @@ alter policy jobflow_showcases_update_completed on public.jobflow_showcases
      select 1 from unnest(image_paths) as photo(path)
      where photo.path !~ (
        '^' || (select auth.uid())::text || '/' || website_id::text ||
-       '/[a-f0-9-]{36}\\.jpg$'
+       '/[a-f0-9-]{36}[.]jpg$'
      )
    )
  );
