@@ -7,20 +7,16 @@ const PROJECT = 'https://anldjuaqlpowwodlphqf.supabase.co';
 const BUCKET = 'ezysouth-staging-published';
 const STAGING_HOST = 'staging-edge-hosted';
 const MAX_HTML = 5 * 1024 * 1024;
+// Bearer-token owner checks, not CORS, protect publishing. No browser cookies
+// are accepted as authentication, and responses never allow credentials.
+// Allow the preflight from real Netlify deploy aliases and iPhone webviews.
 const baseCors = {
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'OPTIONS, GET, POST',
   'Access-Control-Allow-Headers': 'authorization, apikey, content-type, x-client-info',
   'Access-Control-Max-Age': '600',
-  'Vary': 'Origin',
+  'Cache-Control': 'no-store',
 };
-function validOrigin(raw: string | null) {
-  if (!raw) return null;
-  try {
-    const origin = new URL(raw);
-    if (origin.protocol !== 'https:' || origin.origin !== raw) return null;
-    return /^(?:ezysouth-jobflow-test|deploy-preview-[0-9]+--ezysouth-jobflow-test)\.netlify\.app$/.test(origin.hostname) ? raw : null;
-  } catch { return null; }
-}
 function secrets(): string | undefined {
   const direct = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   if (direct) return direct;
@@ -35,13 +31,12 @@ const filePath = (id: string) => id + '/index.html';
 const slugify = (name: string) => name.normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-+$/g,'').slice(0,48) || 'demo-site';
 
 Deno.serve(async req => {
-  const requestOrigin = req.headers.get('origin');
-  const accepted = validOrigin(requestOrigin);
-  const cors = {...baseCors,...(accepted ? {'Access-Control-Allow-Origin':accepted} : {})};
+  const cors = baseCors;
   const respond = (body: Record<string,unknown>,status=200) => new Response(JSON.stringify(body),{
     status,headers:{...cors,'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}
   });
-  if (requestOrigin&&!accepted) return respond({error:'Only the isolated EzySouth test site can publish.'},403);
+  // Handle CORS preflight before user authentication. POST/GET still require
+  // valid Supabase access tokens and server-verified website ownership.
   if(req.method==='OPTIONS') return new Response(null,{status:204,headers:cors});
   if(req.method!=='GET'&&req.method!=='POST') return respond({error:'Method not allowed'},405);
   if(Deno.env.get('SUPABASE_URL')!==PROJECT) return respond({error:'Test publisher is not configured for this project.'},503);
@@ -64,7 +59,7 @@ Deno.serve(async req => {
       .select('website_id,owner_id,netlify_site_id,site_slug,public_url,publish_status,last_published_at,last_error')
       .eq('website_id',id).maybeSingle();
     if(statusErr)return respond({error:'Website publishing status unavailable.'},503);
-    if(deployed&&(deployed.owner_id!==identity.user.id || deployed.netlify_site_id!==STAGING_HOST))
+    if(deployed&&(deployed.owner_id!==identity.user.id || deployed.netlify_site_id!==STAGING_HOST+':'+id))
       return respond({error:'This website uses a different hosting service and cannot be changed from staging.'},409);
 
     const url=publicUrl(id);
@@ -110,7 +105,7 @@ Deno.serve(async req => {
     });
     if(storeErr){console.error('Staging published HTML storage:',storeErr.message);return respond({error:'Could not store website. Nothing was published.'},503);}
     const values={
-      website_id:id,owner_id:identity.user.id,netlify_site_id:STAGING_HOST,
+      website_id:id,owner_id:identity.user.id,netlify_site_id:STAGING_HOST+':'+id,
       site_slug:deployed?.site_slug||slugify(site.name||'website'),public_url:url,
       publish_status:'live',deploy_id:crypto.randomUUID(),last_published_at:now,last_error:null,updated_at:now
     };
