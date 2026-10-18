@@ -22,7 +22,7 @@ function fakeBrowser(page,url,shared){
    addEventListener(type,fn){this.handlers[type]=fn},
    setAttribute(k,x){this.attributes[k]=String(x)},
    getAttribute(k){return this.attributes[k]||null},
-   checkValidity(){return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(this.value)},
+   checkValidity(){return this.value.includes('@')&&this.value.split('@')[1]?.includes('.')},
    focus(){}};
   nodes.set(id,v);return v;
  };
