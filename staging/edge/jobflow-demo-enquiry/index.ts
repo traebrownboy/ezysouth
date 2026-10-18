@@ -3,15 +3,24 @@
 // Requires signed-in staging user JWT and verifies website ownership server-side.
 import { createClient } from "npm:@supabase/supabase-js@2.95.0";
 
-const origin = "https://anldjuaqlpowwodlphqf.supabase.co";
-const cors = {
- "Access-Control-Allow-Origin": origin,
+const stagingOrigin = "https://anldjuaqlpowwodlphqf.supabase.co";
+const corsBase = {
  "Access-Control-Allow-Methods": "POST, OPTIONS",
  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
  "Vary":"Origin"
 };
-function reply(payload: object, status=200) {
- return new Response(JSON.stringify(payload), {status,headers:{...cors,"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}});
+// Permit first-party staging and Netlify's HTTPS test domains.
+// The browser still MUST supply a real user JWT; the server validates
+// Supabase Auth and checks website ownership before any insert.
+function allowedOrigin(origin: string | null): string | null {
+ if (!origin) return null;
+ try {
+  const url = new URL(origin);
+  if (url.origin !== origin || url.protocol !== "https:") return null;
+  if (origin === stagingOrigin) return origin;
+  if (/^[a-z0-9][a-z0-9-]*\.netlify\.app$/.test(url.hostname)) return origin;
+ } catch { /* invalid URL */ }
+ return null;
 }
 function secretKey():string|undefined {
  const direct=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -27,16 +36,22 @@ function uuid(input:unknown):input is string {
  return typeof input==="string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(input);
 }
 Deno.serve(async request=>{
+ const callerOrigin=request.headers.get("Origin");
+ const acceptedOrigin=allowedOrigin(callerOrigin);
+ const cors={...corsBase,...(acceptedOrigin?{"Access-Control-Allow-Origin":acceptedOrigin}:{})};
+ const reply=(payload:object,status=200)=>new Response(JSON.stringify(payload),{
+   status,headers:{...cors,"Content-Type":"application/json; charset=utf-8",
+   "Cache-Control":"no-store","X-Content-Type-Options":"nosniff"}
+ });
+ if(callerOrigin&&!acceptedOrigin)return reply({error:"Only a valid staging origin may trigger a demo enquiry."},403);
  if(request.method==="OPTIONS")return new Response("ok",{status:200,headers:cors});
  if(request.method!=="POST")return reply({error:"Method not allowed"},405);
- const callerOrigin=request.headers.get("Origin");
- if(callerOrigin && callerOrigin!==origin)return reply({error:"Only the staging app can trigger a demo enquiry."},403);
  if(Number(request.headers.get("content-length")||"0")>2000)return reply({error:"Request too large"},413);
  const token=(request.headers.get("Authorization")||"").replace(/^Bearer\s+/i,"").trim();
  if(!token)return reply({error:"Sign into staging JobFlow first."},401);
  const serviceKey=secretKey();
  const projectUrl=Deno.env.get("SUPABASE_URL");
- if(!serviceKey||projectUrl!==origin)return reply({error:"Staging test service not configured"},503);
+ if(!serviceKey||projectUrl!==stagingOrigin)return reply({error:"Staging test service not configured"},503);
  const db=createClient(projectUrl,serviceKey,{auth:{persistSession:false,autoRefreshToken:false}});
  try {
   // Validate the JWT through Supabase Auth, not by trusting a client-supplied owner ID.
