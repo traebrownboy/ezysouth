@@ -11,3 +11,7 @@ This uses the third-party raw.githack development proxy, not Netlify hosting or 
 4. Return to **Workspace** and open **EzySouth Web**.
 
 No real customer websites or production databases are connected. If the third-party preview service is unavailable, use the original standalone HTML in a local browser. The long-term tester should use an isolated first-party hosting project.
+
+## EzySouth Web external link
+
+The Explore EzySouth Web and Open Website Builder links open https://ezysouth.netlify.app/ in a new tab. This is navigation only: no product integration or cross-product data syncing. Publishing is possible only by using the live builder deliberately.
