@@ -9,6 +9,8 @@ on:
       - 'scripts/jobflow-preview-smoke.js'
       - 'scripts/jobflow-auth-flow-test.js'
       - 'scripts/jobflow-preset-consistency-test.js'
+      - 'scripts/jobflow-publish-network-check.js'
+      - 'staging/functions/**'
       - '.github/workflows/jobflow-preview-check.yml'
       - 'netlify.toml'
   pull_request:
@@ -19,6 +21,8 @@ on:
       - 'scripts/jobflow-preview-smoke.js'
       - 'scripts/jobflow-auth-flow-test.js'
       - 'scripts/jobflow-preset-consistency-test.js'
+      - 'scripts/jobflow-publish-network-check.js'
+      - 'staging/functions/**'
       - '.github/workflows/jobflow-preview-check.yml'
   workflow_dispatch:
 
@@ -40,3 +44,5 @@ jobs:
         run: node scripts/jobflow-auth-flow-test.js
       - name: Check Coastal Clean preset consistency and export parity
         run: node scripts/jobflow-preset-consistency-test.js
+      - name: Check live staging publishing CORS and owner auth boundaries
+        run: node scripts/jobflow-publish-network-check.js
