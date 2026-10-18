@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
-<title>EzySouth | Two-product hub prototype (offline demo)</title>
+<title>EzySouth | Two-product tester V2</title>
 <style>
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18332b;background:#f4f8f6;font-synthesis:none}
 *{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -13,7 +13,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .shell{max-width:1120px;margin:auto;padding:24px 20px 72px}
 .topbar{display:flex;align-items:center;gap:16px;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid #dce9e2;flex-wrap:wrap}
 .brand{font-size:1.35rem;font-weight:850;letter-spacing:-.035em}.brand span{color:#198661}.nav{display:flex;gap:5px;flex-wrap:wrap}
-.nav button{border:0;background:transparent;color:#446359;padding:9px 15px;border-radius:10px;font-weight:650}
+.nav button,.nav a{border:0;background:transparent;color:#446359;padding:9px 15px;border-radius:10px;font-weight:650;text-decoration:none;display:inline-block}.nav a:hover,.nav button:hover{background:#e4eee9}
 .nav button.active{background:#dcede6;color:#11664a}
 .tag{font-size:.75rem;letter-spacing:.05em;font-weight:800;text-transform:uppercase;color:#08724f;background:#d6f1e4;border:1px solid #9ed9bd;display:inline-block;padding:7px 11px;border-radius:999px}
 .hero{padding:52px 0 24px;max-width:790px}h1{font-size:clamp(2rem,5vw,3.55rem);letter-spacing:-.055em;line-height:1.08;margin:16px 0}h2{font-size:1.65rem;letter-spacing:-.035em;margin:0}h3{font-size:1.12rem;margin:0}.muted{color:#5e756c}p{margin:8px 0}.hero p{font-size:1.11rem}
@@ -47,28 +47,20 @@ textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668
   <div class="brand">Ezy<span>South</span> <small class="muted" style="font-size:.65em;font-weight:550">PRODUCT LAB</small></div>
   <nav class="nav" aria-label="Product prototype navigation">
     <button type="button" class="active" data-view="home" aria-current="page">Workspace</button>
-    <button type="button" data-view="web">EzySouth Web</button>
+    <a href="https://ezysouth.netlify.app/" rel="noreferrer" aria-label="Open live EzySouth Web website builder">EzySouth Web ↗</a>
     <button type="button" data-view="jobflow">JobFlow</button>
   </nav>
 </header>
 <main>
 <section class="section" id="view-home">
-  <div class="hero"><span class="tag">Interactive tester · no live data</span><h1>Two products.<br>One better way to run a business.</h1><p class="muted">EzySouth Web builds your online presence. JobFlow helps you manage the work that follows. Use either, or connect both in a future release.</p></div>
+  <div class="hero"><span class="tag">Tester V2 · no live customer data</span><h1>Two products.<br>One better way to run a business.</h1><p class="muted">EzySouth Web builds your online presence. JobFlow helps you manage the work that follows. Use either, or connect both in a future release.</p></div>
   <div class="grid">
-    <article class="card"><span class="icon" aria-hidden="true">🌐</span><span class="chip">Product 01</span><h2>EzySouth Web</h2><p class="muted">A simple website builder for real local businesses, with live site publishing in the existing beta.</p><a class="button" href="https://ezysouth.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Explore EzySouth Web website builder (opens a new tab)">Explore EzySouth Web → ↗</a></article>
-    <article class="card"><span class="icon" aria-hidden="true">🧰</span><span class="chip">Product 02</span><h2>JobFlow <small class="muted" style="font-size:.5em">by EzySouth</small></h2><p class="muted">Enquiries, customer jobs, quotes and communication. This version shows a standalone fictional-data demo.</p><button class="button" type="button" data-open="jobflow">Try JobFlow demo →</button></article>
+    <article class="card"><span class="icon" aria-hidden="true">🌐</span><span class="chip">Product 01</span><h2>EzySouth Web</h2><p class="muted">Open the real EzySouth Web website builder. This takes you to our existing public beta in the same browser tab.</p><a class="button" href="https://ezysouth.netlify.app/" rel="noreferrer" aria-label="Go to the real EzySouth Web website builder">Explore EzySouth Web →</a></article>
+    <article class="card"><span class="icon" aria-hidden="true">🧰</span><span class="chip">Product 02</span><h2>JobFlow <small class="muted" style="font-size:.5em">by EzySouth</small></h2><p class="muted">Enquiries, customer jobs, quotes and communication. Try a standalone fictional-data demo, without affecting the live builder.</p><button class="button" type="button" data-open="jobflow">Try JobFlow demo →</button></article>
   </div>
   <div class="bar"></div><h2>Better together, independent by design.</h2>
   <div class="flow" aria-label="Planned connected flow"><span class="pill">Website enquiry</span><span class="arrow">→</span><span class="pill">JobFlow inbox</span><span class="arrow">→</span><span class="pill">Quote</span><span class="arrow">→</span><span class="pill">Completed job</span></div>
   <p class="hint">Connection flow is a product plan, not an active integration in this prototype.</p>
-</section>
-<section class="section" id="view-web" hidden>
-  <div class="subnav"><button class="button quiet" type="button" data-open="home">← Workspace</button><span class="tag">EzySouth Web · product preview</span></div>
-  <div class="hero"><h1>Your business, online.</h1><p class="muted">EzySouth Web is our existing website-building product. Its beta continues independently of this prototype.</p></div>
-  <div class="grid"><div class="panel"><h3>Build & design</h3><p class="muted">Edit business details, sections and visual styles.</p></div><div class="panel"><h3>Publish when ready</h3><p class="muted">Keep existing customer website publishing separate from this experiment.</p></div></div>
-  <div class="notice">The tester itself does not publish websites or share customer data with JobFlow. The button below opens the existing live EzySouth Web beta in a new tab. Publishing from the real builder is still possible if you choose to do it there.</div>
-  <p><a class="button" href="https://ezysouth.netlify.app/" target="_blank" rel="noopener noreferrer">Open Website Builder → ↗</a></p>
-  <button class="button secondary" type="button" data-open="jobflow">Try JobFlow instead →</button>
 </section>
 <section class="section" id="view-jobflow" hidden>
   <div class="subnav"><button class="button quiet" type="button" data-open="home">← Workspace</button><span class="tag">JobFlow · sample data only</span></div>
@@ -106,7 +98,7 @@ textarea.field{min-height:90px;resize:vertical}.hint{font-size:.87rem;color:#668
   <div class="notice"><strong>Not a production product.</strong> This is a browser-only usability prototype. Do not enter real customer details. Sign-in, business accounts, secure storage, external enquiries, quotes, SMS and email are not yet connected here.</div>
 </section>
 </main>
-<footer class="footer">EzySouth Product Lab · Public demonstration using fictional records only · Reloading discards changes · Existing live sites are unaffected</footer>
+<footer class="footer">EzySouth Product Lab V2 · Website Builder link opens the live beta · JobFlow uses fictional data only · Existing sites unaffected</footer>
 </div>
 <script>
 (function(){
@@ -122,7 +114,7 @@ var jobs=seed.map(function(j){return Object.assign({},j)});
 var currentFilter='All',nextId=1005;
 function byId(id){return document.getElementById(id)}
 function show(name){
-  if(['home','web','jobflow'].indexOf(name)<0)return;
+  if(['home','jobflow'].indexOf(name)<0)return;
   document.querySelectorAll('.section').forEach(function(s){s.hidden=s.id!=='view-'+name});
   document.querySelectorAll('button[data-view]').forEach(function(b){
     var active=b.dataset.view===name;b.classList.toggle('active',active);
