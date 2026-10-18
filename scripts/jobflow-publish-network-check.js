@@ -90,7 +90,7 @@ async function test(label,fn){await fn();console.log('PASS '+label);count++}
   const result=await r.json();
   if(r.status===200){
     assert.equal(result.status,'live');
-    assert.ok(/^\\s*<!doctype html>/i.test(result.html),'Raw payload must contain full HTML');
+    assert.ok(/^\s*<!doctype html>/i.test(result.html),'Raw payload must contain full HTML');
   }else assert.ok(['unpublished','removed','draft'].includes(result.status));
  });
  console.log('\n'+count+' non-destructive network checks passed');
