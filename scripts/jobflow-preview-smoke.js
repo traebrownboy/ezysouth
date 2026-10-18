@@ -9,12 +9,23 @@ const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const files={
   home:read('netlify-preview/index.html'),
+  login:read('netlify-preview/login.html'),
   web:read('netlify-preview/web.html'),
   job:read('netlify-preview/jobflow.html')
 };
 const tests=[];
 function check(name,run){try{run();tests.push({name,ok:true});console.log('PASS '+name)}catch(e){tests.push({name,ok:false});console.error('FAIL '+name+': '+e.message)}}
 const contains=(doc,fragment)=>assert.ok(doc.includes(fragment),'Expected '+JSON.stringify(fragment));
+check('one-account login routes are on the homepage',()=>{
+ contains(files.home,'href="./login.html"');
+ contains(files.home,'href="./login.html?mode=register"');
+ contains(files.home,'home-signed-in');
+ contains(files.home,'home-signed-out');
+ contains(files.home,'home-sign-out');
+ contains(files.login,'href="./index.html"');
+ contains(files.login,'href="./web.html"');
+ contains(files.login,'href="./jobflow.html"');
+});
 check('home has both named products',()=>{
  contains(files.home,'EzySouth Web');
  contains(files.home,'JobFlow');
@@ -36,6 +47,24 @@ check('staging app isolation (no production Supabase project)',()=>{
   assert.ok(!html.includes('sb_secret_'),'Secret key must not be in browser');
   contains(html,'STAGING');
  }
+});
+check('single staging Supabase login supports sign-in, registration and recovery',()=>{
+ const pages=[files.home,files.login,files.web,files.job];
+ for(const html of pages){
+  contains(html,'https://anldjuaqlpowwodlphqf.supabase.co');
+  assert.ok(!html.includes('ezcmfbaoivdwkgayznbt'),'Production project leaked');
+  assert.ok(!html.includes('sb_secret_'),'Private key leaked');
+ }
+ contains(files.login,'signInWithPassword');
+ contains(files.login,'signUp');
+ contains(files.login,'resetPasswordForEmail');
+ contains(files.login,'updateUser');
+ contains(files.login,'signOut');
+ contains(files.login,'detectSessionInUrl:true');
+ contains(files.login,'persistSession:true');
+ contains(files.login,'Object.prototype.hasOwnProperty.call(targets,nextKey)');
+ contains(files.login,'id="auth-title"');
+ assert.ok(!files.login.includes('service_role'),'Privileged key reference');
 });
 check('working features preserved',()=>{
  contains(files.web,'Save current website to cloud');
@@ -74,7 +103,7 @@ check('security migrations are present',()=>{
 });
 check('HTML links point to actual preview files',()=>{
  for(const [key,html] of Object.entries(files)){
-  for(const [,file] of html.matchAll(/href="\.\/(index\.html|web\.html|jobflow\.html)"/g)){
+  for(const [,file] of html.matchAll(/href="\.\/(index\.html|web\.html|jobflow\.html|login\.html)(?:\?[^\"]*)?"/g)){
    assert.ok(fs.existsSync(path.join(root,'netlify-preview',file)),key+': missing '+file);
   }
  }
@@ -86,7 +115,7 @@ check('all inline application scripts compile as JavaScript',()=>{
    if(!contents.trim())continue;
    new vm.Script(contents,{filename:page+'-inline-'+(++i)+'.js'});
   }
-  if(page!=='home')assert.ok(i>=1,page+' missing app JS');
+  assert.ok(i>=1,page+' missing app JS');
  }
 });
 const failures=tests.filter(t=>!t.ok);
