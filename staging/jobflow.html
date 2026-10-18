@@ -50,7 +50,9 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
      <label for="website-filter">Website <select id="website-filter"><option value="all">All my websites</option></select></label>
      <label for="status-filter">Status <select id="status-filter"><option value="all">All statuses</option><option>New</option><option>Quote needed</option><option>Quote sent</option><option>Won</option><option>Completed</option><option>Lost</option></select></label>
     </div>
-    <p class="muted micro">Only you can see customer names, contact details and the original messages. This inbox requires a secure login.</p>
+    <div class="notice warn"><strong>STAGING TEST ONLY:</strong> After creating a fake website in the EzySouth Web staging builder and enabling JobFlow, press below to generate a new fictional customer enquiry in your private staging database. Nothing will be sent to production.</div>
+    <div class="controls"><button class="btn secondary" type="button" id="demo-enquiry">＋ Simulate incoming website enquiry</button></div>
+    <p class="muted micro">Only the signed-in owner can generate a test enquiry for their website. The service creates fake names, fake contact information and a fictional message. Other businesses cannot access your staging data.</p>
     <div id="enquiry-list"></div>
   </section>
   <section class="panel">
@@ -318,6 +320,30 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
  }));
  el('sign-out').addEventListener('click',()=>busy(async()=>{const {error}=await client.auth.signOut();if(error)throw error;await checkUser()}));
  el('refresh').addEventListener('click',()=>busy(load));
+ el('demo-enquiry').addEventListener('click',()=>busy(async()=>{
+   if(!user)throw Error('Sign in to staging JobFlow first.');
+   let websiteId=el('website-filter').value;
+   if(websiteId==='all'){
+     if(sites.length===1)websiteId=sites[0].id;
+     else throw Error('Choose a specific fictional website in the Website filter first.');
+   }
+   const website=sites.find(s=>s.id===websiteId);
+   if(!website)throw Error('Create a fake website in EzySouth Web staging first.');
+   if(!website.accepting_enquiries)throw Error('Enable JobFlow enquiries for that fake website in the EzySouth Web staging Launch tab first.');
+   const {data,error}=await client.auth.getSession();
+   const token=data?.session?.access_token;
+   if(error||!token)throw Error('Your test login expired. Sign in again.');
+   const response=await fetch(PROJECT_URL+'/functions/v1/jobflow-demo-enquiry',{
+     method:'POST',
+     headers:{'Content-Type':'application/json','Authorization':'Bearer '+token,'apikey':PUBLIC_KEY},
+     body:JSON.stringify({website_id:websiteId})
+   });
+   const result=await response.json().catch(()=>({}));
+   if(!response.ok)throw Error(result.error||('Demo enquiry request failed (HTTP '+response.status+').'));
+   el('status-filter').value='all';
+   await load();
+   status('✓ '+(result.message||'New fictional website enquiry received.'));
+ }));
  el('website-filter').addEventListener('change',render);
  el('status-filter').addEventListener('change',render);
  client.auth.onAuthStateChange(()=>{setTimeout(()=>checkUser().catch(e=>status('Account error: '+e.message)),0)});
