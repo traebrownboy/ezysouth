@@ -1,51 +1,59 @@
-# EzySouth + JobFlow: separate Netlify test website
+# EzySouth + JobFlow: private beta staging guide
 
-**Status:** GitHub branch `jobflow-netlify-test` is deployment-ready; Netlify site must still be imported/created in your Netlify account. Do not claim the Netlify site exists until it has its own real URL and a successful deploy.
+**Staging address:** https://ezysouth-jobflow-test.netlify.app/
 
-## iPhone setup (do this in the existing Netlify account)
+- **Home / product selector:** https://ezysouth-jobflow-test.netlify.app/
+- **EzySouth Web Builder:** https://ezysouth-jobflow-test.netlify.app/web.html
+- **JobFlow:** https://ezysouth-jobflow-test.netlify.app/jobflow.html
 
-1. Open **https://app.netlify.com/** in Safari. Stay signed in to the Netlify account that hosts the working EzySouth site.
-2. From **Projects**, select **Add new project** → **Import an existing project** → **GitHub**.
-3. Choose the EXISTING repository **`traebrownboy/ezysouth`**. You can use the same repository for two Netlify projects.
-4. Set the new project's **branch to deploy** to **`jobflow-netlify-test`** (not `main`).
-5. Build settings should be taken from the committed **root `netlify.toml`** on this branch. Verify:
-   - **Base directory:** empty (repo root)
-   - **Build command:** empty / none
-   - **Publish directory:** **`netlify-preview`**
-   - Do **not** run `node scripts/build-production.js` or publish `dist`, as those are production settings from main.
-6. Give this **NEW** site a distinctive testing name if Netlify offers one, such as `ezysouth-jobflow-lab` (if available; Netlify assigns the actual URL). Never rename the existing `ezysouth.netlify.app` site or change its production branch.
-7. Deploy the new project. Wait for a successful deploy in the Netlify dashboard. Copy the **ACTUAL** `https://....netlify.app` URL; do not guess it.
-8. Open the new site's root address. It should say **STAGING ONLY** and show EzySouth Web Builder. Select **JobFlow ↗**: it should open **`https://<actual-site>.netlify.app/jobflow.html`**, also labeled STAGING ONLY.
-9. In the separate **staging Supabase** project, open **Authentication → URL Configuration → Redirect URLs** and allow the exact `https://<actual-site>.netlify.app/jobflow.html` and `https://<actual-site>.netlify.app/index.html` URLs for confirmation emails. This setting cannot be changed via the current Supabase ChatGPT connector. Do not change production Supabase Auth settings.
-10. Use a test email and **new, unique password**. **Never enter real customer details or use a production account.** Create a fake JobFlow business and fake website to test cloud saving.
+This site is a **separate Netlify project** deploying GitHub branch `jobflow-netlify-test`. It uses isolated existing Supabase project `anldjuaqlpowwodlphqf` and intentionally **cannot publish customer websites**. Main/production branch, `https://ezysouth.netlify.app/`, and production Supabase project remain untouched. All customer/test data in staging should be fictional.
 
-## How to test the cross-product workflow
+## Product navigation
 
-1. Visit `/jobflow.html`; create a fictional business and customer, then a manual job. Reload to test cloud persistence.
-2. Visit `/` on the same new Netlify test domain, select **Cloud Account**, and log in using the same staging account.
-3. Create a fictional business website and save it as a cloud project. In **Launch & Export**, enable live JobFlow enquiries for the fake website. Publishing to real sites is intentionally disabled.
-4. Return to `/jobflow.html`, refresh enquiries, and select the fake website from the dropdown.
-5. Tap **Simulate incoming website enquiry**. This invokes the JWT-authenticated staging `jobflow-demo-enquiry` Edge Function; the owner and website ID are verified, and the function inserts a completely fake enquiry. On the Netlify test domain the function accepts HTTPS `*.netlify.app` origins. No real websites receive test content.
-6. Change the fake enquiry to **Completed**, select **Send to Website**, add a safe fake public title/description and confirm permission.
-7. In the Web Builder, **open that same fake cloud website**. Tap **Refresh completed work** in Design Studio. The selected item should appear in its preview; **nothing publishes automatically**.
-8. Confirm a different test account cannot see the first account's customers, enquiries, manual jobs or showcase data. The staging database has already passed a two-tenant rollback-only SQL RLS check, but browser testing is still required.
+The homepage offers two premium workspaces: **EzySouth Web** and **JobFlow by EzySouth**. Each workspace has a prominent **Return to homepage** link, plus a cross-product link. The website builder's primary tabs are Build website, Design Studio, Save & manage, and Connect JobFlow; legacy quick commands and local drafts are under **More tools**. Disabled publishing and direct Netlify-token controls are hidden from ordinary staging navigation.
 
-## Build isolation and safety
+## EzySouth → JobFlow → EzySouth acceptance test
 
-- **Git branch:** `jobflow-netlify-test`, based on `feature/jobflow-staging-safety`. Not merged into `main`.
-- **Build/publish config:** `netlify.toml` sets `publish = "netlify-preview"` and no build command.
-- **Netlify deploy folder:** `netlify-preview/` contains only `index.html`, `jobflow.html`, `_headers` and `robots.txt`. The database SQL and development docs are *outside* the publish folder.
-- **Data:** both pages use the existing free STAGING Supabase project `anldjuaqlpowwodlphqf`, with a public/publishable client key. No production Supabase URL/key, secret key, or service-role token is in the website.
-- **Security:** RLS on all staging tables; staging RLS tests passed. Netlify pages use noindex, no-store, X-Frame-Options and nosniff headers.
-- **Publishing controls:** live publishing, unpublishing, removing hosted sites and direct Netlify deployments from within the Builder remain intentionally disabled for these test pages.
-- **Original production site:** `https://ezysouth.netlify.app/` keeps its existing Netlify project and `main` branch. No modifications to `main` were required.
-- **No Netlify site created automatically:** the ChatGPT environment can update GitHub and Supabase but currently has **no connected Netlify action** to create the second Netlify project. User must import the repository once in Netlify.
+1. Sign into JobFlow using your **staging** account and create a fictional business/customer.
+2. Open EzySouth Web via the homepage, create or open a fictional website, then **Save & manage → Save current website to cloud**.
+3. In **Connect JobFlow**, choose **Save & enable JobFlow**.
+4. Return to JobFlow and choose **Simulate incoming website enquiry**. Confirm it appears in your inbox.
+5. Mark the test enquiry **Completed** and choose **Send to Website**. Enter fictional, public-safe project title and description.
+6. Select up to **four approved project photos** from the device. The photo picker shows previews and lets you remove choices. Images are converted/resized to JPEG (max 1600px) before upload, with a per-object 3 MB storage limit.
+7. Tick the **explicit public-photo permission confirmation**; submit.
+8. Open **EzySouth Web → Design Studio → Refresh completed work**. Confirm the project title, summary and photos appear in the portfolio card and website preview. Nothing gets automatically published.
+9. Edit or remove a photo in JobFlow and refresh the builder. Confirm the display changes; check that removed image metadata/object is no longer referenced.
 
-## Checklist if something fails
+## Storage and privacy rules
 
-- **It shows the original site instead of STAGING ONLY:** Stop. New Netlify project's branch/publish settings are wrong. Correct branch to `jobflow-netlify-test` and publish dir `netlify-preview`; do not edit the existing production site.
-- **The JobFlow link gives 404:** Confirm `netlify-preview/jobflow.html` is in the successful deployment, not `dist`.
-- **You can't verify the staging login:** Allow your actual test site's exact URLs under staging Supabase Auth redirect configuration; check the email verification link. Confirm the app is pointing at `anldjuaqlpowwodlphqf.supabase.co`.
-- **Fake enquiry button reports CORS/network error:** Confirm staging demo Edge Function v2+ and Netlify HTTPS origin. It accepts `*.netlify.app` origins but still requires a JWT and website ownership.
-- **A cloud website doesn't appear in JobFlow:** Open/save the fake cloud site while logged into the same staging user account and refresh JobFlow.
-- **No previews after choosing Completed:** Check the operator saved the handoff, opened the *same* website in the builder and refreshed approved work.
+- Dedicated public-read bucket `jobflow-portfolio` holds only intentionally approved public photos. Its objects become publicly accessible by URL when uploaded, **even when the website is still a private test draft**. Never upload an identifiable customer or private property photo without consent.
+- Uploads and deletion are restricted by Supabase Storage row-level security to the authenticated owner and their website. File paths use `user_id/website_id/random_uuid.jpg`; no user-supplied filename or customer data enters the stored path.
+- Text and photo handoffs use the existing owner-protected `jobflow_showcases` table; only completed enquiries may be featured. Only title, summary and approved photo paths go to the builder; original private enquiry text, contact and name remain in JobFlow.
+- The original tenant-isolation test and the new `database/tests/jobflow_photos_rls.sql` rollback-only SQL test passed on the actual staging project. Real cross-account *browser Storage API* upload/deletion testing is still required.
+- The staging security advisor separately reports leaked-password protection disabled. Enable it in Auth settings if the plan supports it before any rollout using real accounts.
+
+## Browser and account acceptance matrix (must still be completed)
+
+- **iPhone Safari:** log in, create/open website, save, reload; simulate an enquiry; complete and send with 1–4 actual test photos (including a photo from the camera roll); verify preview, removal, compressed uploads and errors.
+- **Android Chrome:** repeat the above with a different fictional account; verify touch navigation, gallery images, and no horizontal overflow.
+- **Desktop Chrome/Safari/Firefox:** check wide and narrow layouts, keyboard navigation, cloud persistence, completed project previews, and owner-only isolation.
+- **Separate account / second browser:** sign in as Account B; verify Account A's websites, customers, enquiries, manual jobs and showcases are never visible, and that photo uploads using Account B's JWT cannot target Account A's website.
+- **Expired session/offline conditions:** try saving while logged out and when network is disconnected. Make sure no phantom success or corrupted project state.
+- **Privacy/consent:** test photo upload without the approval checkbox, oversize files, more than four photos, and deleting a featured job. None should expose private customer content.
+
+## Automated quality gates
+
+`node scripts/jobflow-preview-smoke.js` validates staging routes, two apps, navigation, photo upload code, JS syntax, production isolation and disabled production publishing. Workflow `.github/workflows/jobflow-preview-check.yml` runs it on the staging branch. The preexisting V7 build check continues to run. SQL database tests live under `database/tests/`.
+
+## Release blockers: do not merge staging PR #5
+
+The homepage replaces the old production root route, so simply merging this staging branch into `main` is **not** an acceptable deployment plan. The live product needs:
+
+1. Explicit production release approval and a safe routing/redirect plan for existing customer URLs.
+2. Production-specific media migration and policies, reviewed independently and applied only after backup.
+3. Working real production enquiry/publishing endpoints and an end-to-end non-fictional hosted-page test.
+4. Browser/device and two-account manual acceptance tests completed, including actual photo upload and removal.
+5. Privacy notice, photo consent policy, beta participant controls, support contact, and defined rollback.
+6. Check Auth redirect allowlist for `/web.html` and `/jobflow.html` in the appropriate environment.
+
+**No production website, Supabase production data or production Netlify project has been changed.**
