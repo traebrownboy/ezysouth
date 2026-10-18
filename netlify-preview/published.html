@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#133d2d">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src https: data: blob:; font-src https: data:; connect-src https://anldjuaqlpowwodlphqf.supabase.co; frame-src about:; child-src about:; form-action 'none'; object-src 'none'; base-uri 'none'">
+<title>EzySouth · Website preview</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#233e30;background:#eff6f0}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;height:100%}
+body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px clamp(14px,3vw,30px);background:#14382a;color:#e9f7ec;min-height:57px}
+.identity{display:flex;align-items:center;gap:10px;font-weight:850;font-size:.88rem;letter-spacing:-.025em}
+.mark{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#295b40;color:#baf1ca;font-size:1.1rem}
+.subtitle{color:#bce2c7;font-weight:720;font-size:.77rem;letter-spacing:.03em}
+.pill{display:inline-flex;align-items:center;gap:7px;background:#25543b;padding:7px 11px;border-radius:100px;color:#e5ffe9;font-size:.72rem;font-weight:800;letter-spacing:.035em}
+.pill:before{content:"";background:#85da98;border-radius:50%;width:7px;height:7px}
+.viewer{display:flex;flex:1;min-height:0;background:#fff}
+#page-frame{display:block;width:100%;min-height:calc(100vh - 57px);min-height:calc(100dvh - 57px);border:0;background:#fff}
+#page-frame[hidden]{display:none}
+.state-shell{width:100%;flex:1;display:grid;place-items:center;min-height:420px;padding:30px;background:linear-gradient(135deg,#f4f9f4,#e6f3e9)}
+.state-card{max-width:560px;width:100%;text-align:center;background:#fff;border:1px solid #d8e9dc;border-radius:22px;padding:36px 30px;box-shadow:0 17px 45px #153d2714}
+.state-mark{width:55px;height:55px;border-radius:16px;background:#ecf6ee;display:grid;place-items:center;margin:0 auto 19px;font-size:1.65rem}
+.state-card h1{font-size:clamp(1.45rem,3.8vw,2.2rem);letter-spacing:-.05em;line-height:1.14;margin:0 0 12px;color:#19402b}
+.state-card p{color:#69816f;line-height:1.7;font-size:.95rem;margin:0}
+.state-card a{display:inline-block;margin-top:20px;color:#fff;background:#1f6945;padding:12px 18px;text-decoration:none;border-radius:11px;font-weight:800}
+#page-frame:focus-visible{outline:3px solid #58aa75;outline-offset:-3px}
+@media(max-width:650px){.banner{padding:10px 12px;min-height:53px}.identity{gap:7px;font-size:.82rem}.subtitle{font-size:.71rem}.pill{font-size:.64rem;padding:6px 8px}.state-card{padding:28px 20px}}
+</style>
+</head>
+<body>
+<header class="banner" aria-label="EzySouth private beta preview">
+ <div class="identity"><span class="mark" aria-hidden="true">✦</span><span>EzySouth <span class="subtitle">/ Published website preview</span></span></div>
+ <span class="pill">PRIVATE BETA · TEST SITE</span>
+</header>
+<main class="viewer" id="viewer" aria-busy="true">
+ <div class="state-shell" id="loading-state" role="status" aria-live="polite">
+  <div class="state-card"><div class="state-mark" aria-hidden="true">✦</div><h1 id="state-title">Opening your website…</h1><p id="state-description">Loading your published design securely.</p></div>
+ </div>
+ <iframe id="page-frame" title="EzySouth published website preview" sandbox="allow-scripts allow-forms allow-popups" referrerpolicy="no-referrer" hidden></iframe>
+</main>
+<script>
+(function(){
+ 'use strict';
+ const API='https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/staging-public-site/';
+ const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+ const params=new URLSearchParams(location.search);
+ const id=params.get('site');
+ const frame=document.getElementById('page-frame');
+ const title=document.getElementById('state-title');
+ const description=document.getElementById('state-description');
+ const viewer=document.getElementById('viewer');
+ function state(heading,copy){
+  title.textContent=heading;description.textContent=copy;
+  frame.hidden=true;document.getElementById('loading-state').hidden=false;
+  viewer.setAttribute('aria-busy','false');
+ }
+ if(!id||!UUID.test(id)){
+  state('Website not found','This preview link is incomplete or invalid. Check the address and try again.');return;
+ }
+ const controller=new AbortController();
+ const guard=setTimeout(()=>controller.abort(),18000);
+ fetch(API+encodeURIComponent(id)+'?raw=1',{
+  method:'GET',mode:'cors',credentials:'omit',signal:controller.signal,cache:'no-store',
+  headers:{'Accept':'application/json'}
+ }).then(async response=>{
+   const raw=await response.text();
+   let result;
+   try{result=JSON.parse(raw)}catch{throw Error('The published page returned an invalid response.')}
+   if(!response.ok||result.status!=='live'||typeof result.html!=='string'){
+    if(result.status==='unpublished')return state('Website temporarily offline','This preview has been taken offline by its owner. The same web address is reserved.');
+    if(result.status==='removed')return state('Website removed','This preview is no longer available. The original address is reserved.');
+    if(response.status===404)return state('Website not found','No published preview exists at this address.');
+    throw Error(result.message||result.error||'The preview could not be loaded.');
+   }
+   if(!/^\s*<!doctype html>/i.test(result.html))throw Error('The saved website export is invalid.');
+   // srcdoc does NOT get same-origin privileges. The sandboxed frame cannot
+   // read EzySouth account sessions or the viewer's DOM, but may run the
+   // embedded fictional staging form using anonymous, rate-limited requests.
+   frame.srcdoc=result.html;
+   frame.hidden=false;
+   document.getElementById('loading-state').hidden=true;
+   viewer.setAttribute('aria-busy','false');
+   document.title=(typeof result.title==='string'&&result.title?result.title+' · ':'')+'EzySouth test website';
+ }).catch(error=>{
+   state('Preview unavailable',error?.name==='AbortError'
+    ?'The connection timed out. Please reload the page.':'Could not open the published website: '+(error?.message||'Network error.'));
+ }).finally(()=>clearTimeout(guard));
+})();
+</script>
+</body>
+</html>
