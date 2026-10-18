@@ -132,8 +132,10 @@ a{color:#1d7250;text-decoration:none}a:hover{text-decoration:underline}
         <button type="submit" class="primary" id="submit-auth">Sign in to EzySouth →</button>
       </form>
       <p class="support" id="mode-switch-copy">New to EzySouth? <a href="./login.html?mode=register" id="register-link">Create an account</a></p>
+      <p class="support" id="mode-recovery-back" hidden><button type="button" class="plain-link" id="back-to-login">← Back to sign in</button></p>
     </div>
     <div id="signed-in-view" hidden>
+      <p class="notice error" id="signed-in-message" role="alert" hidden></p>
       <h2 id="signed-in-title">You're all set.</h2>
       <p class="subheading">Your account works across EzySouth Web and JobFlow. Choose where to continue.</p>
       <div class="after-login">
@@ -191,7 +193,11 @@ a{color:#1d7250;text-decoration:none}a:hover{text-decoration:underline}
   el('auth-confirm').required=selected==='register'||selected==='update';
   el('password-help').hidden=!(selected==='register'||selected==='update');
   el('form-toolbar').hidden=selected!=='login';
-  el('mode-switch-copy').hidden=selected==='register'||selected==='update';
+  el('mode-switch-copy').hidden=selected!=='login';
+  el('mode-recovery-back').hidden=!(selected==='forgot'||selected==='update');
+  el('auth-password').type='password';
+  el('toggle-password').textContent='Show';
+  el('toggle-password').setAttribute('aria-label','Show password');
   el('auth-title').textContent={login:'Welcome back.',register:'Start something good.',forgot:'Reset your password.',update:'Choose a new password.'}[mode];
   el('auth-subtitle').textContent={login:'Sign in once to access both EzySouth Web and JobFlow.',register:'Create one account for both of your EzySouth workspaces.',forgot:'Enter your email and we’ll send you a secure reset link.',update:'Set a new password to keep your EzySouth account secure.'}[mode];
   el('submit-auth').textContent={login:'Sign in to EzySouth →',register:'Create your EzySouth account →',forgot:'Send password reset link →',update:'Save new password →'}[mode];
@@ -277,6 +283,7 @@ a{color:#1d7250;text-decoration:none}a:hover{text-decoration:underline}
  el('mode-register').addEventListener('click',()=>setMode('register'));
  el('register-link').addEventListener('click',e=>{e.preventDefault();setMode('register')});
  el('forgot-password').addEventListener('click',()=>setMode('forgot'));
+ el('back-to-login').addEventListener('click',()=>setMode('login'));
  el('toggle-password').addEventListener('click',()=>{
   const input=el('auth-password');const reveal=input.type==='password';
   input.type=reveal?'text':'password';
@@ -286,8 +293,13 @@ a{color:#1d7250;text-decoration:none}a:hover{text-decoration:underline}
  el('sign-out').addEventListener('click',async()=>{
   if(!client)return;
   el('sign-out').disabled=true;
+  el('signed-in-message').hidden=true;
   try{const {error}=await client.auth.signOut();if(error)throw error;showSignedIn(null);setMode('login')}
-  catch(err){showMessage('Could not confirm sign-out: '+(err?.message||String(err)),'error');showSignedIn(currentUser)}
+  catch(err){
+   el('signed-in-message').textContent='Could not sign out: '+(err?.message||String(err));
+   el('signed-in-message').hidden=false;
+   showSignedIn(currentUser);
+  }
   finally{el('sign-out').disabled=false}
  });
  if(!client){setMode('login');showMessage('Could not load secure account sign-in. Please check your connection and reload.','error');return}
