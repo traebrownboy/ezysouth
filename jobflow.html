@@ -93,7 +93,7 @@ input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padd
   await load();
  }
  async function busy(fn){
-  try{status('Working…');await fn();status('✓ Ready')}
+  try{status('Working…');await fn();if(el('message').textContent==='Working…')status('✓ Ready')}
   catch(error){status('Error: '+(error?.message||String(error)))}
  }
  async function load(){
