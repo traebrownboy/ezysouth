@@ -46,6 +46,16 @@ body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
 <script>
 (function(){
  'use strict';
+ function installCustomerNavigation(){
+  document.addEventListener('click',event=>{
+   const link=event.target instanceof Element?event.target.closest('a[href^="#"]'):null;
+   if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+   let id;try{id=decodeURIComponent(link.getAttribute('href').slice(1))}catch{return}
+   const target=document.getElementById(id);if(!target)return;
+   event.preventDefault();
+   target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start',inline:'nearest'});
+  });
+ }
  const API='https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/staging-public-site/';
  const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
  const params=new URLSearchParams(location.search);
@@ -81,7 +91,12 @@ body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
    // srcdoc does NOT get same-origin privileges. The sandboxed frame cannot
    // read EzySouth account sessions or the viewer's DOM, but may run the
    // embedded fictional staging form using anonymous, rate-limited requests.
-   frame.srcdoc=result.html;
+   // Fragment URLs in srcdoc inherit the viewer's base URL. Handle section
+   // scrolling inside the frame, including exports saved before this fix.
+   const navigation='<script>('+installCustomerNavigation.toString()+')();<\/script>';
+   frame.srcdoc=/<\/body\s*>/i.test(result.html)
+    ?result.html.replace(/<\/body\s*>/i,()=>navigation+'</body>')
+    :result.html+navigation;
    frame.hidden=false;
    document.getElementById('loading-state').hidden=true;
    viewer.setAttribute('aria-busy','false');

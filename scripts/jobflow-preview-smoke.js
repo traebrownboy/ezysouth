@@ -124,7 +124,10 @@ check('staging-only publishing and stable preview links are connected',()=>{
  assert.ok(!server.includes("return new Response(served,{status:200,headers:secureHeaders})"),'Direct HTML is rendered as source on Supabase Edge Functions');
  // Published websites run in an opaque-origin iframe, never inside the app.
  contains(viewer,'sandbox="allow-scripts allow-forms allow-popups"');
- contains(viewer,'frame.srcdoc=result.html');
+ contains(viewer,'function installCustomerNavigation()');
+ contains(viewer,'frame.srcdoc=');
+ contains(viewer,'installCustomerNavigation.toString()');
+ contains(viewer,"target.scrollIntoView");
  contains(viewer,"credentials:'omit'");
  assert.ok(!viewer.includes('allow-same-origin'),'User website must not receive app login storage access');
  contains(viewer,"+'?raw=1'");
