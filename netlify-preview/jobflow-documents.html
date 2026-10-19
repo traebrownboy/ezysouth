@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://anldjuaqlpowwodlphqf.supabase.co wss://ezcmfbaoivdwkgayznbt.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
+<title>Quotes & Invoices | JobFlow STAGING</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#19342c;background:#f4f8f5;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #85c4a6;outline-offset:2px}
+.staging-notice{background:#fff3d9;border-bottom:1px solid #f0dcac;color:#79521c;text-align:center;padding:9px 14px;font-size:12px;font-weight:800;letter-spacing:.045em}.top{background:#122c25;color:#fff;padding:18px 20px}.top-inner{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-weight:850;font-size:1.25rem;letter-spacing:-.035em}.brand span{color:#72cfa5}.top a{color:#e6fff2;font-size:.88rem}
+.shell{max-width:1050px;margin:0 auto;padding:30px 18px 70px}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:22px}.eyebrow{font-size:.7rem;letter-spacing:.11em;font-weight:800;color:#628272}h1{font-size:clamp(1.8rem,4.5vw,2.6rem);letter-spacing:-.05em;margin:5px 0}h2{font-size:1.2rem;letter-spacing:-.025em;margin:3px 0 12px}p{color:#62766d;margin:4px 0;line-height:1.6}.micro{font-size:.85rem}
+.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:750;background:#147a4f;color:#fff;min-height:44px}.btn:hover{background:#106441}.btn.secondary{background:#e8f3ed;color:#1a6143}.btn.danger{background:#ffebea;color:#9b2929}.btn.small{padding:8px 12px;font-size:.86rem;min-height:38px}
+.tabs{display:flex;gap:28px;border-bottom:1px solid #d6e4da;margin-bottom:18px}.tabs button{border:0;border-bottom:2px solid transparent;padding:14px 1px;background:transparent;color:#6a8173;font-weight:750}.tabs button.active{border-color:#147a4f;color:#145c3d}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.stat{background:#eaf4ed;padding:17px;border-radius:12px;min-width:0}.stat strong{display:block;font-size:clamp(1.2rem,3vw,1.85rem);letter-spacing:-.04em;overflow-wrap:anywhere}.stat small{color:#5e7867;font-size:.78rem}
+.panel{background:white;border:1px solid #dbe8e0;border-radius:16px;padding:22px;margin:19px 0;box-shadow:0 8px 20px #133b2508}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.muted{color:#62766d}.notice{background:#e5f2e9;color:#24563c;border:1px solid #bedccb;border-radius:12px;padding:13px 16px;margin:14px 0;font-size:.88rem}.notice.error{background:#fff0ed;border-color:#ebc5c0;color:#9a332d}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}.field.full{grid-column:1/-1}label{display:block;font-size:.85rem;font-weight:700;margin-top:5px}input,textarea,select{width:100%;border:1px solid #bcd2c5;border-radius:9px;padding:11px;color:#19342c;background:white;margin:5px 0 9px}textarea{min-height:100px;resize:vertical}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:10px}.record{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:17px 0;border-top:1px solid #e7eeea}.record h3{font-size:.99rem;margin:0 0 3px}.record p{font-size:.84rem;overflow-wrap:anywhere}.record .right{text-align:right;flex-shrink:0}.amount{font-weight:800;letter-spacing:-.025em}.pill{display:inline-block;padding:4px 9px;border-radius:20px;font-size:.75rem;background:#e7f1eb;color:#376a4e;font-weight:750;margin-top:7px}.pill.Paid,.pill.Accepted{background:#daf3e4;color:#176b40}.pill.Unpaid,.pill.Sent{background:#fff2d8;color:#88621b}.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin-top:10px}.mini{border:1px solid #d2e5d9;border-radius:8px;background:white;color:#236746;padding:6px 9px;font-size:.76rem;font-weight:700;min-height:32px}.mini:hover{background:#edf6f0}.empty{text-align:center;padding:45px 16px;color:#62766d}.footer{margin-top:15px;font-size:.78rem;color:#7e9287}.secure{display:inline-flex;gap:6px;align-items:center;color:#3f7355;font-size:.77rem;font-weight:750}
+@media(max-width:680px){.shell{padding:23px 14px 60px}.panel{padding:16px}.fields{grid-template-columns:1fr}.grid{gap:8px}.stat{padding:12px}.record{flex-direction:column;gap:8px}.record .right{text-align:left;width:100%}.actions{justify-content:flex-start}.heading{align-items:flex-start}.top-inner{align-items:flex-start}}
+@media print{.top,.heading .btn,.tabs,.grid,.panel-head .btn,.actions,.footer,#editor{display:none!important}.panel{box-shadow:none;border:0;padding:0}.record{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="staging-notice">🧪 PRIVATE BETA PREVIEW · Test accounts and fictional details only</div>
+<header class="top"><div class="top-inner"><a href="./index.html" class="brand" style="color:white">JobFlow <span>by Ezysouth</span></a><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><a href="./jobflow.html">← Back to JobFlow</a><a href="./index.html">⌂ Home</a></div></div></header>
+<main class="shell">
+<div class="heading"><div><div class="eyebrow">JOBFLOW / BUSINESS DOCUMENTS</div><h1>Quotes & Invoices</h1><p class="micro">Create, manage and keep track of your paperwork.</p></div><button class="btn" id="create" hidden>+ New quote</button></div>
+<div id="message" role="status" aria-live="polite"></div>
+<div id="loading" class="notice">Checking your Ezysouth account…</div>
+<div id="gate" class="panel" hidden><h2>Sign in to continue</h2><p>For privacy, your documents are only available in your Ezysouth account.</p><div class="controls"><a class="btn" href="./login.html?next=jobflow">Sign in to Ezysouth</a></div></div>
+<div id="workspace" hidden>
+<div class="tabs" role="tablist"><button class="active" data-type="quote" role="tab" aria-selected="true">Quotes</button><button data-type="invoice" role="tab" aria-selected="false">Invoices</button></div>
+<div id="stats" class="grid" aria-label="Document overview"></div>
+<section id="editor" class="panel" hidden><h2 id="editor-title">New quote</h2><p class="micro">Save a draft now. Send it yourself when it's ready.</p>
+<form id="document-form"><div class="fields">
+<div class="field"><label for="business-name">Your business name *</label><input id="business-name" required minlength="2" maxlength="120" autocomplete="organization"></div>
+<div class="field"><label for="customer-name">Customer name *</label><input id="customer-name" required minlength="2" maxlength="120"></div>
+<div class="field"><label for="customer-email">Customer email (optional)</label><input id="customer-email" type="email" maxlength="254"></div>
+<div class="field"><label for="amount">Amount (NZD) *</label><input id="amount" type="number" min=".01" max="999999999.99" step=".01" required></div>
+<div class="field full"><label for="description">Work description *</label><textarea id="description" required minlength="3" maxlength="4000" placeholder="Describe the work you're quoting or invoicing"></textarea></div>
+<div class="field"><label for="gst">GST treatment</label><select id="gst"><option value="unspecified">Not specified (draft)</option><option value="included">Amount includes GST</option><option value="not_charged">No GST charged</option></select></div>
+<div class="field"><label id="date-label" for="due-date">Valid until (optional)</label><input id="due-date" type="date"></div>
+</div><div class="controls"><button class="btn" id="save" type="submit">Save draft</button><button class="btn secondary" id="cancel" type="button">Cancel</button></div></form></section>
+<section class="panel"><div class="panel-head"><div><h2 id="list-title">Your quotes</h2><p class="micro" id="count">0 documents</p></div><button class="btn secondary small" id="refresh">↻ Refresh</button></div><div id="records"></div></section>
+<p class="footer"><span class="secure">✓ Saved securely to your Ezysouth account</span> · Marking a document as sent or paid only records its status. It does not send emails or process payments. Review GST, supplier information and tax requirements before issuing financial documents.</p>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script>
+(()=>{
+'use strict';
+const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co', PUBLIC_KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
+const el=id=>document.getElementById(id);
+const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=cents=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(cents||0)/100);
+let user=null,client=null,docs=[],type='quote',editing=null,busy=false;
+function note(message,error=false){el('message').innerHTML='<div class="notice'+(error?' error':'')+'">'+escapeHtml(message)+'</div>'}
+function showGate(){el('loading').hidden=true;el('gate').hidden=false;el('workspace').hidden=true;el('create').hidden=true}
+function number(t){return (t==='quote'?'Q-':'INV-')+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase()}
+function rows(){return docs.filter(d=>d.document_type===type).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)))}
+function draw(){
+document.querySelectorAll('[data-type]').forEach(b=>{const active=b.dataset.type===type;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});
+el('create').textContent='+ New '+type;el('list-title').textContent=type==='quote'?'Your quotes':'Your invoices';
+const list=rows();el('count').textContent=list.length+' document'+(list.length===1?'':'s');
+const draft=list.filter(d=>d.status==='Draft').length;
+const last=type==='quote'?'Accepted':'Paid';
+const completed=list.filter(d=>d.status===last).length;
+const total=list.reduce((s,d)=>s+Number(d.amount_cents),0);
+el('stats').innerHTML=[['Total '+(type==='quote'?'quoted':'invoiced'),money(total)],['Drafts',draft],[last,completed]].map(([k,v])=>'<div class="stat"><small>'+k+'</small><strong>'+v+'</strong></div>').join('');
+el('records').innerHTML=list.length?list.map(d=>{
+const desc=escapeHtml(d.description.length>105?d.description.slice(0,105)+'…':d.description);
+const action=d.status==='Draft'?'<button class="mini" data-action="edit" data-id="'+d.id+'">Edit</button><button class="mini" data-action="advance" data-id="'+d.id+'">'+(type==='quote'?'Mark sent':'Mark issued')+'</button><button class="mini" data-action="delete" data-id="'+d.id+'">Delete</button>':
+type==='quote'&&d.status==='Sent'?'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark accepted</button><button class="mini" data-action="decline" data-id="'+d.id+'">Declined</button>':
+type==='quote'&&d.status==='Accepted'?'<button class="mini" data-action="convert" data-id="'+d.id+'">Create invoice</button>':
+type==='invoice'&&d.status==='Unpaid'?'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark paid</button>':'';
+return '<article class="record"><div><h3>'+escapeHtml(d.customer_name)+'</h3><p>'+desc+'</p><p class="muted micro">'+escapeHtml(d.number)+'</p><span class="pill '+escapeHtml(d.status)+'">'+escapeHtml(d.status)+'</span></div><div class="right"><div class="amount">'+money(d.amount_cents)+'</div><div class="actions"><button class="mini" data-action="print" data-id="'+d.id+'">Print / PDF</button>'+action+'</div></div></article>';
+}).join(''):'<div class="empty">No '+(type==='quote'?'quotes':'invoices')+' yet. Create your first one.</div>';
+}
+function openForm(d=null){editing=d?.id||null;el('editor-title').textContent=(d?'Edit ':'New ')+type;el('document-form').reset();el('business-name').value=d?.business_name||localStorage.getItem('jobflow_business_name_'+user.id)||'';el('customer-name').value=d?.customer_name||'';el('customer-email').value=d?.customer_email||'';el('description').value=d?.description||'';el('amount').value=d?(d.amount_cents/100).toFixed(2):'';el('gst').value=d?.gst_treatment||'unspecified';el('due-date').value=d?.due_date||'';el('date-label').textContent=type==='quote'?'Valid until (optional)':'Due date (optional)';el('editor').hidden=false;el('business-name').focus();el('editor').scrollIntoView({behavior:'smooth',block:'start'})}
+function closeForm(){editing=null;el('editor').hidden=true;el('document-form').reset()}
+async function refresh(){if(!user)return;const{data,error}=await client.from('jobflow_documents').select('id,document_type,number,business_name,customer_name,customer_email,description,amount_cents,gst_treatment,due_date,status,created_at').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(500);if(error)throw error;docs=data||[];draw()}
+async function task(fn){if(busy)return;busy=true;try{await fn()}catch(e){note('Could not complete the action: '+(e?.message||String(e)),true)}finally{busy=false}}
+async function change(d,status){const{data,error}=await client.from('jobflow_documents').update({status,updated_at:new Date().toISOString()}).eq('id',d.id).eq('owner_id',user.id).select('id');if(error)throw error;if(!data?.length)throw Error('This document could not be updated.');await refresh();note('Status updated to '+status+'. No message was sent.')}
+function printDoc(d){const w=window.open('','_blank');if(!w){note('Allow pop-ups to preview and print the document.',true);return}
+const h=escapeHtml;const label=d.document_type==='quote'?'Quote':'Invoice';
+const date=d.due_date?new Date(d.due_date+'T12:00:00').toLocaleDateString('en-NZ'):'Not specified';
+const gst={included:'Amount includes GST',not_charged:'No GST charged',unspecified:'GST treatment not specified'}[d.gst_treatment]||'GST not specified';
+const html='<!doctype html><html lang="en-NZ"><head><meta charset="utf-8"><title>'+h(d.number)+'</title><style>body{font:16px system-ui,-apple-system,sans-serif;max-width:780px;margin:55px auto;padding:20px;color:#19342c}header{border-bottom:2px solid #19342c;padding-bottom:25px;display:flex;justify-content:space-between;gap:20px}h1{font-size:32px}section{margin:28px 0}p{line-height:1.6;white-space:pre-wrap}small{color:#63766d}.total{border-top:1px solid #ceded2;text-align:right;padding-top:18px;font-size:24px;font-weight:800}</style></head><body><header><div><b>'+h(d.business_name)+'</b><h1>'+label+'</h1><small>'+h(d.number)+' · '+new Date(d.created_at).toLocaleDateString('en-NZ')+'</small></div><div><small>Status</small><p>'+h(d.status)+'</p></div></header><section><small>Prepared for</small><p><b>'+h(d.customer_name)+'</b><br>'+h(d.customer_email||'')+'</p></section><section><small>Work description</small><p>'+h(d.description)+'</p></section><section><small>'+(d.document_type==='quote'?'Valid until':'Due date')+'</small><p>'+h(date)+'</p><small>'+h(gst)+'</small></section><div class="total">Amount: '+money(d.amount_cents)+'</div><p><small>Review required issuer, payment and GST details before sending. Printing does not send this document or process payments.</small></p></body></html>';
+w.document.open();w.document.write(html);w.document.close();w.focus()}
+async function start(){
+if(!window.supabase?.createClient){el('loading').textContent='Unable to load secure account services. Check your internet connection.';return}
+client=window.supabase.createClient(PROJECT_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const{data,error}=await client.auth.getUser();if(error&&!/auth session missing/i.test(error.message||''))throw error;
+user=data?.user||null;
+if(!user){showGate();return}
+el('loading').hidden=true;el('gate').hidden=true;el('workspace').hidden=false;el('create').hidden=false;
+await refresh();
+client.auth.onAuthStateChange((event)=>{if(event==='SIGNED_OUT'){user=null;docs=[];closeForm();showGate()}});
+}
+document.querySelectorAll('[data-type]').forEach(b=>b.addEventListener('click',()=>{type=b.dataset.type;closeForm();draw()}));
+el('create').addEventListener('click',()=>openForm());
+el('cancel').addEventListener('click',closeForm);
+el('refresh').addEventListener('click',()=>task(async()=>{await refresh();note('Documents refreshed.')}));
+el('document-form').addEventListener('submit',e=>{e.preventDefault();void task(async()=>{
+if(!el('document-form').reportValidity())return;
+const raw=Number(el('amount').value),amount_cents=Math.round(raw*100);
+if(!Number.isFinite(amount_cents)||amount_cents<=0||amount_cents>99999999999)throw Error('Enter an amount between $0.01 and $999,999,999.99.');
+const business_name=el('business-name').value.trim(),customer_name=el('customer-name').value.trim(),description=el('description').value.trim(),customer_email=el('customer-email').value.trim();
+if(business_name.length<2||customer_name.length<2||description.length<3)throw Error('Check your business name, customer name and work description.');
+const values={business_name,customer_name,description,customer_email,amount_cents,gst_treatment:el('gst').value,due_date:el('due-date').value||null,updated_at:new Date().toISOString()};
+let query;if(editing){query=client.from('jobflow_documents').update(values).eq('id',editing).eq('owner_id',user.id).eq('status','Draft').select('id')}else{query=client.from('jobflow_documents').insert({...values,owner_id:user.id,document_type:type,number:number(type),status:'Draft'}).select('id')}
+const {data,error}=await query;if(error)throw error;if(!data?.length)throw Error('Document not saved. It may no longer be a draft.');
+try{localStorage.setItem('jobflow_business_name_'+user.id,business_name)}catch(e){}
+closeForm();await refresh();note('Draft saved securely to your Ezysouth account.');
+})});
+el('records').addEventListener('click',e=>{const button=e.target.closest('button[data-action]');if(!button||busy)return;const d=docs.find(x=>x.id===button.dataset.id);if(!d)return;const a=button.dataset.action;
+if(a==='print'){printDoc(d);return}if(a==='edit'&&d.status==='Draft'){openForm(d);return}
+void task(async()=>{
+if(a==='delete'){if(d.status!=='Draft')throw Error('Only drafts can be deleted.');if(!confirm('Permanently delete '+d.number+'?'))return;const{data,error}=await client.from('jobflow_documents').delete().eq('id',d.id).eq('owner_id',user.id).eq('status','Draft').select('id');if(error)throw error;if(!data?.length)throw Error('The draft could not be deleted.');await refresh();note('Draft deleted.');return}
+if(a==='advance'){const next=d.status==='Draft'?(d.document_type==='quote'?'Sent':'Unpaid'):d.document_type==='quote'&&d.status==='Sent'?'Accepted':d.document_type==='invoice'&&d.status==='Unpaid'?'Paid':null;if(!next)return;
+if(d.status==='Draft'&&!confirm('Have you reviewed this document? Marking it as '+(next==='Sent'?'sent':'issued')+' does not email the customer.'))return;
+await change(d,next);return}
+if(a==='decline'&&d.status==='Sent'){await change(d,'Declined');return}
+if(a==='convert'&&d.document_type==='quote'&&d.status==='Accepted'){
+const {data,error}=await client.from('jobflow_documents').insert({owner_id:user.id,document_type:'invoice',number:number('invoice'),business_name:d.business_name,customer_name:d.customer_name,customer_email:d.customer_email,description:d.description,amount_cents:d.amount_cents,gst_treatment:d.gst_treatment,due_date:null,status:'Draft'}).select('id');
+if(error)throw error;if(!data?.length)throw Error('Could not create invoice.');
+type='invoice';closeForm();await refresh();note('Invoice draft created from the accepted quote.');return}
+});
+});
+start().catch(e=>{el('loading').hidden=true;showGate();note('Account error: '+(e?.message||String(e)),true)});
+})();
+</script>
+</body></html>
