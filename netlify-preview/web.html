@@ -416,7 +416,20 @@ function polishCustomerSite(site){
 function renderDesign(){['layout','hero','font','surface','spacing','photos','reviews','cta'].forEach(k=>{let el=$('design-'+k);if(el&&document.activeElement!==el)el.value=design[k]});document.querySelectorAll('[data-template]').forEach(b=>{const chosen=b.dataset.template===design.preset;b.classList.toggle('selected',chosen);b.setAttribute('aria-pressed',String(chosen))});renderDesignPreview()}
 // Named presets are now declared with the shared structure above.
 document.querySelectorAll('[data-template]').forEach(button=>button.addEventListener('click',()=>{const preset=button.dataset.template;const chosen=premiumPresets[preset];if(!chosen)return;Object.assign(design,chosen,{preset});data.color=chosen.color;save();try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){}render();renderDesign();$('design-status').textContent=button.querySelector('strong').textContent+' applied. Your text and photos are unchanged.'}));
-function renderDesignPreview(){const original=$('site');const clone=original.cloneNode(true);clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));clone.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));$('design-preview').replaceChildren(clone)}
+// Keep each embedded preview's anchors local, with unique IDs across the builder.
+function customerPreviewClone(previewId){
+ const clone=$('site').cloneNode(true);clone.removeAttribute('id');
+ const targets=new Map();
+ clone.querySelectorAll('[id]').forEach(el=>{const oldId=el.id;el.id=previewId+'--'+oldId;targets.set(oldId,el)});
+ clone.querySelectorAll('a[href^="#"]').forEach(a=>{
+  const target=targets.get(a.getAttribute('href').slice(1));
+  if(!target)return;
+  a.setAttribute('href','#'+target.id);
+  a.addEventListener('click',e=>{e.preventDefault();target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start',inline:'nearest'})});
+ });
+ return clone;
+}
+function renderDesignPreview(){$('design-preview').replaceChildren(customerPreviewClone('design-preview'))}
 $('design-apply').onclick=()=>{['layout','hero','font','surface','spacing','photos','reviews','cta'].forEach(k=>design[k]=$('design-'+k).value);design.preset='custom';['serviceStyle','navStyle','trust','hours','social'].forEach(k=>design[k]=$('design-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())).value);try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){$('design-status').textContent='Storage is unavailable in this browser.'}renderDesignSite();renderDesignPreview();$('design-status').textContent='Design updated. Changes are saved locally.'};
 $('design-clear').onclick=async()=>{if(!confirm('Clear all uploaded photos, photo links and testimonials?'))return;uploadedPhotos=[];try{await savePhotos()}catch(e){}design.photos='';design.reviews='';try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){}refreshPhotos();renderDesign();$('design-status').textContent='Gallery and testimonials cleared.'};
 
@@ -460,7 +473,7 @@ function exportSite(){
 $('export').onclick=()=>{let blob=new Blob([exportSite()],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ezysouth-'+(data.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')||'website')+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);$('launch-msg').textContent='Website HTML downloaded. You can open it in a browser or upload it to a hosting provider.'};
 $('copy').onclick=async()=>{let text=[data.name,data.location,data.description,data.services,data.phone,data.email].join('\n\n');try{await navigator.clipboard.writeText(text);$('launch-msg').textContent='Website text copied.'}catch(e){$('launch-msg').textContent='Copy unavailable in this browser. Select the text in the builder instead.'}};
 function renderChat(){const log=$('chat-log');log.innerHTML='';for(const msg of chatMessages){const div=document.createElement('div');div.className='chat-msg '+(msg.role==='user'?'user':'bot');div.textContent=msg.text;log.appendChild(div)}log.scrollTop=log.scrollHeight}
-function renderChatPreview(){const site=$('site').cloneNode(true);site.removeAttribute('id');site.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));const container=$('chat-preview');container.replaceChildren(site);site.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()))}
+function renderChatPreview(){$('chat-preview').replaceChildren(customerPreviewClone('chat-preview'))}
 function chatApply(raw){const message=raw.trim();if(!message)return;chatMessages.push({role:'user',text:message});const before=JSON.stringify(data);const changes=[];const apply=(key,value,label)=>{value=value.trim().replace(/[.!]+$/,'');if(value&&data[key]!==value){data[key]=value;changes.push(label)}};
 const colors={blue:'#1b5de2',green:'#207b67',orange:'#c2642a',terracotta:'#c2642a',black:'#202c44',charcoal:'#202c44',dark:'#202c44'};
 let m;
@@ -1216,7 +1229,7 @@ render();renderLeads();renderChat();
  function drawTemplates(){templateGrid.innerHTML=presets.map(([id,name,sub,bg,fg])=>`<button type="button" class="v56-template ${design.preset===id?'selected':''}" data-v56-template="${id}"><div class="v56-mock" style="background:${bg};color:${fg}"><span></span><span></span><span></span><em></em></div><strong>${name}</strong><small>${sub}</small></button>`).join('');templateGrid.querySelectorAll('[data-v56-template]').forEach(b=>b.onclick=()=>{const existing=document.querySelector('[data-template="'+b.dataset.v56Template+'"]');if(existing)existing.click();drawTemplates();updatePreview()})}
  function syncGuided(){guidedFields.forEach(f=>{const el=$('v57-'+f);if(el&&document.activeElement!==el)el.value=data[f]||'';});}
  const oldGuidedRender=render;render=function(){oldGuidedRender.apply(this,arguments);syncGuided();};
- function updatePreview(){const container=$('v56-live-preview');if(!container)return;const clone=$('site').cloneNode(true);clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));clone.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));container.replaceChildren(clone)}
+ function updatePreview(){const container=$('v56-live-preview');if(!container)return;container.replaceChildren(customerPreviewClone('v56-live-preview'))}
  const guidedFields=['name','type','location','services','description','phone','email'];
  guidedFields.forEach(f=>{const el=$('v57-'+f);if(!el)return;el.value=data[f]||'';el.addEventListener('input',()=>{data[f]=el.value;const original=$(f);if(original)original.value=el.value;save();render();if($('v57-step-error'))$('v57-step-error').textContent='';});});
  $('v57-continue').onclick=()=>{const name=$('v57-name').value.trim(),location=$('v57-location').value.trim(),services=$('v57-services').value.trim(),phone=$('v57-phone').value.trim(),email=$('v57-email').value.trim();if(!name||!location||!services){$('v57-step-error').textContent='Add your business name, service area and at least one service before continuing.';return;}if(!phone&&!email){$('v57-step-error').textContent='Add a phone number or email so customers have a way to contact you.';return;}if(email&&!$('v57-email').checkValidity()){$('v57-step-error').textContent='Please enter a valid email address.';return;}localStorage.setItem('ezysouth-guide-basics','1');window.dispatchEvent(new Event('ezy:state'));setStep(1);};
