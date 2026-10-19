@@ -35,8 +35,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <form id="document-form"><div class="fields">
 <div class="field"><label for="business-name">Your business name *</label><input id="business-name" required minlength="2" maxlength="120" autocomplete="organization"></div>
 <div class="field"><label for="customer-name">Customer name *</label><input id="customer-name" required minlength="2" maxlength="120"></div>
-<div class="field"><label for="customer-email">Customer email (optional)</label><input id="customer-email" type="email" maxlength="254"></div>
-<div class="field"><label for="amount">Amount (NZD) *</label><input id="amount" type="number" min=".01" max="999999999.99" step=".01" required></div>
+<div class="field"><label for="customer-email">Customer email (optional)</label><input id="customer-email" type="email" maxlength="254"></div><div class="field"><label for="customer-contact">Customer phone or contact</label><input id="customer-contact" maxlength="200" placeholder="Copied from enquiry if available"></div>
+<div class="field"><label for="amount">Amount (NZD)</label><input id="amount" type="number" min=".01" max="999999999.99" step=".01" placeholder="Add pricing before issuing"></div>
 <div class="field full"><label for="description">Work description *</label><textarea id="description" required minlength="3" maxlength="4000" placeholder="Describe the work you're quoting or invoicing"></textarea></div>
 <div class="field"><label for="gst">GST treatment</label><select id="gst"><option value="unspecified">Not specified (draft)</option><option value="included">Amount includes GST</option><option value="not_charged">No GST charged</option></select></div>
 <div class="field"><label id="date-label" for="due-date">Valid until (optional)</label><input id="due-date" type="date"></div>
@@ -53,7 +53,7 @@ const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co', PUBLIC_KEY='sb_pub
 const el=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=cents=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(cents||0)/100);
-let user=null,client=null,docs=[],type='quote',editing=null,busy=false;
+let user=null,client=null,docs=[],type=new URLSearchParams(location.search).get('tab')==='invoice'?'invoice':'quote',editing=null,busy=false;
 function note(message,error=false){el('message').innerHTML='<div class="notice'+(error?' error':'')+'">'+escapeHtml(message)+'</div>'}
 function showGate(){el('loading').hidden=true;el('gate').hidden=false;el('workspace').hidden=true;el('create').hidden=true}
 function number(t){return (t==='quote'?'Q-':'INV-')+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase()}
@@ -65,8 +65,8 @@ const list=rows();el('count').textContent=list.length+' document'+(list.length==
 const draft=list.filter(d=>d.status==='Draft').length;
 const last=type==='quote'?'Accepted':'Paid';
 const completed=list.filter(d=>d.status===last).length;
-const total=list.reduce((s,d)=>s+Number(d.amount_cents),0);
-el('stats').innerHTML=[['Total '+(type==='quote'?'quoted':'invoiced'),money(total)],['Drafts',draft],[last,completed]].map(([k,v])=>'<div class="stat"><small>'+k+'</small><strong>'+v+'</strong></div>').join('');
+const total=list.reduce((s,d)=>s+(d.amount_cents==null?0:Number(d.amount_cents)),0);
+el('stats').innerHTML=[['Priced '+(type==='quote'?'quotes':'invoices'),money(total)],['Drafts',draft],[last,completed]].map(([k,v])=>'<div class="stat"><small>'+k+'</small><strong>'+v+'</strong></div>').join('');
 el('records').innerHTML=list.length?list.map(d=>{
 const desc=escapeHtml(d.description.length>105?d.description.slice(0,105)+'…':d.description);
 const action=d.status==='Draft'?'<button class="mini" data-action="edit" data-id="'+d.id+'">Edit</button><button class="mini" data-action="advance" data-id="'+d.id+'">'+(type==='quote'?'Mark sent':'Mark issued')+'</button><button class="mini" data-action="delete" data-id="'+d.id+'">Delete</button>':
@@ -76,9 +76,9 @@ type==='invoice'&&d.status==='Unpaid'?'<button class="mini" data-action="advance
 return '<article class="record"><div><h3>'+escapeHtml(d.customer_name)+'</h3><p>'+desc+'</p><p class="muted micro">'+escapeHtml(d.number)+'</p><span class="pill '+escapeHtml(d.status)+'">'+escapeHtml(d.status)+'</span></div><div class="right"><div class="amount">'+money(d.amount_cents)+'</div><div class="actions"><button class="mini" data-action="print" data-id="'+d.id+'">Print / PDF</button>'+action+'</div></div></article>';
 }).join(''):'<div class="empty">No '+(type==='quote'?'quotes':'invoices')+' yet. Create your first one.</div>';
 }
-function openForm(d=null){editing=d?.id||null;el('editor-title').textContent=(d?'Edit ':'New ')+type;el('document-form').reset();el('business-name').value=d?.business_name||localStorage.getItem('jobflow_business_name_'+user.id)||'';el('customer-name').value=d?.customer_name||'';el('customer-email').value=d?.customer_email||'';el('description').value=d?.description||'';el('amount').value=d?(d.amount_cents/100).toFixed(2):'';el('gst').value=d?.gst_treatment||'unspecified';el('due-date').value=d?.due_date||'';el('date-label').textContent=type==='quote'?'Valid until (optional)':'Due date (optional)';el('editor').hidden=false;el('business-name').focus();el('editor').scrollIntoView({behavior:'smooth',block:'start'})}
+function openForm(d=null){editing=d?.id||null;el('editor-title').textContent=(d?'Edit ':'New ')+type;el('document-form').reset();el('business-name').value=d?.business_name||localStorage.getItem('jobflow_business_name_'+user.id)||'';el('customer-name').value=d?.customer_name||'';el('customer-email').value=d?.customer_email||'';el('customer-contact').value=d?.customer_contact||'';el('description').value=d?.description||'';el('amount').value=d?.amount_cents==null?'':(Number(d.amount_cents)/100).toFixed(2);el('gst').value=d?.gst_treatment||'unspecified';el('due-date').value=d?.due_date||'';el('date-label').textContent=type==='quote'?'Valid until (optional)':'Due date (optional)';el('editor').hidden=false;el('business-name').focus();el('editor').scrollIntoView({behavior:'smooth',block:'start'})}
 function closeForm(){editing=null;el('editor').hidden=true;el('document-form').reset()}
-async function refresh(){if(!user)return;const{data,error}=await client.from('jobflow_documents').select('id,document_type,number,business_name,customer_name,customer_email,description,amount_cents,gst_treatment,due_date,status,created_at').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(500);if(error)throw error;docs=data||[];draw()}
+async function refresh(){if(!user)return;const{data,error}=await client.from('jobflow_documents').select('id,document_type,number,business_name,customer_name,customer_email,customer_contact,description,amount_cents,gst_treatment,due_date,status,created_at,source_enquiry_id,source_quote_id').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(500);if(error)throw error;docs=data||[];draw()}
 async function task(fn){if(busy)return;busy=true;try{await fn()}catch(e){note('Could not complete the action: '+(e?.message||String(e)),true)}finally{busy=false}}
 async function change(d,status){const{data,error}=await client.from('jobflow_documents').update({status,updated_at:new Date().toISOString()}).eq('id',d.id).eq('owner_id',user.id).select('id');if(error)throw error;if(!data?.length)throw Error('This document could not be updated.');await refresh();note('Status updated to '+status+'. No message was sent.')}
 function printDoc(d){const w=window.open('','_blank');if(!w){note('Allow pop-ups to preview and print the document.',true);return}
@@ -103,12 +103,12 @@ el('cancel').addEventListener('click',closeForm);
 el('refresh').addEventListener('click',()=>task(async()=>{await refresh();note('Documents refreshed.')}));
 el('document-form').addEventListener('submit',e=>{e.preventDefault();void task(async()=>{
 if(!el('document-form').reportValidity())return;
-const raw=Number(el('amount').value),amount_cents=Math.round(raw*100);
-if(!Number.isFinite(amount_cents)||amount_cents<=0||amount_cents>99999999999)throw Error('Enter an amount between $0.01 and $999,999,999.99.');
-const business_name=el('business-name').value.trim(),customer_name=el('customer-name').value.trim(),description=el('description').value.trim(),customer_email=el('customer-email').value.trim();
+const raw=el('amount').value.trim(),amount_cents=raw===''?null:Math.round(Number(raw)*100);
+if(amount_cents!==null&&(!Number.isFinite(amount_cents)||amount_cents<=0||amount_cents>99999999999))throw Error('Enter an amount between $0.01 and $999,999,999.99.');
+const business_name=el('business-name').value.trim(),customer_name=el('customer-name').value.trim(),description=el('description').value.trim(),customer_email=el('customer-email').value.trim(),customer_contact=el('customer-contact').value.trim();
 if(business_name.length<2||customer_name.length<2||description.length<3)throw Error('Check your business name, customer name and work description.');
-const values={business_name,customer_name,description,customer_email,amount_cents,gst_treatment:el('gst').value,due_date:el('due-date').value||null,updated_at:new Date().toISOString()};
-let query;if(editing){query=client.from('jobflow_documents').update(values).eq('id',editing).eq('owner_id',user.id).eq('status','Draft').select('id')}else{query=client.from('jobflow_documents').insert({...values,owner_id:user.id,document_type:type,number:number(type),status:'Draft'}).select('id')}
+const values={business_name,customer_name,description,customer_email,customer_contact,amount_cents,gst_treatment:el('gst').value,due_date:el('due-date').value||null,updated_at:new Date().toISOString()};
+let query;if(editing){query=client.from('jobflow_documents').update(values).eq('id',editing).eq('owner_id',user.id).in('status',['Draft','Sent']).select('id')}else{query=client.from('jobflow_documents').insert({...values,owner_id:user.id,document_type:type,number:number(type),status:'Draft'}).select('id')}
 const {data,error}=await query;if(error)throw error;if(!data?.length)throw Error('Document not saved. It may no longer be a draft.');
 try{localStorage.setItem('jobflow_business_name_'+user.id,business_name)}catch(e){}
 closeForm();await refresh();note('Draft saved securely to your Ezysouth account.');
