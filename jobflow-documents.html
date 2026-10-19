@@ -88,105 +88,218 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
 <script>
+
 (()=>{
 'use strict';
-const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co', PUBLIC_KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
+const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co',PUBLIC_KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
 const el=id=>document.getElementById(id);
-const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const money=cents=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(cents||0)/100);
-let user=null,client=null,docs=[],type=new URLSearchParams(location.search).get('tab')==='invoice'?'invoice':'quote',editing=null,busy=false;
-function note(message,error=false){el('message').innerHTML='<div class="notice'+(error?' error':'')+'">'+escapeHtml(message)+'</div>'}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=c=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(c||0)/100);
+const num=(t)=>{const n=Number(t);return Number.isFinite(n)?n:null};
+const parseCents=t=>{const s=String(t).trim();if(!/^\d+(?:\.\d{1,2})?$/.test(s))return null;const n=num(s);return n===null||n>999999999.99?null:Math.round(n*100)};
+const param=new URLSearchParams(location.search);
+let type=param.get('tab')==='invoice'?'invoice':'quote',focusEnquiry=param.get('enquiry'),editing=null;
+let user=null,client=null,docs=[],lineRows=[],busy=false;
+function note(message,error=false){el('message').innerHTML='<div class="notice'+(error?' error':'')+'">'+esc(message)+'</div>'}
 function showGate(){el('loading').hidden=true;el('gate').hidden=false;el('workspace').hidden=true;el('create').hidden=true}
-function number(t){return (t==='quote'?'Q-':'INV-')+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase()}
-function rows(){return docs.filter(d=>d.document_type===type).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)))}
+function number(t){return (t==='quote'?'Q-':'INV-')+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,7).toUpperCase()}
+function rows(){const list=docs.filter(d=>d.document_type===type).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));if(focusEnquiry)list.sort((a,b)=>Number(b.source_enquiry_id===focusEnquiry)-Number(a.source_enquiry_id===focusEnquiry));return list}
+function editAllowed(d){return d.status==='Draft'||(d.document_type==='quote'&&d.status==='Sent'&&d.source_enquiry_id&&d.amount_cents===null)}
+function hasPrice(d){return d.amount_cents!==null&&d.amount_cents!==undefined&&Number(d.amount_cents)>0}
 function draw(){
-document.querySelectorAll('[data-type]').forEach(b=>{const active=b.dataset.type===type;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});
-el('create').textContent='+ New '+type;el('list-title').textContent=type==='quote'?'Your quotes':'Your invoices';
-const list=rows();el('count').textContent=list.length+' document'+(list.length===1?'':'s');
-const draft=list.filter(d=>d.status==='Draft').length;
-const last=type==='quote'?'Accepted':'Paid';
-const completed=list.filter(d=>d.status===last).length;
-const total=list.reduce((s,d)=>s+(d.amount_cents==null?0:Number(d.amount_cents)),0);
-el('stats').innerHTML=[['Priced '+(type==='quote'?'quotes':'invoices'),money(total)],['Drafts',draft],[last,completed]].map(([k,v])=>'<div class="stat"><small>'+k+'</small><strong>'+v+'</strong></div>').join('');
-el('records').innerHTML=list.length?list.map(d=>{
-const desc=escapeHtml(d.description.length>105?d.description.slice(0,105)+'…':d.description);
-const action=d.status==='Draft'
- ? '<button class="mini" data-action="edit" data-id="'+d.id+'">Edit draft</button><button class="mini" data-action="advance" data-id="'+d.id+'">'+(type==='quote'?'Mark sent':'Mark issued')+'</button>'+(d.source_enquiry_id?'':'<button class="mini" data-action="delete" data-id="'+d.id+'">Delete</button>')
- : type==='quote'&&d.status==='Sent'
- ? (d.amount_cents===null&&d.source_enquiry_id?'<button class="mini" data-action="edit" data-id="'+d.id+'">Complete pricing</button>':'')+'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark accepted</button><button class="mini" data-action="decline" data-id="'+d.id+'">Declined</button>'
- : type==='quote'&&d.status==='Accepted'
- ? '<button class="mini" data-action="convert" data-id="'+d.id+'">View invoice</button>'
- : type==='invoice'&&d.status==='Unpaid'
- ? '<button class="mini" data-action="advance" data-id="'+d.id+'">Mark paid</button>'
- : '';
-const value=d.amount_cents===null?'Pricing needed':money(d.amount_cents);
-const origin=(d.source_enquiry_id?' · From enquiry':'')+(d.source_quote_id?' · Linked to quote':'');
-return '<article class="record"><div><h3>'+escapeHtml(d.customer_name)+'</h3><p>'+desc+'</p><p class="muted micro">'+escapeHtml(d.number)+origin+'</p><span class="pill '+escapeHtml(d.status)+'">'+escapeHtml(d.status)+'</span></div><div class="right"><div class="amount">'+value+'</div><div class="actions"><button class="mini" data-action="print" data-id="'+d.id+'">Print / PDF</button>'+action+'</div></div></article>';
-}).join(''):'<div class="empty">No '+(type==='quote'?'quotes':'invoices')+' yet. Create your first one.</div>';
+ document.querySelectorAll('[data-type]').forEach(b=>{const active=b.dataset.type===type;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active))});
+ el('create').textContent='+ New '+type;el('list-title').textContent=type==='quote'?'Your quotes':'Your invoices';
+ const list=rows(),draft=list.filter(d=>d.status==='Draft').length,last=type==='quote'?'Accepted':'Paid';
+ el('count').textContent=list.length+' document'+(list.length===1?'':'s');
+ const total=list.reduce((sum,d)=>sum+(hasPrice(d)?Number(d.amount_cents):0),0);
+ el('stats').innerHTML=[['Priced '+(type==='quote'?'quotes':'invoices'),money(total)],['Drafts',draft],[last,list.filter(d=>d.status===last).length]].map(([name,value])=>'<div class="stat"><small>'+name+'</small><strong>'+value+'</strong></div>').join('');
+ el('records').innerHTML=list.length?list.map(d=>{
+  const desc=esc(d.description.slice(0,110))+(d.description.length>110?'…':'');
+  const draftActions='<button class="mini" data-action="edit" data-id="'+d.id+'">Edit draft</button><button class="mini" data-action="advance" data-id="'+d.id+'">'+(type==='quote'?'Mark sent':'Mark issued')+'</button>'+(d.source_enquiry_id?'':'<button class="mini" data-action="delete" data-id="'+d.id+'">Delete</button>');
+  const sentActions=(editAllowed(d)?'<button class="mini" data-action="edit" data-id="'+d.id+'">Complete pricing</button>':'')+'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark accepted</button><button class="mini" data-action="decline" data-id="'+d.id+'">Decline</button>';
+  const action=d.status==='Draft'?draftActions:d.document_type==='quote'&&d.status==='Sent'?sentActions:d.document_type==='quote'&&d.status==='Accepted'?'<button class="mini" data-action="convert" data-id="'+d.id+'">View invoice</button>':d.document_type==='invoice'&&d.status==='Unpaid'?'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark paid</button>':'';
+  const badges=(d.source_enquiry_id?' · From enquiry':'')+(d.source_quote_id?' · Linked to quote':'')+(Array.isArray(d.line_items)&&d.line_items.length?' · '+d.line_items.length+' items':'');
+  return '<article class="record" '+(focusEnquiry&&d.source_enquiry_id===focusEnquiry?'style="background:#edf6ef;border-radius:10px;padding-left:12px;padding-right:12px"':'')+'><div><h3>'+esc(d.customer_name)+'</h3><p>'+desc+'</p><p class="muted micro">'+esc(d.number)+badges+'</p><span class="pill '+esc(d.status)+'">'+esc(d.status)+'</span></div><div class="right"><div class="amount">'+(hasPrice(d)?money(d.amount_cents):'Pricing needed')+'</div><div class="actions"><button class="mini" data-action="print" data-id="'+d.id+'">Print / PDF</button>'+action+'</div></div></article>';
+ }).join(''):'<div class="empty">No '+(type==='quote'?'quotes':'invoices')+' yet. Create your first one.</div>';
 }
-function openForm(d=null){editing=d?.id||null;el('editor-title').textContent=(d?'Edit ':'New ')+type;el('document-form').reset();el('business-name').value=d?.business_name||localStorage.getItem('jobflow_business_name_'+user.id)||'';el('customer-name').value=d?.customer_name||'';el('customer-email').value=d?.customer_email||'';el('customer-contact').value=d?.customer_contact||'';el('description').value=d?.description||'';el('amount').value=d?.amount_cents==null?'':(Number(d.amount_cents)/100).toFixed(2);el('gst').value=d?.gst_treatment||'unspecified';el('due-date').value=d?.due_date||'';el('date-label').textContent=type==='quote'?'Valid until (optional)':'Due date (optional)';el('editor').hidden=false;el('business-name').focus();el('editor').scrollIntoView({behavior:'smooth',block:'start'})}
-function closeForm(){editing=null;el('editor').hidden=true;el('document-form').reset()}
-async function refresh(){if(!user)return;const{data,error}=await client.from('jobflow_documents').select('id,document_type,number,business_name,customer_name,customer_email,customer_contact,description,amount_cents,gst_treatment,due_date,status,created_at,source_enquiry_id,source_quote_id').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(500);if(error)throw error;docs=data||[];draw()}
+function rowHtml(r,i){return '<div class="line-row" data-i="'+i+'">'+
+ '<label class="line-desc">Description<input data-field="description" maxlength="160" placeholder="e.g. Labour or materials" value="'+esc(r.description)+'"></label>'+
+ '<label>Qty<input data-field="quantity" inputmode="decimal" type="number" min=".01" max="10000" step=".01" value="'+esc(r.quantity)+'"></label>'+
+ '<label class="line-value">Unit price ($)<input data-field="price" type="number" inputmode="decimal" min="0" max="999999999.99" step=".01" placeholder="0.00" value="'+esc(r.price)+'"></label>'+
+ '<div class="line-output"><label>Line total</label><div class="line-total" data-total="'+i+'">$0.00</div></div>'+
+ '<div class="line-remove"><button type="button" class="remove-line" data-remove="'+i+'" aria-label="Remove line item '+(i+1)+'" title="Remove item">×</button></div></div>'}
+function renderLines(){el('line-items').innerHTML=lineRows.map(rowHtml).join('');updateSummary()}
+function compute(strict=false){
+ const items=[],empty=r=>!r.description.trim()&&String(r.price).trim()==='';
+ for(const r of lineRows){
+  if(empty(r))continue;
+  const description=r.description.trim(),qtext=String(r.quantity).trim(),price=String(r.price).trim();
+  const qty=num(qtext),priceCents=parseCents(price);
+  if(description.length<1||description.length>160||!/^\d+(?:\.\d{1,2})?$/.test(qtext)||qty===null||qty<=0||qty>10000||priceCents===null){
+   if(strict)throw Error('Complete every item description, quantity and unit price (two decimal places maximum).');return null;
+  }
+  items.push({description,quantity:qty,unit_price_cents:priceCents});
+ }
+ if(items.length>100){if(strict)throw Error('Maximum 100 line items.');return null}
+ const subtotal=items.reduce((sum,x)=>sum+Math.round(x.quantity*x.unit_price_cents),0);
+ const discount=parseCents(el('discount').value||'0');
+ if(discount===null||discount>subtotal||(items.length===0&&discount>0)){
+  if(strict)throw Error('Discount must be a valid amount no greater than the subtotal.');return null;
+ }
+ const taxable=subtotal-discount,mode=el('gst').value;
+ let gst=0;
+ if(mode==='exclusive')gst=Math.round(taxable*0.15);
+ if(mode==='included')gst=Math.round(taxable*3/23);
+ const total=taxable+(mode==='exclusive'?gst:0);
+ if(total>99999999999){if(strict)throw Error('Document total is too high.');return null}
+ return {items,subtotal,discount,gst,total:total>0?total:null,mode};
+}
+function updateSummary(){
+ const calculated=compute(false),valid=!!calculated;
+ el('sum-subtotal').textContent=valid?money(calculated.subtotal):'—';
+ el('sum-discount').textContent=valid?'- '+money(calculated.discount):'—';
+ el('sum-gst').textContent=valid?money(calculated.gst):'—';
+ el('sum-gst-label').textContent=el('gst').value==='included'?'GST included (15%)':el('gst').value==='exclusive'?'GST added (15%)':el('gst').value==='not_charged'?'GST not charged':'GST not selected';
+ el('sum-total').textContent=valid?money(calculated.total):'—';
+ el('editor-help').textContent=valid?'':'Finish the item details and check the discount to calculate a total.';
+ el('tax-help').textContent=el('gst').value==='unspecified'?'Choose the correct GST treatment before marking a document sent or issued.':el('gst').value==='not_charged'?'No GST is charged on this document.':'Only select 15% GST if your business is GST registered and this supply qualifies.';
+ document.querySelectorAll('#line-items [data-i]').forEach(row=>{
+  const item=lineRows[Number(row.dataset.i)],q=num(item.quantity),price=parseCents(item.price),value=row.querySelector('[data-total]');
+  value.textContent=q&&price!==null?money(Math.round(q*price)):'—';
+ });
+}
+function openForm(d=null){
+ if(d&&!editAllowed(d)){note('Only drafts can be edited.');return}
+ editing=d?.id||null;
+ el('editor-title').textContent=(d?'Edit ':'New ')+type;
+ el('document-form').reset();
+ let business='',gstNum='';
+ try{business=localStorage.getItem('jobflow_business_name_'+user.id)||'';gstNum=localStorage.getItem('jobflow_business_gst_'+user.id)||''}catch(e){}
+ el('business-name').value=d?.business_name||business;
+ el('business-gst-number').value=d?.business_gst_number||gstNum;
+ el('customer-name').value=d?.customer_name||'';
+ el('customer-email').value=d?.customer_email||'';
+ el('customer-contact').value=d?.customer_contact||'';
+ el('description').value=d?.description||'';
+ el('gst').value=d?.gst_treatment||'unspecified';
+ el('due-date').value=d?.due_date||'';
+ el('discount').value=d?.discount_cents?String(Number(d.discount_cents)/100):'0';
+ el('date-label').textContent=type==='quote'?'Valid until (optional)':'Due date (optional)';
+ if(Array.isArray(d?.line_items)&&d.line_items.length){
+  lineRows=d.line_items.map(x=>({description:String(x.description||''),quantity:String(x.quantity||1),price:(Number(x.unit_price_cents)/100).toFixed(2)}));
+ }else if(hasPrice(d)){
+  lineRows=[{description:d.description.slice(0,160),quantity:'1',price:(Number(d.amount_cents)/100).toFixed(2)}];
+ }else{
+  lineRows=[{description:'',quantity:'1',price:''}];
+ }
+ el('editor').hidden=false;
+ renderLines();
+ el('business-name').focus();
+ el('editor').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function closeForm(){editing=null;lineRows=[];el('editor').hidden=true;el('document-form').reset();el('line-items').replaceChildren()}
+async function refresh(){
+ if(!user)return;
+ const {data,error}=await client.from('jobflow_documents')
+  .select('id,document_type,number,business_name,business_gst_number,customer_name,customer_email,customer_contact,description,line_items,discount_cents,subtotal_cents,gst_cents,amount_cents,gst_treatment,due_date,status,created_at,source_enquiry_id,source_quote_id')
+  .eq('owner_id',user.id).order('created_at',{ascending:false}).limit(500);
+ if(error)throw error;
+ docs=data||[];draw();
+}
 async function task(fn){if(busy)return;busy=true;try{await fn()}catch(e){note('Could not complete the action: '+(e?.message||String(e)),true)}finally{busy=false}}
-async function change(d,status){const{data,error}=await client.from('jobflow_documents').update({status,updated_at:new Date().toISOString()}).eq('id',d.id).eq('owner_id',user.id).select('id');if(error)throw error;if(!data?.length)throw Error('This document could not be updated.');await refresh();note(status==='Sent'&&d.document_type==='quote'?'Quote marked sent. Invoice draft created automatically. No email was sent.':'Status updated to '+status+'. No message was sent.')}
-function printDoc(d){if(d.amount_cents===null){note('Add pricing before printing this document.',true);return}const w=window.open('','_blank');if(!w){note('Allow pop-ups to preview and print the document.',true);return}
-const h=escapeHtml;const label=d.document_type==='quote'?'Quote':'Invoice';
-const date=d.due_date?new Date(d.due_date+'T12:00:00').toLocaleDateString('en-NZ'):'Not specified';
-const gst={included:'Amount includes GST',not_charged:'No GST charged',unspecified:'GST treatment not specified'}[d.gst_treatment]||'GST not specified';
-const html='<!doctype html><html lang="en-NZ"><head><meta charset="utf-8"><title>'+h(d.number)+'</title><style>body{font:16px system-ui,-apple-system,sans-serif;max-width:780px;margin:55px auto;padding:20px;color:#19342c}header{border-bottom:2px solid #19342c;padding-bottom:25px;display:flex;justify-content:space-between;gap:20px}h1{font-size:32px}section{margin:28px 0}p{line-height:1.6;white-space:pre-wrap}small{color:#63766d}.total{border-top:1px solid #ceded2;text-align:right;padding-top:18px;font-size:24px;font-weight:800}</style></head><body><header><div><b>'+h(d.business_name)+'</b><h1>'+label+'</h1><small>'+h(d.number)+' · '+new Date(d.created_at).toLocaleDateString('en-NZ')+'</small></div><div><small>Status</small><p>'+h(d.status)+'</p></div></header><section><small>Prepared for</small><p><b>'+h(d.customer_name)+'</b><br>'+h(d.customer_email||'')+'</p></section><section><small>Work description</small><p>'+h(d.description)+'</p></section><section><small>'+(d.document_type==='quote'?'Valid until':'Due date')+'</small><p>'+h(date)+'</p><small>'+h(gst)+'</small></section><div class="total">Amount: '+money(d.amount_cents)+'</div><p><small>Review required issuer, payment and GST details before sending. Printing does not send this document or process payments.</small></p></body></html>';
-w.document.open();w.document.write(html);w.document.close();w.focus()}
+function readyToIssue(d){
+ if(!hasPrice(d))throw Error('Add pricing before marking the document sent or issued.');
+ if(d.gst_treatment==='unspecified')throw Error('Choose the correct GST treatment before issuing.');
+ if((d.gst_treatment==='included'||d.gst_treatment==='exclusive')&&!String(d.business_gst_number||'').trim())throw Error('Enter your business GST number before marking a GST-charging document sent or issued.');
+}
+async function change(d,status){
+ const {data,error}=await client.from('jobflow_documents').update({status,updated_at:new Date().toISOString()}).eq('id',d.id).eq('owner_id',user.id).select('id');
+ if(error)throw error;
+ if(!data?.length)throw Error('This document could not be updated.');
+ await refresh();
+ note(status==='Sent'&&d.document_type==='quote'?'Quote recorded as sent. A linked invoice draft was created. No email was sent.':'Status updated to '+status+'. No message was sent.');
+}
+function printDoc(d){
+ if(!hasPrice(d)){note('Set the amount before printing this document.',true);return}
+ const w=window.open('','_blank');if(!w){note('Allow pop-ups to preview or save the document as PDF.',true);return}
+ const h=esc,label=d.document_type==='quote'?'Quote':'Invoice';
+ const date=d.due_date?new Date(d.due_date+'T12:00:00').toLocaleDateString('en-NZ'):'Not specified';
+ const inclusive=d.gst_treatment==='included',exclusive=d.gst_treatment==='exclusive';
+ const items=Array.isArray(d.line_items)?d.line_items:[];
+ const lines=items.length?items.map(x=>'<tr><td>'+h(x.description)+'</td><td>'+h(x.quantity)+'</td><td>'+money(x.unit_price_cents)+'</td><td>'+money(Math.round(Number(x.quantity)*Number(x.unit_price_cents)))+'</td></tr>').join(''):'<tr><td>'+h(d.description)+'</td><td>1</td><td>'+money(d.amount_cents)+'</td><td>'+money(d.amount_cents)+'</td></tr>';
+ const subtotal=d.subtotal_cents==null?Number(d.amount_cents):Number(d.subtotal_cents);
+ const discount=Number(d.discount_cents||0),gst=Number(d.gst_cents||0);
+ const taxText=inclusive?'GST included (15%)':exclusive?'GST added (15%)':d.gst_treatment==='not_charged'?'GST not charged':'GST treatment not specified';
+ const html='<!doctype html><html lang="en-NZ"><head><meta charset="utf-8"><title>'+h(d.number)+'</title><style>body{font:15px system-ui,-apple-system,sans-serif;max-width:800px;margin:35px auto;padding:25px;color:#19342c}header{display:flex;justify-content:space-between;gap:20px;border-bottom:2px solid #173b2a;padding-bottom:22px}h1{font-size:35px;margin:5px 0}.client{margin:27px 0}p{line-height:1.6;white-space:pre-wrap}small{color:#64796d}table{border-collapse:collapse;width:100%;margin-top:24px}th,td{border-bottom:1px solid #dce8e0;padding:12px 8px;text-align:left}th{color:#557363;font-size:12px}td:nth-child(n+2),th:nth-child(n+2){text-align:right}.summary{max-width:320px;margin:25px 0 30px auto}.total{display:flex;justify-content:space-between;padding:7px 0}.grand{font-weight:800;font-size:20px;border-top:2px solid #19342c;margin-top:8px;padding-top:14px}.fine{color:#667b70;font-size:12px;margin-top:35px}@media print{body{margin:0}thead{display:table-header-group}}</style></head><body><header><div><b>'+h(d.business_name)+'</b>'+(d.business_gst_number?'<p><small>GST No: '+h(d.business_gst_number)+'</small></p>':'')+'<h1>'+label+'</h1><small>'+h(d.number)+'</small></div><div><small>Created '+new Date(d.created_at).toLocaleDateString('en-NZ')+'</small><p><b>'+h(d.status)+'</b></p></div></header><div class="client"><small>Prepared for</small><p><strong>'+h(d.customer_name)+'</strong><br>'+h(d.customer_email||d.customer_contact||'')+'</p><small>'+(d.document_type==='quote'?'Valid until':'Due date')+': '+h(date)+'</small></div><p>'+h(d.description)+'</p><table><thead><tr><th>Description</th><th>Qty</th><th>Unit price</th><th>Amount</th></tr></thead><tbody>'+lines+'</tbody></table><div class="summary"><div class="total"><span>Subtotal</span><span>'+money(subtotal)+'</span></div><div class="total"><span>Discount</span><span>- '+money(discount)+'</span></div><div class="total"><span>'+h(taxText)+'</span><span>'+money(gst)+'</span></div><div class="total grand"><span>Total NZD</span><span>'+money(d.amount_cents)+'</span></div></div><p class="fine">Review supplier, buyer and payment details and taxable supply information requirements before sending. Printing or saving as PDF does not email the customer.</p></body></html>';
+ w.document.open();w.document.write(html);w.document.close();w.focus();
+}
 async function start(){
-if(!window.supabase?.createClient){el('loading').textContent='Unable to load secure account services. Check your internet connection.';return}
-client=window.supabase.createClient(PROJECT_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-const{data,error}=await client.auth.getUser();if(error&&!/auth session missing/i.test(error.message||''))throw error;
-user=data?.user||null;
-if(!user){showGate();return}
-el('loading').hidden=true;el('gate').hidden=true;el('workspace').hidden=false;el('create').hidden=false;
-await refresh();
-client.auth.onAuthStateChange((event)=>{if(event==='SIGNED_OUT'){user=null;docs=[];closeForm();showGate()}});
+ if(!window.supabase?.createClient){el('loading').textContent='Secure account service could not load. Check your connection.';return}
+ client=window.supabase.createClient(PROJECT_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ const {data,error}=await client.auth.getUser();
+ if(error&&!/auth session missing/i.test(error.message||''))throw error;
+ user=data?.user||null;
+ if(!user){showGate();return}
+ el('loading').hidden=true;el('gate').hidden=true;el('workspace').hidden=false;el('create').hidden=false;
+ await refresh();
+ client.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){user=null;docs=[];closeForm();showGate()}});
 }
 document.querySelectorAll('[data-type]').forEach(b=>b.addEventListener('click',()=>{type=b.dataset.type;closeForm();draw()}));
 el('create').addEventListener('click',()=>openForm());
 el('cancel').addEventListener('click',closeForm);
 el('refresh').addEventListener('click',()=>task(async()=>{await refresh();note('Documents refreshed.')}));
+el('add-line').addEventListener('click',()=>{if(lineRows.length>=100){note('Maximum 100 line items.',true);return}lineRows.push({description:'',quantity:'1',price:''});renderLines();const fields=el('line-items').querySelectorAll('[data-field="description"]');fields[fields.length-1]?.focus()});
+el('line-items').addEventListener('input',e=>{const input=e.target.closest('[data-field]'),row=e.target.closest('[data-i]');if(!input||!row)return;const i=Number(row.dataset.i),field=input.dataset.field;if(!lineRows[i]||!['description','quantity','price'].includes(field))return;lineRows[i][field]=input.value;updateSummary()});
+el('line-items').addEventListener('click',e=>{const btn=e.target.closest('[data-remove]');if(!btn)return;lineRows.splice(Number(btn.dataset.remove),1);if(!lineRows.length)lineRows.push({description:'',quantity:'1',price:''});renderLines()});
+el('gst').addEventListener('change',updateSummary);
+el('discount').addEventListener('input',updateSummary);
 el('document-form').addEventListener('submit',e=>{e.preventDefault();void task(async()=>{
-if(!el('document-form').reportValidity())return;
-const raw=el('amount').value.trim(),amount_cents=raw===''?null:Math.round(Number(raw)*100);
-if(amount_cents!==null&&(!Number.isFinite(amount_cents)||amount_cents<=0||amount_cents>99999999999))throw Error('Enter an amount between $0.01 and $999,999,999.99.');
-const business_name=el('business-name').value.trim(),customer_name=el('customer-name').value.trim(),description=el('description').value.trim(),customer_email=el('customer-email').value.trim(),customer_contact=el('customer-contact').value.trim();
-if(business_name.length<2||customer_name.length<2||description.length<3)throw Error('Check your business name, customer name and work description.');
-const values={business_name,customer_name,description,customer_email,customer_contact,amount_cents,gst_treatment:el('gst').value,due_date:el('due-date').value||null,updated_at:new Date().toISOString()};
-let query;if(editing){query=client.from('jobflow_documents').update(values).eq('id',editing).eq('owner_id',user.id).in('status',['Draft','Sent']).select('id')}else{query=client.from('jobflow_documents').insert({...values,owner_id:user.id,document_type:type,number:number(type),status:'Draft'}).select('id')}
-const {data,error}=await query;if(error)throw error;if(!data?.length)throw Error('Document not saved. It may no longer be a draft.');
-try{localStorage.setItem('jobflow_business_name_'+user.id,business_name)}catch(e){}
-closeForm();await refresh();note('Draft saved securely to your Ezysouth account.');
+ if(!el('document-form').reportValidity())return;
+ const computed=compute(true);
+ const business_name=el('business-name').value.trim(),business_gst_number=el('business-gst-number').value.trim();
+ const customer_name=el('customer-name').value.trim(),description=el('description').value.trim(),customer_email=el('customer-email').value.trim(),customer_contact=el('customer-contact').value.trim();
+ if(business_name.length<2||customer_name.length<2||description.length<3)throw Error('Check business name, customer and work description.');
+ const values={business_name,business_gst_number,customer_name,description,customer_email,customer_contact,
+   line_items:computed.items,discount_cents:computed.discount,amount_cents:computed.total,
+   gst_treatment:el('gst').value,due_date:el('due-date').value||null,updated_at:new Date().toISOString()};
+ let query;
+ if(editing){query=client.from('jobflow_documents').update(values).eq('id',editing).eq('owner_id',user.id).in('status',['Draft','Sent']).select('id')}
+ else{query=client.from('jobflow_documents').insert({...values,owner_id:user.id,document_type:type,number:number(type),status:'Draft'}).select('id')}
+ const {data,error}=await query;
+ if(error)throw error;if(!data?.length)throw Error('Document not saved. It may no longer be a draft.');
+ try{localStorage.setItem('jobflow_business_name_'+user.id,business_name);localStorage.setItem('jobflow_business_gst_'+user.id,business_gst_number)}catch(e){}
+ closeForm();await refresh();note('Itemised document saved securely to your Ezysouth account.');
 })});
 el('records').addEventListener('click',e=>{const button=e.target.closest('button[data-action]');if(!button||busy)return;const d=docs.find(x=>x.id===button.dataset.id);if(!d)return;const a=button.dataset.action;
-if(a==='print'){printDoc(d);return}if(a==='edit'&&(d.status==='Draft'||(d.status==='Sent'&&d.document_type==='quote'&&d.source_enquiry_id&&d.amount_cents===null))){openForm(d);return}
-void task(async()=>{
-if(a==='delete'){if(d.status!=='Draft')throw Error('Only drafts can be deleted.');if(!confirm('Permanently delete '+d.number+'?'))return;const{data,error}=await client.from('jobflow_documents').delete().eq('id',d.id).eq('owner_id',user.id).eq('status','Draft').select('id');if(error)throw error;if(!data?.length)throw Error('The draft could not be deleted.');await refresh();note('Draft deleted.');return}
-if(a==='advance'){if(d.amount_cents===null)throw Error('Set the price before issuing, accepting or marking paid.');const next=d.status==='Draft'?(d.document_type==='quote'?'Sent':'Unpaid'):d.document_type==='quote'&&d.status==='Sent'?'Accepted':d.document_type==='invoice'&&d.status==='Unpaid'?'Paid':null;if(!next)return;
-if(d.status==='Draft'&&!confirm('Have you reviewed this document? Marking it as '+(next==='Sent'?'sent':'issued')+' does not email the customer.'))return;
-await change(d,next);return}
-if(a==='decline'&&d.status==='Sent'){await change(d,'Declined');return}
-if(a==='convert'&&d.document_type==='quote'&&d.status==='Accepted'){
-const existing=docs.find(x=>x.source_quote_id===d.id&&x.document_type==='invoice');
-if(!existing){
- const {data,error}=await client.from('jobflow_documents').insert({
-  owner_id:user.id,document_type:'invoice',number:number('invoice'),
-  business_name:d.business_name,customer_name:d.customer_name,
-  customer_email:d.customer_email,customer_contact:d.customer_contact||'',
-  description:d.description,amount_cents:d.amount_cents,gst_treatment:d.gst_treatment,
-  due_date:null,status:'Draft',source_quote_id:d.id,source_enquiry_id:d.source_enquiry_id||null
- }).select('id');
- if(error&&error.code!=='23505')throw error;
- if(!data?.length&&(!error||error.code!=='23505'))throw Error('Could not create linked invoice.');
-}
-type='invoice';closeForm();await refresh();note('Linked invoice opened.');return}
-
+ if(a==='print'){printDoc(d);return}
+ if(a==='edit'&&editAllowed(d)){openForm(d);return}
+ void task(async()=>{
+  if(a==='delete'){
+   if(d.status!=='Draft'||d.source_enquiry_id)throw Error('Only unlinked drafts can be deleted.');
+   if(!confirm('Permanently delete '+d.number+'?'))return;
+   const {data,error}=await client.from('jobflow_documents').delete().eq('id',d.id).eq('owner_id',user.id).eq('status','Draft').select('id');
+   if(error)throw error;if(!data?.length)throw Error('Draft could not be deleted.');await refresh();note('Draft deleted.');return
+  }
+  if(a==='advance'){
+   const next=d.status==='Draft'?(d.document_type==='quote'?'Sent':'Unpaid'):d.document_type==='quote'&&d.status==='Sent'?'Accepted':d.document_type==='invoice'&&d.status==='Unpaid'?'Paid':null;
+   if(!next)return;
+   if(d.status==='Draft'){readyToIssue(d);if(!confirm('Mark this document as '+(next==='Sent'?'sent':'issued')+'? This only updates JobFlow and does not email the customer.'))return}
+   else if(d.status==='Sent'&&next==='Accepted'&&!hasPrice(d))throw Error('Complete the quote pricing first.');
+   await change(d,next);return
+  }
+  if(a==='decline'&&d.document_type==='quote'&&d.status==='Sent'){await change(d,'Declined');return}
+  if(a==='convert'&&d.document_type==='quote'&&d.status==='Accepted'){
+   if(!docs.some(x=>x.source_quote_id===d.id&&x.document_type==='invoice')){
+    const {data,error}=await client.from('jobflow_documents').insert({owner_id:user.id,document_type:'invoice',number:number('invoice'),business_name:d.business_name,business_gst_number:d.business_gst_number||'',customer_name:d.customer_name,customer_email:d.customer_email,customer_contact:d.customer_contact||'',description:d.description,line_items:d.line_items||[],discount_cents:d.discount_cents||0,amount_cents:d.amount_cents,gst_treatment:d.gst_treatment,status:'Draft',source_quote_id:d.id,source_enquiry_id:d.source_enquiry_id||null}).select('id');
+    if(error&&error.code!=='23505')throw error;
+    if(!data?.length&&(!error||error.code!=='23505'))throw Error('Could not open linked invoice.');
+   }
+   type='invoice';closeForm();await refresh();note('Linked invoice opened.');return
+  }
+ });
 });
-});
-start().catch(e=>{el('loading').hidden=true;showGate();note('Account error: '+(e?.message||String(e)),true)});
+start().catch(error=>{showGate();note('Account error: '+(error?.message||String(error)),true)});
 })();
+
 </script>
 </body></html>
