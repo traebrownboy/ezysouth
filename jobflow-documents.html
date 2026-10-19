@@ -18,6 +18,26 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}.field.full{grid-column:1/-1}label{display:block;font-size:.85rem;font-weight:700;margin-top:5px}input,textarea,select{width:100%;border:1px solid #bcd2c5;border-radius:9px;padding:11px;color:#19342c;background:white;margin:5px 0 9px}textarea{min-height:100px;resize:vertical}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:10px}.record{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:17px 0;border-top:1px solid #e7eeea}.record h3{font-size:.99rem;margin:0 0 3px}.record p{font-size:.84rem;overflow-wrap:anywhere}.record .right{text-align:right;flex-shrink:0}.amount{font-weight:800;letter-spacing:-.025em}.pill{display:inline-block;padding:4px 9px;border-radius:20px;font-size:.75rem;background:#e7f1eb;color:#376a4e;font-weight:750;margin-top:7px}.pill.Paid,.pill.Accepted{background:#daf3e4;color:#176b40}.pill.Unpaid,.pill.Sent{background:#fff2d8;color:#88621b}.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin-top:10px}.mini{border:1px solid #d2e5d9;border-radius:8px;background:white;color:#236746;padding:6px 9px;font-size:.76rem;font-weight:700;min-height:32px}.mini:hover{background:#edf6f0}.empty{text-align:center;padding:45px 16px;color:#62766d}.footer{margin-top:15px;font-size:.78rem;color:#7e9287}.secure{display:inline-flex;gap:6px;align-items:center;color:#3f7355;font-size:.77rem;font-weight:750}
 @media(max-width:680px){.shell{padding:23px 14px 60px}.panel{padding:16px}.fields{grid-template-columns:1fr}.grid{gap:8px}.stat{padding:12px}.record{flex-direction:column;gap:8px}.record .right{text-align:left;width:100%}.actions{justify-content:flex-start}.heading{align-items:flex-start}.top-inner{align-items:flex-start}}
 @media print{.top,.heading .btn,.tabs,.grid,.panel-head .btn,.actions,.footer,#editor{display:none!important}.panel{box-shadow:none;border:0;padding:0}.record{break-inside:avoid}}
+/* Itemised document editor */
+.item-workspace{margin-top:23px;padding:18px;background:#fbfdfb;border:1px solid #dce9e0;border-radius:14px}
+.item-intro{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-bottom:12px}
+.item-intro h3{font-size:1.05rem;letter-spacing:-.025em;margin:0;color:#153b2a}
+.line-row{display:grid;grid-template-columns:minmax(145px,2.3fr) minmax(76px,.65fr) minmax(110px,1fr) minmax(110px,1fr) 38px;gap:10px;align-items:end;border-top:1px solid #e3ece6;padding:13px 0}
+.line-row label{font-size:.73rem;color:#60796a;margin:0}
+.line-row input{min-width:0;width:100%;margin:5px 0 0;border-color:#d4e2d8}
+.line-total{display:flex;align-items:center;min-height:45px;white-space:nowrap;font-weight:750;font-size:.88rem}
+.remove-line{height:43px;width:38px;border:1px solid #e1e8e1;border-radius:9px;background:white;color:#9d4740;font-size:1.25rem}
+.remove-line:hover{background:#fff0ee}
+.add-item{border:1px solid #caddce;border-radius:9px;padding:10px 14px;color:#176644;background:#edf6ef;font-weight:750;margin-top:8px}
+.calc-wrap{display:grid;grid-template-columns:1fr minmax(215px,280px);gap:19px;margin-top:20px}
+.summary{padding:16px;background:#edf5ef;border:1px solid #deeadf;border-radius:12px}
+.summary-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;font-size:.85rem}
+.summary-row.total{font-size:1.14rem;color:#124d34;font-weight:850;border-top:1px solid #d4e3d9;margin-top:9px;padding-top:12px}
+.summary strong{white-space:nowrap}
+.helper{font-size:.78rem;color:#667e70;line-height:1.5}
+#editor-help{font-size:.8rem;color:#a0611f;min-height:0;margin-top:7px}
+@media(max-width:800px){.line-row{grid-template-columns:minmax(0,2fr) minmax(70px,.6fr) minmax(100px,1fr);gap:8px}.line-total{min-height:32px}.calc-wrap{grid-template-columns:1fr}}
+@media(max-width:480px){.line-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 38px}.line-row .line-desc{grid-column:1/-1}.line-row .line-value{grid-column:1/2}.line-row .line-output{grid-column:2/3}.line-row .line-remove{grid-column:3/4;align-self:end}.item-workspace{padding:13px}}
 </style>
 </head>
 <body>
@@ -33,14 +53,35 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <div id="stats" class="grid" aria-label="Document overview"></div>
 <section id="editor" class="panel" hidden><h2 id="editor-title">New quote</h2><p class="micro">Save a draft now. Send it yourself when it's ready.</p>
 <form id="document-form"><div class="fields">
-<div class="field"><label for="business-name">Your business name *</label><input id="business-name" required minlength="2" maxlength="120" autocomplete="organization"></div>
+<div class="field"><label for="business-name">Your business name *</label><input id="business-name" required minlength="2" maxlength="120" autocomplete="organization"></div><div class="field"><label for="business-gst-number">GST number (if registered)</label><input id="business-gst-number" maxlength="30" placeholder="Only if you charge GST"></div>
 <div class="field"><label for="customer-name">Customer name *</label><input id="customer-name" required minlength="2" maxlength="120"></div>
 <div class="field"><label for="customer-email">Customer email (optional)</label><input id="customer-email" type="email" maxlength="254"></div><div class="field"><label for="customer-contact">Customer phone or contact</label><input id="customer-contact" maxlength="200" placeholder="Copied from enquiry if available"></div>
-<div class="field"><label for="amount">Amount (NZD)</label><input id="amount" type="number" min=".01" max="999999999.99" step=".01" placeholder="Add pricing before issuing"></div>
+
 <div class="field full"><label for="description">Work description *</label><textarea id="description" required minlength="3" maxlength="4000" placeholder="Describe the work you're quoting or invoicing"></textarea></div>
-<div class="field"><label for="gst">GST treatment</label><select id="gst"><option value="unspecified">Not specified (draft)</option><option value="included">Amount includes GST</option><option value="not_charged">No GST charged</option></select></div>
+<div class="field"><label for="gst">GST treatment</label><select id="gst"><option value="unspecified">Not specified (draft)</option><option value="included">Prices include GST (15%)</option><option value="exclusive">Add GST to prices (15%)</option><option value="not_charged">No GST charged</option></select></div>
 <div class="field"><label id="date-label" for="due-date">Valid until (optional)</label><input id="due-date" type="date"></div>
-</div><div class="controls"><button class="btn" id="save" type="submit">Save draft</button><button class="btn secondary" id="cancel" type="button">Cancel</button></div></form></section>
+</div>
+<section class="item-workspace" aria-label="Itemised pricing">
+ <div class="item-intro"><div><h3>Items & pricing</h3><p class="helper">Add labour, materials or services. All prices in NZD.</p></div></div>
+ <div id="line-items"></div>
+ <button type="button" class="add-item" id="add-line">+ Add another item</button>
+ <div class="calc-wrap">
+  <div>
+   <label for="discount">Discount (NZD)</label>
+   <input id="discount" type="number" min="0" max="999999999.99" step=".01" value="0" style="max-width:180px">
+   <p class="helper">Discount is applied before any additional GST.</p>
+   <p class="helper" id="tax-help">Choose the correct GST treatment for your business before issuing.</p>
+  </div>
+  <div class="summary" aria-live="polite" aria-label="Price summary">
+   <div class="summary-row"><span>Items subtotal</span><strong id="sum-subtotal">$0.00</strong></div>
+   <div class="summary-row"><span>Discount</span><strong id="sum-discount">$0.00</strong></div>
+   <div class="summary-row"><span id="sum-gst-label">GST</span><strong id="sum-gst">$0.00</strong></div>
+   <div class="summary-row total"><span>Total</span><strong id="sum-total">$0.00</strong></div>
+  </div>
+ </div>
+ <p id="editor-help" role="status" aria-live="polite"></p>
+</section>
+<div class="controls"><button class="btn" id="save" type="submit">Save draft</button><button class="btn secondary" id="cancel" type="button">Cancel</button></div></form></section>
 <section class="panel"><div class="panel-head"><div><h2 id="list-title">Your quotes</h2><p class="micro" id="count">0 documents</p></div><button class="btn secondary small" id="refresh">↻ Refresh</button></div><div id="records"></div></section>
 <p class="footer"><span class="secure">✓ Saved securely to your Ezysouth account</span> · Marking a document as sent or paid only records its status. It does not send emails or process payments. Review GST, supplier information and tax requirements before issuing financial documents.</p>
 </div>
