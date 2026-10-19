@@ -38,6 +38,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 #editor-help{font-size:.8rem;color:#a0611f;min-height:0;margin-top:7px}
 @media(max-width:800px){.line-row{grid-template-columns:minmax(0,2fr) minmax(70px,.6fr) minmax(100px,1fr);gap:8px}.line-total{min-height:32px}.calc-wrap{grid-template-columns:1fr}}
 @media(max-width:480px){.line-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 38px}.line-row .line-desc{grid-column:1/-1}.line-row .line-value{grid-column:1/2}.line-row .line-output{grid-column:2/3}.line-row .line-remove{grid-column:3/4;align-self:end}.item-workspace{padding:13px}}
+.share-modal[hidden],.share-result[hidden]{display:none!important}
+.share-modal{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;padding:16px;background:#102820aa;backdrop-filter:blur(5px)}
+.share-card{width:min(100%,580px);max-height:94dvh;overflow:auto;background:white;border-radius:19px;padding:clamp(17px,4vw,27px);box-shadow:0 25px 70px #0b312839}
+.share-top{display:flex;justify-content:space-between;align-items:start;gap:14px}.share-top h2{margin:0}.share-top p{font-size:.83rem;color:#6f8475}
+.share-close{background:white;border:1px solid #dce7dd;color:#205b3f;border-radius:9px;font-size:1.3rem;padding:5px 12px}
+.share-buttons{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.share-buttons .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.share-result{padding:15px;background:#ecf6ef;border:1px solid #d8e9dd;border-radius:12px;margin:17px 0}
+.share-result input{font-size:.76rem}.share-helper{font-size:.79rem;color:#6a8071;line-height:1.5}
+.share-message{font-size:.83rem;color:#256044;white-space:pre-wrap}
+.share-history{border-top:1px solid #e2ece5;margin-top:21px;padding-top:12px}
+.share-row{display:flex;justify-content:space-between;gap:13px;padding:11px 0;border-bottom:1px solid #eef3ef;font-size:.8rem}
+.share-row small{display:block;color:#758879}
+@media(max-width:600px){.share-buttons .btn{flex:1}.share-row{align-items:start}}
 </style>
 </head>
 <body>
@@ -86,6 +99,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <p class="footer"><span class="secure">✓ Saved securely to your Ezysouth account</span> · Marking a document as sent or paid only records its status. It does not send emails or process payments. Review GST, supplier information and tax requirements before issuing financial documents.</p>
 </div>
 </main>
+<div class="share-modal" id="share-modal" hidden role="dialog" aria-modal="true" aria-labelledby="share-title">
+ <div class="share-card">
+  <div class="share-top"><div><h2 id="share-title">Share document</h2><p id="share-subtitle"></p></div><button type="button" class="share-close" id="share-close" aria-label="Close sharing">×</button></div>
+  <label for="share-email">Customer email</label><input id="share-email" type="email" maxlength="254" placeholder="customer@example.co.nz">
+  <p class="share-helper">Only share a document after reviewing it. Private links should be sent to the intended customer.</p>
+  <div class="share-buttons"><button type="button" class="btn" id="share-prepare">Create secure link</button><button type="button" class="btn secondary" id="share-send" hidden>Send email from JobFlow</button></div>
+  <p class="share-helper" id="share-connection">Direct email is not connected. Secure links and your email app are available.</p>
+  <p id="share-message" class="share-message" role="status" aria-live="polite"></p>
+  <div class="share-result" id="share-result" hidden><strong>Private link ready</strong><p class="share-helper">Expires in 14 days. Anyone with this link can view the document.</p>
+   <input id="share-link" type="text" readonly aria-label="Private document link">
+   <div class="share-buttons"><button class="btn" type="button" id="share-copy">Copy link</button><a class="btn secondary" id="share-mailto" href="#">Open email app</a><a class="btn secondary" id="share-preview" href="#" target="_blank" rel="noopener noreferrer">Preview</a></div>
+  </div>
+  <div class="share-history"><h3>Sharing history</h3><p class="share-helper">Creating a link does not send an email. Links can be revoked at any time.</p><div id="share-history"></div></div>
+ </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
 <script>
 
@@ -119,7 +147,7 @@ function draw(){
   const sentActions=(editAllowed(d)?'<button class="mini" data-action="edit" data-id="'+d.id+'">Complete pricing</button>':'')+'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark accepted</button><button class="mini" data-action="decline" data-id="'+d.id+'">Decline</button>';
   const action=d.status==='Draft'?draftActions:d.document_type==='quote'&&d.status==='Sent'?sentActions:d.document_type==='quote'&&d.status==='Accepted'?'<button class="mini" data-action="convert" data-id="'+d.id+'">View invoice</button>':d.document_type==='invoice'&&d.status==='Unpaid'?'<button class="mini" data-action="advance" data-id="'+d.id+'">Mark paid</button>':'';
   const badges=(d.source_enquiry_id?' · From enquiry':'')+(d.source_quote_id?' · Linked to quote':'')+(Array.isArray(d.line_items)&&d.line_items.length?' · '+d.line_items.length+' items':'');
-  return '<article class="record" '+(focusEnquiry&&d.source_enquiry_id===focusEnquiry?'style="background:#edf6ef;border-radius:10px;padding-left:12px;padding-right:12px"':'')+'><div><h3>'+esc(d.customer_name)+'</h3><p>'+desc+'</p><p class="muted micro">'+esc(d.number)+badges+'</p><span class="pill '+esc(d.status)+'">'+esc(d.status)+'</span></div><div class="right"><div class="amount">'+(hasPrice(d)?money(d.amount_cents):'Pricing needed')+'</div><div class="actions"><button class="mini" data-action="print" data-id="'+d.id+'">Print / PDF</button>'+action+'</div></div></article>';
+  return '<article class="record" '+(focusEnquiry&&d.source_enquiry_id===focusEnquiry?'style="background:#edf6ef;border-radius:10px;padding-left:12px;padding-right:12px"':'')+'><div><h3>'+esc(d.customer_name)+'</h3><p>'+desc+'</p><p class="muted micro">'+esc(d.number)+badges+'</p><span class="pill '+esc(d.status)+'">'+esc(d.status)+'</span></div><div class="right"><div class="amount">'+(hasPrice(d)?money(d.amount_cents):'Pricing needed')+'</div><div class="actions"><button class="mini" data-action="print" data-id="'+d.id+'">Print / PDF</button><button class="mini" data-action="share" data-id="'+d.id+'">Share</button>'+action+'</div></div></article>';
  }).join(''):'<div class="empty">No '+(type==='quote'?'quotes':'invoices')+' yet. Create your first one.</div>';
 }
 function rowHtml(r,i){return '<div class="line-row" data-i="'+i+'">'+
@@ -272,6 +300,7 @@ el('document-form').addEventListener('submit',e=>{e.preventDefault();void task(a
 })});
 el('records').addEventListener('click',e=>{const button=e.target.closest('button[data-action]');if(!button||busy)return;const d=docs.find(x=>x.id===button.dataset.id);if(!d)return;const a=button.dataset.action;
  if(a==='print'){printDoc(d);return}
+ if(a==='share'){if(window.jobflowShare)void window.jobflowShare(d.id);return}
  if(a==='edit'&&editAllowed(d)){openForm(d);return}
  void task(async()=>{
   if(a==='delete'){
@@ -298,8 +327,10 @@ el('records').addEventListener('click',e=>{const button=e.target.closest('button
   }
  });
 });
+window.addEventListener('jobflow:deliverySent',()=>void refresh());
 start().catch(error=>{showGate();note('Account error: '+(error?.message||String(error)),true)});
 })();
 
 </script>
+<script src="./jobflow-delivery.js"></script>
 </body></html>
