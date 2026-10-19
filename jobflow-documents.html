@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://ezcmfbaoivdwkgayznbt.supabase.co wss://ezcmfbaoivdwkgayznbt.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
-<title>Quotes & Invoices | JobFlow by Ezysouth</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://anldjuaqlpowwodlphqf.supabase.co wss://ezcmfbaoivdwkgayznbt.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
+<title>Quotes & Invoices | JobFlow STAGING</title>
 <style>
 :root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#19342c;background:#f4f8f5;font-synthesis:none}
 *{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}a{color:inherit;text-decoration:none}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #85c4a6;outline-offset:2px}
-.top{background:#122c25;color:#fff;padding:18px 20px}.top-inner{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-weight:850;font-size:1.25rem;letter-spacing:-.035em}.brand span{color:#72cfa5}.top a{color:#e6fff2;font-size:.88rem}
+.staging-notice{background:#fff3d9;border-bottom:1px solid #f0dcac;color:#79521c;text-align:center;padding:9px 14px;font-size:12px;font-weight:800;letter-spacing:.045em}.top{background:#122c25;color:#fff;padding:18px 20px}.top-inner{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-weight:850;font-size:1.25rem;letter-spacing:-.035em}.brand span{color:#72cfa5}.top a{color:#e6fff2;font-size:.88rem}
 .shell{max-width:1050px;margin:0 auto;padding:30px 18px 70px}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:22px}.eyebrow{font-size:.7rem;letter-spacing:.11em;font-weight:800;color:#628272}h1{font-size:clamp(1.8rem,4.5vw,2.6rem);letter-spacing:-.05em;margin:5px 0}h2{font-size:1.2rem;letter-spacing:-.025em;margin:3px 0 12px}p{color:#62766d;margin:4px 0;line-height:1.6}.micro{font-size:.85rem}
 .btn{border:0;border-radius:10px;padding:11px 16px;font-weight:750;background:#147a4f;color:#fff;min-height:44px}.btn:hover{background:#106441}.btn.secondary{background:#e8f3ed;color:#1a6143}.btn.danger{background:#ffebea;color:#9b2929}.btn.small{padding:8px 12px;font-size:.86rem;min-height:38px}
 .tabs{display:flex;gap:28px;border-bottom:1px solid #d6e4da;margin-bottom:18px}.tabs button{border:0;border-bottom:2px solid transparent;padding:14px 1px;background:transparent;color:#6a8173;font-weight:750}.tabs button.active{border-color:#147a4f;color:#145c3d}
@@ -21,12 +21,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 </style>
 </head>
 <body>
-<header class="top"><div class="top-inner"><div class="brand">JobFlow <span>by Ezysouth</span></div><a href="./jobflow.html">← Back to JobFlow</a></div></header>
+<div class="staging-notice">🧪 PRIVATE BETA PREVIEW · Test accounts and fictional details only</div>
+<header class="top"><div class="top-inner"><a href="./index.html" class="brand" style="color:white">JobFlow <span>by Ezysouth</span></a><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><a href="./jobflow.html">← Back to JobFlow</a><a href="./index.html">⌂ Home</a></div></div></header>
 <main class="shell">
 <div class="heading"><div><div class="eyebrow">JOBFLOW / BUSINESS DOCUMENTS</div><h1>Quotes & Invoices</h1><p class="micro">Create, manage and keep track of your paperwork.</p></div><button class="btn" id="create" hidden>+ New quote</button></div>
 <div id="message" role="status" aria-live="polite"></div>
 <div id="loading" class="notice">Checking your Ezysouth account…</div>
-<div id="gate" class="panel" hidden><h2>Sign in to continue</h2><p>For privacy, your documents are only available in your Ezysouth account.</p><div class="controls"><a class="btn" href="./jobflow.html">Sign in to JobFlow</a></div></div>
+<div id="gate" class="panel" hidden><h2>Sign in to continue</h2><p>For privacy, your documents are only available in your Ezysouth account.</p><div class="controls"><a class="btn" href="./login.html?next=jobflow">Sign in to Ezysouth</a></div></div>
 <div id="workspace" hidden>
 <div class="tabs" role="tablist"><button class="active" data-type="quote" role="tab" aria-selected="true">Quotes</button><button data-type="invoice" role="tab" aria-selected="false">Invoices</button></div>
 <div id="stats" class="grid" aria-label="Document overview"></div>
@@ -48,7 +49,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <script>
 (()=>{
 'use strict';
-const PROJECT_URL='https://ezcmfbaoivdwkgayznbt.supabase.co', PUBLIC_KEY='sb_publishable_f4Pl6Lxlre4k1kV1G6dRLg_RGuYOY03';
+const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co', PUBLIC_KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
 const el=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=cents=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(cents||0)/100);
