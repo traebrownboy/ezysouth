@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; connect-src https://anldjuaqlpowwodlphqf.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Shared document | JobFlow by Ezysouth</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#19372c;background:#f6f9f6;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;line-height:1.5}
+.head{background:#102a25;color:white;padding:18px 20px}
+.head-inner{max-width:850px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:1.2rem;font-weight:850;letter-spacing:-.04em}.brand span{color:#8ed8b2}
+.tag{font-size:.7rem;letter-spacing:.06em;color:#b2d6c1;text-transform:uppercase}
+.shell{max-width:850px;margin:35px auto;padding:0 15px 45px}
+.paper{background:white;border:1px solid #dce9e1;border-radius:20px;padding:clamp(20px,5vw,44px);box-shadow:0 13px 46px #15372211}
+.notice{border:1px solid #d3e3d8;border-radius:12px;background:#eaf5ee;color:#2a6041;padding:18px;line-height:1.6}
+.dochead{display:flex;justify-content:space-between;align-items:start;gap:20px;border-bottom:2px solid #19392b;padding-bottom:23px}
+.dochead h1{font-size:clamp(1.6rem,5vw,2.5rem);letter-spacing:-.05em;margin:5px 0}
+.eyebrow{letter-spacing:.09em;text-transform:uppercase;color:#7b9183;font-size:.72rem;font-weight:750}
+.business{font-size:1.2rem;font-weight:800;color:#173b2b}
+.meta{font-size:.82rem;color:#647b6c;margin:4px 0}
+.client{margin:30px 0}.client strong{display:block;font-size:1.13rem;margin:7px 0}
+.description{white-space:pre-wrap;overflow-wrap:anywhere;color:#4d6757}
+table{border-collapse:collapse;width:100%;margin:28px 0}td,th{border-bottom:1px solid #e4eee7;padding:12px 8px;text-align:left;font-size:.85rem}
+th{font-size:.74rem;color:#698473}td:nth-child(n+2),th:nth-child(n+2){text-align:right}
+.totals{max-width:350px;margin:25px 0 8px auto}
+.totals .line{display:flex;gap:14px;justify-content:space-between;padding:7px 0;font-size:.88rem}
+.totals .grand{font-size:1.22rem;font-weight:850;border-top:2px solid #19392b;padding-top:14px;margin-top:9px}
+.controls{max-width:850px;margin:17px auto 0;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+button{cursor:pointer;border:0;background:#147a4f;color:white;border-radius:11px;padding:12px 18px;font-weight:750;font:inherit}
+.note{color:#6f8277;font-size:.79rem;margin-top:28px;border-top:1px solid #e4eee7;padding-top:18px}
+@media(max-width:640px){.dochead{flex-direction:column;gap:12px}table{display:block;overflow-x:auto}td,th{white-space:nowrap}.totals{max-width:100%}.head-inner{align-items:start}}
+@media print{body{background:white}.head,.controls,.note{display:none!important}.shell{max-width:100%;margin:0;padding:0}.paper{box-shadow:none;border:0;border-radius:0;padding:0}table{display:table}.dochead{display:flex}}
+</style>
+</head>
+<body>
+<header class="head"><div class="head-inner"><div class="brand">JobFlow <span>by Ezysouth</span></div><span class="tag">Private document</span></div></header>
+<main class="shell">
+<div id="message" class="notice">Opening your private document…</div>
+<article id="paper" class="paper" hidden></article>
+<div id="controls" class="controls" hidden><button type="button" id="print">Print / Save PDF</button></div>
+</main>
+<script>
+(async ()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const e=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=c=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(c||0)/100);
+const param=new URLSearchParams(location.search),token=param.get('token');
+function fail(msg){$('message').textContent=msg;$('message').hidden=false;$('paper').hidden=true;$('controls').hidden=true}
+if(!token||!/^[0-9a-f]{64}$/.test(token)){fail('This document link is invalid. Contact the business for a new link.');return}
+try{
+const response=await fetch('https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/jobflow-document-delivery?token='+encodeURIComponent(token),{cache:'no-store',referrerPolicy:'no-referrer'});
+const result=await response.json();if(!response.ok)throw Error(result.error||'Unable to open document.');
+const d=result.document;if(!d||!['quote','invoice'].includes(d.type))throw Error('Document was not recognised.');
+const quote=d.type==='quote',items=Array.isArray(d.line_items)?d.line_items:[];
+const lines=items.length?items.map(i=>'<tr><td>'+e(i.description)+'</td><td>'+e(i.quantity)+'</td><td>'+money(i.unit_price_cents)+'</td><td>'+money(Math.round(Number(i.quantity)*Number(i.unit_price_cents)))+'</td></tr>').join(''):'<tr><td>'+e(d.description)+'</td><td>1</td><td>'+money(d.amount_cents)+'</td><td>'+money(d.amount_cents)+'</td></tr>';
+const subtotal=d.subtotal_cents===null||d.subtotal_cents===undefined?Number(d.amount_cents):Number(d.subtotal_cents);
+const discount=Number(d.discount_cents||0),gst=Number(d.gst_cents||0);
+const tax=d.gst_treatment==='included'?'GST included (15%)':d.gst_treatment==='exclusive'?'GST added (15%)':d.gst_treatment==='not_charged'?'No GST charged':'GST treatment not specified';
+const date=d.due_date?new Date(d.due_date+'T12:00:00').toLocaleDateString('en-NZ'):'Not specified';
+$('paper').innerHTML='<div class="dochead"><div><div class="business">'+e(d.business_name)+'</div>'+(d.business_gst_number?'<p class="meta">GST No. '+e(d.business_gst_number)+'</p>':'')+'<h1>'+(quote?'Quote':'Invoice')+'</h1><p class="meta">'+e(d.number)+'</p></div><div><div class="eyebrow">Issued</div><p class="meta">'+new Date(result.created_at).toLocaleDateString('en-NZ')+'</p><p class="meta">'+e(d.status||'')+'</p></div></div>'+
+'<section class="client"><div class="eyebrow">Prepared for</div><strong>'+e(d.customer_name)+'</strong><p class="meta">'+(quote?'Valid until':'Due date')+': '+e(date)+'</p></section>'+
+'<p class="description">'+e(d.description)+'</p>'+
+'<table><thead><tr><th>Description</th><th>Qty</th><th>Unit</th><th>Total</th></tr></thead><tbody>'+lines+'</tbody></table>'+
+'<div class="totals"><div class="line"><span>Subtotal</span><strong>'+money(subtotal)+'</strong></div>'+
+'<div class="line"><span>Discount</span><strong>− '+money(discount)+'</strong></div>'+
+'<div class="line"><span>'+e(tax)+'</span><strong>'+money(gst)+'</strong></div>'+
+'<div class="line grand"><span>Total NZD</span><span>'+money(d.amount_cents)+'</span></div></div>'+
+'<p class="note">This document was shared privately by '+e(d.business_name)+'. The link expires on '+new Date(result.expires_at).toLocaleDateString('en-NZ')+'. For corrections, payment details or other enquiries, contact the issuing business directly.</p>';
+$('message').hidden=true;$('paper').hidden=false;$('controls').hidden=false;
+$('print').onclick=()=>window.print();
+}catch(error){fail(error?.message||'The document could not be opened.')}
+})();
+</script>
+</body></html>
