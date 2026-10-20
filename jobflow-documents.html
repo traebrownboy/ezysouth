@@ -300,7 +300,7 @@ el('document-form').addEventListener('submit',e=>{e.preventDefault();void task(a
 })});
 el('records').addEventListener('click',e=>{const button=e.target.closest('button[data-action]');if(!button||busy)return;const d=docs.find(x=>x.id===button.dataset.id);if(!d)return;const a=button.dataset.action;
  if(a==='print'){printDoc(d);return}
- if(a==='share'){if(typeof window.jobflowShare==='function'){void window.jobflowShare(d.id)}else{note('Sharing could not load. Refresh this page and try again.',true)}return}
+ if(a==='share'){if(typeof window.jobflowShare==='function'){void window.jobflowShare(d.id)}else{const warning='Sharing controls failed to load. Refresh this page to retry.';note(warning,true);window.alert(warning)}return}
  if(a==='edit'&&editAllowed(d)){openForm(d);return}
  void task(async()=>{
   if(a==='delete'){
@@ -332,5 +332,5 @@ start().catch(error=>{showGate();note('Account error: '+(error?.message||String(
 })();
 
 </script>
-<script src="./jobflow-delivery.js?v=3" onerror="document.getElementById('message').textContent='Sharing controls failed to load. Refresh this page and try again.'"></script>
+<script src="./jobflow-delivery.js?v=4" onerror="document.getElementById('message').textContent='Sharing controls failed to load. Refresh this page and try again.'"></script>
 </body></html>
