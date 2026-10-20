@@ -87,7 +87,7 @@ function renderApproval(data){
  if(data.response){
   $('approval-action').hidden=true;
   const when=data.respondedAt?new Date(data.respondedAt).toLocaleString('en-NZ'):'';
-  approvalStatus('Quote '+(data.response==='Accepted'?'accepted':'declined')+(data.responseName?' by '+data.responseName:'')+(when?' on '+when:'')+'. The business has been notified in JobFlow.');
+  approvalStatus('Quote '+(data.response==='Accepted'?'accepted':'declined')+(data.responseName?' by '+data.responseName:'')+(when?' on '+when:'')+'. The business can see this decision in JobFlow.');
   return;
  }
  if(!data.canRespond){
@@ -125,7 +125,7 @@ const subtotal=d.subtotal_cents===null||d.subtotal_cents===undefined?Number(d.am
 const discount=Number(d.discount_cents||0),gst=Number(d.gst_cents||0);
 const tax=d.gst_treatment==='included'?'GST included (15%)':d.gst_treatment==='exclusive'?'GST added (15%)':d.gst_treatment==='not_charged'?'No GST charged':'GST treatment not specified';
 const date=d.due_date?new Date(d.due_date+'T12:00:00').toLocaleDateString('en-NZ'):'Not specified';
-$('paper').innerHTML='<div class="dochead"><div><div class="business">'+e(d.business_name)+'</div>'+(d.business_gst_number?'<p class="meta">GST No. '+e(d.business_gst_number)+'</p>':'')+'<h1>'+(quote?'Quote':'Invoice')+'</h1><p class="meta">'+e(d.number)+'</p></div><div><div class="eyebrow">Issued</div><p class="meta">'+new Date(result.created_at).toLocaleDateString('en-NZ')+'</p><p class="meta">'+e(d.status||'')+'</p></div></div>'+
+$('paper').innerHTML='<div class="dochead"><div><div class="business">'+e(d.business_name)+'</div>'+(d.business_gst_number?'<p class="meta">GST No. '+e(d.business_gst_number)+'</p>':'')+'<h1>'+(quote?'Quote':'Invoice')+'</h1><p class="meta">'+e(d.number)+'</p></div><div><div class="eyebrow">Issued</div><p class="meta">'+new Date(result.created_at).toLocaleDateString('en-NZ')+'</p><p class="meta">'+(quote?'For customer review':e(d.status||''))+'</p></div></div>'+
 '<section class="client"><div class="eyebrow">Prepared for</div><strong>'+e(d.customer_name)+'</strong><p class="meta">'+(quote?'Valid until':'Due date')+': '+e(date)+'</p></section>'+
 '<p class="description">'+e(d.description)+'</p>'+
 '<table><thead><tr><th>Description</th><th>Qty</th><th>Unit</th><th>Total</th></tr></thead><tbody>'+lines+'</tbody></table>'+
