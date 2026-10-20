@@ -327,10 +327,22 @@ el('records').addEventListener('click',e=>{const button=e.target.closest('button
   }
  });
 });
+// Approval changes can arrive from a customer's browser. Refresh while this tab is visible.
+let approvalRefreshing=false;
+async function refreshCustomerDecisions(){
+ if(!user||busy||editing||document.hidden||approvalRefreshing)return;
+ approvalRefreshing=true;
+ try{await refresh()}catch(error){/* Keep an existing draft editable if offline. */}
+ finally{approvalRefreshing=false}
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)void refreshCustomerDecisions()});
+window.addEventListener('focus',()=>void refreshCustomerDecisions());
+window.setInterval(()=>void refreshCustomerDecisions(),30000);
 window.addEventListener('jobflow:deliverySent',()=>void refresh());
+
 start().catch(error=>{showGate();note('Account error: '+(error?.message||String(error)),true)});
 })();
 
 </script>
-<script src="./jobflow-delivery.js?v=4" onerror="document.getElementById('message').textContent='Sharing controls failed to load. Refresh this page and try again.'"></script>
+<script src="./jobflow-delivery.js?v=5" onerror="document.getElementById('message').textContent='Sharing controls failed to load. Refresh this page and try again.'"></script>
 </body></html>
