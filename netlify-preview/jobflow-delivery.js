@@ -1,18 +1,18 @@
 /* Ezysouth JobFlow staging secure sharing UI */
 (()=>{
 'use strict';
-const URL='https://anldjuaqlpowwodlphqf.supabase.co';
+const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co';
 const KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
-const API=URL+'/functions/v1/jobflow-document-delivery';
+const API=PROJECT_URL+'/functions/v1/jobflow-document-delivery';
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=c=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(c||0)/100);
-const client=window.supabase?.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-let current=null,user=null,link='',emailEnabled=false,busy=false;
+const client=window.supabase?.createClient(PROJECT_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+let current=null,user=null,link='',emailEnabled=false,busy=false,loadSequence=0;
 const modal=$('share-modal');
 if(!modal||!client)return;
 function message(text,error=false){$('share-message').textContent=text;$('share-message').style.color=error?'#a33a31':'#246245'}
-function close(){if(busy)return;modal.hidden=true;current=null;link='';$('share-result').hidden=true;message('')}
+function close(){if(busy)return;loadSequence++;modal.hidden=true;current=null;link='';$('share-result').hidden=true;message('')}
 async function request(action,options){
  const {data:{session},error}=await client.auth.getSession();
  if(error||!session?.access_token)throw Error('Sign in to JobFlow to share this document.');
@@ -33,14 +33,14 @@ async function loadHistory(){
   const revoked=!!d.revoked_at,expired=new Date(d.expires_at).getTime()<Date.now();
   const label=revoked?'Revoked':expired?'Expired':d.status==='sent'?'Email accepted':d.status==='prepared'?'Link created':d.status==='pending'?'Sending…':'Failed';
   const right=!revoked&&!expired&&['sent','prepared'].includes(d.status)?'<button class="mini" data-revoke="'+esc(d.id)+'" type="button">Revoke</button>':'';
-  return '<div class="share-row"><div><strong>'+esc(label)+'</strong> · '+esc(d.recipient_email)+
+  return '<div class="share-row"><div><strong>'+esc(label)+'</strong> · '+esc(d.recipient_email||'Copyable link')+
    '<small>'+esc(new Date(d.created_at).toLocaleString('en-NZ'))+(d.opened_at?' · Opened':'')+'</small></div>'+right+'</div>';
  }).join('');
 }
 async function perform(action){
  if(!current||busy)return;
  const email=$('share-email').value.trim();
- if(!email||!$('share-email').checkValidity()){message('Enter a valid customer email address.',true);$('share-email').focus();return}
+ if((action==='send'||email!=='')&&(!email||!$('share-email').checkValidity())){message('Enter a valid customer email for email delivery, or clear the field to create a link.',true);$('share-email').focus();return}
  if(action==='send'&&!confirm('Send '+current.number+' to '+email+'? This sends a real email.'))return;
  busy=true;$('share-prepare').disabled=true;$('share-send').disabled=true;
  message(action==='send'?'Submitting email…':'Creating private link…');
@@ -64,26 +64,45 @@ async function perform(action){
  finally{busy=false;$('share-prepare').disabled=false;$('share-send').disabled=false}
 }
 window.jobflowShare=async id=>{
+ const sequence=++loadSequence;
+ // Show the modal immediately on click, before doing any network request.
+ modal.hidden=false;current=null;link='';
+ $('share-result').hidden=true;
+ $('share-title').textContent='Share document';
+ $('share-subtitle').textContent='Loading document details…';
+ $('share-email').value='';
+ $('share-prepare').disabled=true;
+ $('share-send').hidden=true;
+ $('share-history').innerHTML='<p class="share-helper">Loading sharing history…</p>';
+ message('Checking your document…');
  try{
   const {data:{user:account},error:authError}=await client.auth.getUser();
-  if(authError||!account)throw Error('Sign in to JobFlow first.');
+  if(sequence!==loadSequence||modal.hidden)return;
+  if(authError||!account)throw Error('Sign in to JobFlow again to share this document.');
   user=account;
   const {data:doc,error}=await client.from('jobflow_documents').select('*').eq('owner_id',user.id).eq('id',id).single();
-  if(error||!doc)throw Error('The document could not be found.');
-  if(!Number.isFinite(Number(doc.amount_cents))||Number(doc.amount_cents)<=0)throw Error('Complete pricing before sharing this document.');
-  if(doc.gst_treatment==='unspecified')throw Error('Choose the GST treatment first.');
-  if(['included','exclusive'].includes(doc.gst_treatment)&&!doc.business_gst_number)throw Error('Enter the business GST number first.');
-  current=doc;link='';
+  if(sequence!==loadSequence||modal.hidden)return;
+  if(error||!doc)throw Error('The document could not be found. Refresh your JobFlow documents and try again.');
+  current=doc;
   $('share-title').textContent='Share '+(doc.document_type==='quote'?'quote':'invoice');
-  $('share-subtitle').textContent=doc.number+' · '+doc.customer_name+' · '+money(doc.amount_cents);
+  $('share-subtitle').textContent=doc.number+' · '+doc.customer_name+(Number(doc.amount_cents)>0?' · '+money(doc.amount_cents):'');
   $('share-email').value=doc.customer_email||'';
-  $('share-result').hidden=true;message('');modal.hidden=false;
   $('share-send').hidden=!emailEnabled;
-  $('share-connection').textContent=emailEnabled?'Email delivery is connected. Send directly or share a private link.':'Direct email requires a verified sending domain. Secure links and your own email app are ready.';
-  try{await loadHistory()}catch(error){message('Sharing history unavailable: '+error.message,true)}
-  $('share-email').focus();
+  $('share-connection').textContent=emailEnabled?'Email delivery is connected. Send directly or copy a private link.':'Direct email is not connected yet. Create a private link, then copy it or use your email app.';
+  const issue=!Number.isFinite(Number(doc.amount_cents))||Number(doc.amount_cents)<=0?'Set the document price before sharing.':
+   doc.gst_treatment==='unspecified'?'Choose the GST treatment in the quote editor before sharing.':
+   ['included','exclusive'].includes(doc.gst_treatment)&&!doc.business_gst_number?'Enter your business GST number in the quote editor before sharing.':
+   doc.status==='Void'?'This document is void and cannot be shared.':'';
+  $('share-prepare').disabled=!!issue;
+  $('share-send').disabled=!!issue;
+  message(issue||'Document ready. Choose Create secure link. A customer email is optional for copying the link.',!!issue);
+  try{await loadHistory()}catch(historyError){message((issue?issue+'\n':'')+'Sharing history unavailable: '+historyError.message,!!issue)}
+  if(!issue)$('share-email').focus();
  }catch(err){
-  const box=$('message');if(box){box.textContent=err?.message||'Sharing could not be opened.';}
+  if(sequence!==loadSequence||modal.hidden)return;
+  $('share-subtitle').textContent='';
+  $('share-history').textContent='';
+  message(err?.message||'Could not load the document for sharing.',true);
  }
 };
 $('share-prepare').addEventListener('click',()=>void perform('prepare'));
@@ -107,6 +126,6 @@ $('share-history').addEventListener('click',e=>{
  })();
 });
 fetch(API+'?capabilities=1',{cache:'no-store'})
-.then(async r=>{const d=await r.json();emailEnabled=r.ok&&d.emailEnabled===true})
+.then(async r=>{const d=await r.json();emailEnabled=r.ok&&d.emailEnabled===true;if(current&&!modal.hidden)$('share-send').hidden=!emailEnabled})
 .catch(()=>{emailEnabled=false});
 })();
