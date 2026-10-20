@@ -33,7 +33,19 @@ th{font-size:.74rem;color:#698473}td:nth-child(n+2),th:nth-child(n+2){text-align
 button{cursor:pointer;border:0;background:#147a4f;color:white;border-radius:11px;padding:12px 18px;font-weight:750;font:inherit}
 .note{color:#6f8277;font-size:.79rem;margin-top:28px;border-top:1px solid #e4eee7;padding-top:18px}
 @media(max-width:640px){.dochead{flex-direction:column;gap:12px}table{display:block;overflow-x:auto}td,th{white-space:nowrap}.totals{max-width:100%}.head-inner{align-items:start}}
-@media print{body{background:white}.head,.controls,.note{display:none!important}.shell{max-width:100%;margin:0;padding:0}.paper{box-shadow:none;border:0;border-radius:0;padding:0}table{display:table}.dochead{display:flex}}
+.approval[hidden]{display:none!important}
+.approval{background:white;border:1px solid #dce9e1;border-radius:16px;margin-top:18px;padding:clamp(18px,4vw,26px);box-shadow:0 8px 24px #1537220b}
+.approval h2{margin:0 0 6px;letter-spacing:-.025em;font-size:1.35rem}
+.approval p{font-size:.86rem;color:#647b6c;line-height:1.55}
+.approval label{display:block;font-weight:700;color:#294737;font-size:.84rem;margin:19px 0 7px}
+.approval input{display:block;max-width:480px;width:100%;padding:12px 13px;border:1px solid #c7d9cd;border-radius:9px;font:inherit;color:#19372c;background:#fff}
+.approval .buttons{display:flex;gap:11px;flex-wrap:wrap;margin-top:15px}
+.approval .buttons button{min-height:44px;font-size:.9rem;font-weight:750}
+.approval .buttons button.secondary{background:#edf4ee;color:#23563b}
+.approval .buttons button:disabled{opacity:.55;cursor:not-allowed}
+.approval .status{margin:12px 0 0;font-size:.89rem;color:#195e3b}
+.approval .terms{margin-top:13px;font-size:.76rem}
+@media print{body{background:white}.head,.controls,.approval,.note{display:none!important}.shell{max-width:100%;margin:0;padding:0}.paper{box-shadow:none;border:0;border-radius:0;padding:0}table{display:table}.dochead{display:flex}}
 </style>
 </head>
 <body>
@@ -41,6 +53,17 @@ button{cursor:pointer;border:0;background:#147a4f;color:white;border-radius:11px
 <main class="shell">
 <div id="message" class="notice">Opening your private document…</div>
 <article id="paper" class="paper" hidden></article>
+<section id="approval" class="approval" hidden aria-label="Respond to quote">
+ <h2>Respond to this quote</h2>
+ <p id="approval-intro">Review the details and total above, then choose whether to accept or decline.</p>
+ <div id="approval-action" hidden>
+  <label for="approval-name">Your name</label>
+  <input type="text" id="approval-name" maxlength="120" minlength="2" autocomplete="name" placeholder="Your full name">
+  <div class="buttons"><button id="approve" type="button">Accept quote</button><button id="decline" class="secondary" type="button">Decline quote</button></div>
+  <p class="terms">By selecting a response, you are confirming your decision for this exact quote. Anyone with this private link can respond, so keep it private. This does not make a payment or send an invoice.</p>
+ </div>
+ <p id="approval-status" class="status" role="status" aria-live="polite">Checking whether a response is available…</p>
+</section>
 <div id="controls" class="controls" hidden><button type="button" id="print">Print / Save PDF</button></div>
 </main>
 <script>
@@ -50,6 +73,46 @@ const $=id=>document.getElementById(id);
 const e=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=c=>new Intl.NumberFormat('en-NZ',{style:'currency',currency:'NZD'}).format(Number(c||0)/100);
 const param=new URLSearchParams(location.search),token=param.get('token');
+const APPROVAL_API='https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/jobflow-quote-approval';
+let responseBusy=false;
+function approvalStatus(message,error=false){$('approval-status').textContent=message;$('approval-status').style.color=error?'#a13d2e':'#185b3b'}
+async function approvalRequest(payload){
+ const response=await fetch(APPROVAL_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload,token}),cache:'no-store',referrerPolicy:'no-referrer'});
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw Error(data.error||'Quote response unavailable.');
+ return data;
+}
+function renderApproval(data){
+ $('approval').hidden=false;
+ if(data.response){
+  $('approval-action').hidden=true;
+  const when=data.respondedAt?new Date(data.respondedAt).toLocaleString('en-NZ'):'';
+  approvalStatus('Quote '+(data.response==='Accepted'?'accepted':'declined')+(data.responseName?' by '+data.responseName:'')+(when?' on '+when:'')+'. The business has been notified in JobFlow.');
+  return;
+ }
+ if(!data.canRespond){
+  $('approval-action').hidden=true;
+  approvalStatus(data.reason||'This quote is not available for a response. Please contact the business.',true);
+  return;
+ }
+ $('approval-action').hidden=false;
+ approvalStatus('Your decision will be recorded against this quote.');
+}
+async function sendDecision(decision){
+ if(responseBusy)return;
+ const name=$('approval-name').value.trim();
+ if(name.length<2||name.length>120){approvalStatus('Please enter your name before responding.',true);$('approval-name').focus();return}
+ const verb=decision==='Accepted'?'accept':'decline';
+ if(!window.confirm('Confirm that you want to '+verb+' this quote? This decision will be recorded and shared with the business.'))return;
+ responseBusy=true;$('approve').disabled=true;$('decline').disabled=true;
+ approvalStatus('Recording your decision…');
+ try{
+  const record=await approvalRequest({action:'respond',name,decision});
+  renderApproval({response:record.status,responseName:record.responseName,respondedAt:record.respondedAt});
+ }catch(error){approvalStatus(error.message||'Could not record your response.',true)}
+ finally{responseBusy=false;$('approve').disabled=false;$('decline').disabled=false}
+}
+
 function fail(msg){$('message').textContent=msg;$('message').hidden=false;$('paper').hidden=true;$('controls').hidden=true}
 if(!token||!/^[0-9a-f]{64}$/.test(token)){fail('This document link is invalid. Contact the business for a new link.');return}
 try{
@@ -73,6 +136,14 @@ $('paper').innerHTML='<div class="dochead"><div><div class="business">'+e(d.busi
 '<p class="note">This document was shared privately by '+e(d.business_name)+'. The link expires on '+new Date(result.expires_at).toLocaleDateString('en-NZ')+'. For corrections, payment details or other enquiries, contact the issuing business directly.</p>';
 $('message').hidden=true;$('paper').hidden=false;$('controls').hidden=false;
 $('print').onclick=()=>window.print();
+if(quote){
+ $('approval').hidden=false;
+ $('approval-name').value=d.customer_name||'';
+ $('approve').addEventListener('click',()=>void sendDecision('Accepted'));
+ $('decline').addEventListener('click',()=>void sendDecision('Declined'));
+ try{renderApproval(await approvalRequest({action:'state'}))}
+ catch(error){$('approval-action').hidden=true;approvalStatus(error.message||'Unable to check approval status.',true)}
+}
 }catch(error){fail(error?.message||'The document could not be opened.')}
 })();
 </script>
