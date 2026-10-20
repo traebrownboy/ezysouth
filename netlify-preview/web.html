@@ -150,9 +150,9 @@ body>header .brand span{color:#7bd1a3!important}
 .ezy-direct-auth>.field:first-of-type{margin-top:18px}
 @media(max-width:650px){.ezy-unified-auth{flex-direction:column;gap:11px;padding:16px}.ezy-unified-auth .actions{align-items:stretch}.ezy-unified-auth a.btn{width:100%}}
 
-/* V6.6: shared Coastal Clean geometry for all four named design styles.
+/* V6.6: shared Coastal Clean geometry for all seven named design styles.
    Included in exported HTML using document.querySelector('style'). */
-.site.preset-coastal,.site.preset-studio,.site.preset-trade,.site.preset-midnight{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional){
  --card-radius:22px;--section-space:clamp(40px,6vw,76px);
  --font-stack:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
  font-family:var(--font-stack);background:var(--paper);color:var(--ink);line-height:1.55
@@ -161,53 +161,53 @@ body>header .brand span{color:#7bd1a3!important}
 .site.preset-studio{--ink:#2d4038;--paper:#fbfaf7;--card-bg:#f0f0eb;--hero-panel:#f2f0e9;--hero-ink:#344a3f;--nav-panel:#fbfaf7;--nav-ink:#2d4038;--contact-panel:#f3f2ed}
 .site.preset-trade{--ink:#253746;--paper:#f8fafc;--card-bg:#e9eef2;--hero-panel:#182939;--hero-ink:#fff9ef;--nav-panel:#182939;--nav-ink:#f9f8f2;--contact-panel:#edf2f6}
 .site.preset-midnight{--ink:#f3ecdf;--paper:#191f28;--card-bg:#29313b;--hero-panel:#121a23;--hero-ink:#f8f0e4;--nav-panel:#121a23;--nav-ink:#f8f0e4;--contact-panel:#242c35}
-.site.preset-coastal .site-nav,.site.preset-studio .site-nav,.site.preset-trade .site-nav,.site.preset-midnight .site-nav{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-nav{
  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
  padding:20px clamp(22px,4vw,42px);min-height:72px;background:var(--nav-panel);color:var(--nav-ink);
  border-bottom:1px solid #899e9526
 }
-.site.preset-coastal .site-nav a,.site.preset-studio .site-nav a,.site.preset-trade .site-nav a,.site.preset-midnight .site-nav a{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-nav a{
  color:var(--nav-ink)!important;background:transparent;padding:10px 12px;border-radius:10px;
  border:1px solid currentColor;font-size:13px;font-weight:750;text-decoration:none
 }
-.site.preset-coastal .hero,.site.preset-studio .hero,.site.preset-trade .hero,.site.preset-midnight .hero{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero{
  display:block;min-height:0;padding:clamp(60px,9vw,120px) clamp(24px,5vw,60px);
  background:var(--hero-panel)!important;color:var(--hero-ink)
 }
-.site.preset-coastal .hero:after,.site.preset-studio .hero:after,.site.preset-trade .hero:after,.site.preset-midnight .hero:after{content:none;display:none}
-.site.preset-coastal .hero h1,.site.preset-studio .hero h1,.site.preset-trade .hero h1,.site.preset-midnight .hero h1{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero:after{content:none;display:none}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero h1{
  font-size:clamp(31px,4vw,52px);line-height:1.07;max-width:650px;font-weight:760;
  letter-spacing:-.035em;text-transform:none;margin:12px 0;color:inherit
 }
-.site.preset-coastal .hero p,.site.preset-studio .hero p,.site.preset-trade .hero p,.site.preset-midnight .hero p{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero p{
  max-width:540px;font-size:clamp(15px,1.7vw,18px);line-height:1.75;color:inherit;opacity:.86
 }
-.site.preset-coastal .hero small,.site.preset-studio .hero small,.site.preset-trade .hero small,.site.preset-midnight .hero small{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero small{
  color:inherit;opacity:.82;font-size:12px;letter-spacing:.11em
 }
-.site.preset-coastal .site-cta,.site.preset-studio .site-cta,.site.preset-trade .site-cta,.site.preset-midnight .site-cta{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-cta{
  border-radius:50px!important;padding:12px 22px;font-family:var(--font-stack);font-weight:800;text-transform:none
 }
 .site.preset-trade .site-cta,.site.preset-midnight .site-cta{color:#13211e!important}
-.site.preset-coastal .site-section,.site.preset-studio .site-section,.site.preset-trade .site-section,.site.preset-midnight .site-section{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-section{
  padding:var(--section-space) clamp(24px,5vw,60px)
 }
-.site.preset-coastal .service-list,.site.preset-studio .service-list,.site.preset-trade .service-list,.site.preset-midnight .service-list{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .service-list{
  display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:15px
 }
-.site.preset-coastal .service,.site.preset-studio .service,.site.preset-trade .service,.site.preset-midnight .service{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .service{
  border:1px solid #8b9c951f;border-radius:var(--card-radius);background:var(--card-bg);
  padding:18px;min-height:75px;display:flex;align-items:center;font-family:var(--font-stack);
  font-size:15px;font-weight:700;text-align:left;box-shadow:none;color:var(--ink)
 }
-.site.preset-coastal .review-card,.site.preset-studio .review-card,.site.preset-trade .review-card,.site.preset-midnight .review-card,
-.site.preset-coastal .trust-chip,.site.preset-studio .trust-chip,.site.preset-trade .trust-chip,.site.preset-midnight .trust-chip{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .review-card,
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .trust-chip{
  border-radius:var(--card-radius);background:var(--card-bg);color:var(--ink)
 }
-.site.preset-coastal .contact,.site.preset-studio .contact,.site.preset-trade .contact,.site.preset-midnight .contact{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .contact{
  background:var(--contact-panel);color:var(--ink)
 }
-.site.preset-coastal .pro-footer,.site.preset-studio .pro-footer,.site.preset-trade .pro-footer,.site.preset-midnight .pro-footer{
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .pro-footer{
  grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;
  padding:40px clamp(24px,5vw,60px);background:#182a32;color:#f4f7fa
 }
@@ -221,12 +221,12 @@ body>header .brand span{color:#7bd1a3!important}
 .site.preset-midnight .service,.site.preset-midnight .review-card,.site.preset-midnight .trust-chip{border-color:#ffffff1b}
 .site.preset-midnight .site-section h2{color:#f8f0e4}
 @media(max-width:640px){
- .site.preset-coastal .site-nav,.site.preset-studio .site-nav,.site.preset-trade .site-nav,.site.preset-midnight .site-nav{
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-nav{
   min-height:0;gap:8px;padding:15px 18px
  }
- .site.preset-coastal .hero,.site.preset-studio .hero,.site.preset-trade .hero,.site.preset-midnight .hero{padding:52px 22px}
- .site.preset-coastal .site-section,.site.preset-studio .site-section,.site.preset-trade .site-section,.site.preset-midnight .site-section{padding:42px 22px}
- .site.preset-coastal .pro-footer,.site.preset-studio .pro-footer,.site.preset-trade .pro-footer,.site.preset-midnight .pro-footer{
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero{padding:52px 22px}
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-section{padding:42px 22px}
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .pro-footer{
   grid-template-columns:1fr;gap:12px;padding:32px 22px
  }
 }
@@ -283,111 +283,52 @@ body>header .brand span{color:#7bd1a3!important}
 @container(max-width:390px){.site .site-nav>span{flex-basis:100%}.site .customer-links{justify-content:flex-start}.site .hero,.site .site-section{padding-left:20px!important;padding-right:20px!important}}
 @media(prefers-reduced-motion:reduce){.site *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
-/* EzySouth Web: distinct professional site structures. First stylesheet is exported as-is. */
-.site.preset-landscape,.site.preset-automotive,.site.preset-professional{
- --card-radius:16px;--section-space:clamp(42px,6vw,90px);
- font:400 16px/1.6 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- background:var(--paper);color:var(--ink);
-}
+/* EzySouth Web: seven visual themes on ONE Coastal Clean layout.
+   Do not override display, grid, padding, width, aspect ratio or breakpoints here.
+   Core navigation, hero, cards and responsive behaviour are shared above. */
 .site.preset-landscape{--ink:#294935;--paper:#f5f6ed;--card-bg:#e8eee0;--hero-panel:#e2e8d8;--hero-ink:#213b2a;--nav-panel:#f5f6ed;--nav-ink:#294935;--contact-panel:#dde7d4}
-.site.preset-automotive{--ink:#eef3f7;--paper:#111a24;--card-bg:#1f2a35;--hero-panel:#17212c;--hero-ink:#f7f8fa;--nav-panel:#101720;--nav-ink:#eef3f7;--contact-panel:#192430}
+.site.preset-automotive{--ink:#eaf0f5;--paper:#141d27;--card-bg:#26313d;--hero-panel:#1c2b38;--hero-ink:#f7f8fa;--nav-panel:#101b26;--nav-ink:#f5f7fa;--contact-panel:#202d39}
 .site.preset-professional{--ink:#263949;--paper:#fff;--card-bg:#f0f4f8;--hero-panel:#ecf2f8;--hero-ink:#223d53;--nav-panel:#fff;--nav-ink:#263949;--contact-panel:#e8eff6}
-.site.preset-landscape .site-nav,.site.preset-automotive .site-nav,.site.preset-professional .site-nav{background:var(--nav-panel);color:var(--nav-ink);padding:20px clamp(20px,4vw,48px);gap:15px}
-.site.preset-landscape .site-nav a,.site.preset-automotive .site-nav a,.site.preset-professional .site-nav a{color:var(--nav-ink)!important;text-decoration:none;padding:8px 12px}
-.site.preset-landscape .hero,.site.preset-automotive .hero,.site.preset-professional .hero{background:var(--hero-panel)!important;color:var(--hero-ink);padding:clamp(45px,8vw,102px) clamp(24px,6vw,76px)}
-.site.preset-landscape .hero h1,.site.preset-automotive .hero h1,.site.preset-professional .hero h1{font-size:clamp(38px,5.4cqi,72px);line-height:1.06;letter-spacing:-.045em;color:inherit;margin:12px 0;max-width:760px}
-.site.preset-landscape .hero p,.site.preset-automotive .hero p,.site.preset-professional .hero p{color:inherit;opacity:.85;font-size:clamp(15px,1.6vw,18px);line-height:1.7}
-.site.preset-landscape .site-section,.site.preset-automotive .site-section,.site.preset-professional .site-section{color:var(--ink);background:var(--paper)}
-.site.preset-landscape .service,.site.preset-automotive .service,.site.preset-professional .service,
-.site.preset-landscape .review-card,.site.preset-automotive .review-card,.site.preset-professional .review-card{background:var(--card-bg);color:var(--ink)}
-.site.preset-landscape .contact,.site.preset-automotive .contact,.site.preset-professional .contact{background:var(--contact-panel)}
-.site.preset-landscape .pro-footer,.site.preset-automotive .pro-footer,.site.preset-professional .pro-footer{background:var(--nav-panel);color:var(--nav-ink);padding:40px clamp(24px,5vw,60px)}
-/* The original four now have distinct compositions, not one copied geometry. */
-.site.preset-studio .hero{background:#f4f0e8!important;color:#344838!important;display:grid!important;grid-template-columns:1.15fr .85fr;gap:clamp(25px,5vw,72px);align-items:center}
-.site.preset-studio .hero .hero-copy h1{font:500 clamp(40px,5.6cqi,78px)/1.08 Georgia,serif;letter-spacing:-.06em}
-.site.preset-studio .customer-hero-photo{aspect-ratio:3/4;max-height:670px;border-radius:100px 100px 12px 12px}
-.site.preset-studio .service-list{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important}
-.site.preset-studio .service{border:0!important;border-bottom:1px solid #bac4b4!important;border-radius:0!important;background:transparent!important;min-height:90px!important;padding:22px 4px!important}
-.site.preset-studio .service:before{content:'0' counter(ezy-studio)!important;counter-increment:ezy-studio;font-size:12px;font-weight:700;margin-right:20px}
-.site.preset-studio .service-list{counter-reset:ezy-studio}
-.site.preset-studio .gallery-grid{grid-template-columns:2fr 1fr 1fr;gap:12px}
-.site.preset-studio .gallery-grid img:first-child{grid-row:span 2;aspect-ratio:auto;height:100%!important}
-.site.preset-trade .hero{background:#182a35!important;color:#fff!important;min-height:460px;display:grid!important;grid-template-columns:1.25fr .75fr;align-items:center;gap:30px}
-.site.preset-trade .hero .hero-copy h1{font:900 clamp(40px,6cqi,82px)/.98 Inter,system-ui,sans-serif;letter-spacing:-.065em;text-transform:uppercase}
-.site.preset-trade .customer-hero-photo{border-radius:8px;aspect-ratio:4/5;transform:rotate(2deg)}
-.site.preset-trade .site-cta{border-radius:5px!important;padding:15px 24px}
-.site.preset-trade .service-list{grid-template-columns:repeat(2,minmax(0,1fr))!important;counter-reset:ezy-trade}
-.site.preset-trade .service{background:#e7edf2!important;border-radius:7px!important;border-left:5px solid var(--accent)!important;min-height:120px!important;align-items:center!important}
-.site.preset-trade .service:before{content:counter(ezy-trade,decimal-leading-zero)!important;counter-increment:ezy-trade;font-size:23px;font-weight:900;color:var(--accent);margin-right:22px}
-.site.preset-trade .gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.site.preset-trade .gallery-grid img{border-radius:5px;aspect-ratio:5/4}
-.site.preset-midnight .hero{background-image:linear-gradient(90deg,#0a1019ed,#0a101992),var(--hero-image,linear-gradient(135deg,#1b2733,#374754))!important;background-size:cover!important;background-position:center!important;min-height:520px;text-align:center;display:flex!important;align-items:center;justify-content:center}
-.site.preset-midnight .hero .hero-copy{max-width:850px;text-align:center}
-.site.preset-midnight .hero h1{font:500 clamp(47px,6cqi,90px)/1.04 Georgia,serif;letter-spacing:-.045em;margin:24px auto}
-.site.preset-midnight .hero p,.site.preset-midnight .hero small{color:#fff!important;margin-inline:auto}
-.site.preset-midnight .hero .site-cta{margin-top:26px;background:#d0af76!important;border-radius:4px!important}
-.site.preset-midnight .site-nav{border-color:#ffffff22}
-.site.preset-midnight .service-list{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-.site.preset-midnight .service{background:transparent!important;border:1px solid #ffffff3a!important;border-radius:3px!important;color:#f4ecdc!important;align-items:center!important;justify-content:center;text-align:center!important}
-.site.preset-midnight .service:before{content:none!important}
-.site.preset-midnight .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-.site.preset-midnight .gallery-grid img{border-radius:2px;aspect-ratio:5/3}
-.site.preset-coastal .hero{background:#e7f2ed!important}
-.site.preset-coastal .service-list{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-.site.preset-coastal .service{background:#e8f3f0!important;border-radius:22px!important}
-.site.preset-coastal .gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.site.preset-coastal .gallery-grid img{border-radius:20px}
-.site.preset-landscape .hero{display:grid!important;grid-template-columns:1fr .85fr;align-items:center;gap:34px;min-height:430px}
-.site.preset-landscape .hero .hero-copy h1{font:500 clamp(43px,5.2cqi,77px)/1.08 Georgia,serif;color:#24462f;letter-spacing:-.05em}
-.site.preset-landscape .hero .customer-hero-photo{aspect-ratio:1/1.13;border-radius:46% 46% 14px 14px;max-height:620px}
-.site.preset-landscape .hero .site-cta{border-radius:99px;background:#467e52!important}
-.site.preset-landscape .service-list{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-.site.preset-landscape .service{border:1px solid #d3dfc8!important;background:#e8eee0!important;min-height:155px!important;border-radius:28px 6px 28px 6px!important}
-.site.preset-landscape .service:before{content:'✳'!important;color:#608a56}
-.site.preset-landscape .gallery-grid{grid-template-columns:1.2fr .8fr;gap:12px}
-.site.preset-landscape .gallery-grid img{border-radius:28px 4px 28px 4px;aspect-ratio:5/3}
-.site.preset-landscape .gallery-grid img:first-child{grid-row:span 2;aspect-ratio:auto;height:100%!important}
-.site.preset-automotive .hero{background:#18232e!important;color:#f5f7f9!important;display:grid!important;grid-template-columns:1.15fr .85fr;gap:34px;min-height:450px}
-.site.preset-automotive .hero .hero-copy h1{font:900 clamp(39px,6cqi,88px)/.97 Inter,system-ui,sans-serif;text-transform:uppercase;letter-spacing:-.07em}
-.site.preset-automotive .hero .site-cta{border-radius:2px!important;background:#e95639!important;color:#fff!important}
-.site.preset-automotive .customer-hero-photo{aspect-ratio:4/3;border-radius:3px;transform:skew(-2deg)}
-.site.preset-automotive .service-list{grid-template-columns:1fr 1fr!important;gap:0!important;counter-reset:ezy-auto}
-.site.preset-automotive .service{background:transparent!important;color:#ebf0f2!important;border:0!important;border-bottom:1px solid #526272!important;border-radius:0!important;padding:24px 8px!important}
-.site.preset-automotive .service:before{content:counter(ezy-auto,decimal-leading-zero)!important;counter-increment:ezy-auto;color:#ee6249;font-weight:900;font-size:21px}
-.site.preset-automotive .gallery-grid{grid-template-columns:2fr 1fr;gap:7px}
-.site.preset-automotive .gallery-grid img{aspect-ratio:4/3;border-radius:4px}
-.site.preset-professional .site-nav{border-bottom:1px solid #dce6ee}
-.site.preset-professional .site-nav a{border-radius:0!important;border:0!important;border-bottom:1px solid transparent!important}
-.site.preset-professional .site-nav a:hover{border-bottom-color:#31658a!important}
-.site.preset-professional .hero{padding-block:clamp(70px,11vw,150px);background:#ecf2f8!important}
-.site.preset-professional .hero .hero-copy{max-width:820px}
-.site.preset-professional .hero .hero-copy h1{font:550 clamp(41px,5.8cqi,82px)/1.04 Inter,system-ui,sans-serif;letter-spacing:-.065em}
-.site.preset-professional .hero .site-cta{background:#32628a!important;color:#fff!important;border-radius:5px!important}
-.site.preset-professional .service-list{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important;counter-reset:ezy-prof}
-.site.preset-professional .service{background:transparent!important;color:#244052!important;border:0!important;border-bottom:1px solid #d4e0ea!important;border-radius:0!important;padding:26px 8px!important}
-.site.preset-professional .service:before{content:counter(ezy-prof,decimal-leading-zero)!important;counter-increment:ezy-prof;color:#6c8bad;font-size:13px;font-weight:900}
-.site.preset-professional .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.site.preset-professional .gallery-grid img{border-radius:5px;aspect-ratio:16/10}
-.site.preset-professional .review-card{background:#f4f7fa;border:0!important;border-left:3px solid #577da3!important;border-radius:0}
-.site.preset-professional .contact{text-align:left}
-/* Distinct template thumbnail compositions, visible before selecting. */
+.site.preset-coastal .hero{background:#e7f3ed!important;color:#294a3c}
+.site.preset-studio .hero{background:linear-gradient(125deg,#f6f2e8,#e7ebe2)!important;color:#344a3f}
+.site.preset-trade .hero{background:linear-gradient(135deg,#182939,#2e4556)!important;color:#fff7e7}
+.site.preset-midnight .hero{background:linear-gradient(145deg,#111820,#263544)!important;color:#f8f0e4}
+.site.preset-landscape .hero{background:linear-gradient(140deg,#eaf0e1,#dce9d1)!important;color:#264331}
+.site.preset-automotive .hero{background:linear-gradient(140deg,#172430,#293a46)!important;color:#f8f7f4}
+.site.preset-professional .hero{background:linear-gradient(125deg,#edf3fa,#e3edf6)!important;color:#223d53}
+.site.preset-studio .hero h1,.site.preset-studio .site-section h2,
+.site.preset-midnight .hero h1,.site.preset-midnight .site-section h2,
+.site.preset-landscape .hero h1,.site.preset-landscape .site-section h2{
+ font-family:Georgia,"Times New Roman",serif;font-weight:500
+}
+.site.preset-trade .hero h1,.site.preset-automotive .hero h1{font-weight:800}
+.site.preset-trade .site-cta{background:#ed903b!important;color:#192938!important}
+.site.preset-midnight .site-cta{background:#d1ac71!important;color:#161d23!important}
+.site.preset-landscape .site-cta{background:#477857!important;color:white!important}
+.site.preset-automotive .site-cta{background:#e95639!important;color:white!important}
+.site.preset-professional .site-cta{background:#3b658d!important;color:white!important}
+.site.preset-midnight .site-section .muted,.site.preset-automotive .site-section .muted,
+.site.preset-midnight .design-empty,.site.preset-automotive .design-empty{color:#c6d0d6}
+.site.preset-midnight .service,.site.preset-midnight .review-card,
+.site.preset-automotive .service,.site.preset-automotive .review-card{border-color:#ffffff2d!important}
+.site.preset-midnight .site-section h2,.site.preset-automotive .site-section h2{color:var(--ink)}
+/* Template thumbnails reflect the colour personality; the actual site keeps one layout. */
 .v56-template,.template-choice{transition:transform .18s,border-color .18s,box-shadow .18s}
 .v56-template:hover,.template-choice:hover{transform:translateY(-3px);box-shadow:0 10px 25px #1e3f3018}
 .v56-template.selected,.template-choice.selected{outline:3px solid #64a987!important;outline-offset:2px;border-color:#286f50!important}
 .v56-template .v56-mock{position:relative}
 .v56-template .v56-mock:after{content:"";position:absolute;right:10px;top:18px;width:31%;height:69%;background:currentColor;opacity:.18;border-radius:13px}
 .v56-template[data-v56-template="coastal"] .v56-mock:after{border-radius:18px}
-.v56-template[data-v56-template="studio"] .v56-mock:after{width:43%;height:95%;right:0;top:0;border-radius:0 9px 9px 0}
-.v56-template[data-v56-template="trade"] .v56-mock:after{width:39%;height:100%;right:0;top:0;border-radius:0}
-.v56-template[data-v56-template="midnight"] .v56-mock{align-items:center;justify-content:center}
-.v56-template[data-v56-template="midnight"] .v56-mock span{width:60%!important;text-align:center}
-.v56-template[data-v56-template="midnight"] .v56-mock:after{display:none}
-.v56-template[data-v56-template="landscape"] .v56-mock:after{border-radius:50% 50% 0 0}
-.v56-template[data-v56-template="automotive"] .v56-mock:after{width:44%;height:100%;top:0;right:0;border-radius:0;transform:skew(-9deg)}
-.v56-template[data-v56-template="professional"] .v56-mock:after{height:12%;width:80%;top:auto;bottom:9px;left:10px;border-radius:0}
+.v56-template[data-v56-template="studio"] .v56-mock:after{border-radius:3px}
+.v56-template[data-v56-template="trade"] .v56-mock:after{border-radius:1px}
+.v56-template[data-v56-template="midnight"] .v56-mock:after{border:1px solid currentColor;background:transparent;opacity:.5}
+.v56-template[data-v56-template="landscape"] .v56-mock:after{border-radius:50% 50% 6px 6px}
+.v56-template[data-v56-template="automotive"] .v56-mock:after{border-radius:2px;transform:skew(-5deg)}
+.v56-template[data-v56-template="professional"] .v56-mock:after{border-radius:1px}
 .template-choice[data-template="landscape"] .template-swatch{background:linear-gradient(120deg,#edf2e2 50%,#619274 50%)}
 .template-choice[data-template="automotive"] .template-swatch{background:linear-gradient(140deg,#141c24 50%,#e95e46 50%)}
 .template-choice[data-template="professional"] .template-swatch{background:linear-gradient(120deg,#e8f0f8 55%,#4576a2 55%)}
+
 /* Premium contextual editor stays in builder only, never embedded in published HTML. */
 .ezy-inline-dialog[hidden]{display:none!important}
 .ezy-inline-dialog{position:fixed;inset:0;background:#071b1591;backdrop-filter:blur(7px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}
@@ -417,19 +358,6 @@ body>header .brand span{color:#7bd1a3!important}
 }
 
 
-/* No empty half-hero when a customer hasn't uploaded work photos yet. */
-.site.preset-studio .hero:not(.has-customer-photo),
-.site.preset-trade .hero:not(.has-customer-photo),
-.site.preset-landscape .hero:not(.has-customer-photo),
-.site.preset-automotive .hero:not(.has-customer-photo){
- grid-template-columns:1fr!important;display:block!important;
-}
-.site.preset-studio .hero:not(.has-customer-photo) .hero-copy,
-.site.preset-trade .hero:not(.has-customer-photo) .hero-copy,
-.site.preset-landscape .hero:not(.has-customer-photo) .hero-copy,
-.site.preset-automotive .hero:not(.has-customer-photo) .hero-copy{max-width:800px}
-.site.preset-automotive .site-section .muted,
-.site.preset-automotive .design-empty{color:#cad6df}
 </style></head><body><div class="staging-ribbon">🧪 PRIVATE BETA PREVIEW · Fictional data only · Publishing disabled</div>
 <header><div class="brand">✦ EzySouth <span>Web</span></div><div class="ezy-header-actions"><span class="ezy-beta-badge">Private preview</span><button type="button" id="ezy-guide-open" class="ezy-header-guide">🧭 Setup guide</button></div></header>
 <nav class="ezy-main-nav" aria-label="Main product navigation"><a href="./index.html">⌂ Return to homepage</a><button class="active" data-tab="builder">Build website</button><button data-tab="design">Design Studio</button><button data-tab="cloud">Save &amp; manage</button><button data-tab="launch">Publish &amp; JobFlow</button><a href="./jobflow.html">Open JobFlow ↗</a><details><summary>More tools ▾</summary><div class="more-tools"><button data-tab="assistant">Quick commands</button><button data-tab="projects">Local drafts</button></div></details></nav>
@@ -501,15 +429,15 @@ function render(){fields.forEach(f=>{if(document.activeElement!==$(f))$(f).value
 // Coastal Clean proportions are the foundation for every named preset.
 // Advanced custom layouts remain independent when preset='custom'.
 const coastalPresetStructure=Object.freeze({layout:'friendly',hero:'standard',surface:'soft',spacing:'balanced',serviceStyle:'cards',navStyle:'clean'});
-// Real layout recipes. Switching a preset explicitly changes geometry but preserves business data.
+// Named styles share the same proven geometry; only the visual palette and fonts change.
 const premiumPresets=Object.freeze({
  coastal:{...coastalPresetStructure,font:'modern',color:'#207b67'},
- studio:{layout:'premium',hero:'split',surface:'sharp',spacing:'airy',serviceStyle:'list',navStyle:'clean',font:'editorial',color:'#526b5a'},
- trade:{layout:'trades',hero:'split',surface:'sharp',spacing:'balanced',serviceStyle:'icons',navStyle:'dark',font:'strong',color:'#ed903b'},
- midnight:{layout:'luxury',hero:'photo',surface:'sharp',spacing:'airy',serviceStyle:'list',navStyle:'dark',font:'editorial',color:'#d1ac71'},
- landscape:{layout:'friendly',hero:'split',surface:'soft',spacing:'airy',serviceStyle:'cards',navStyle:'clean',font:'editorial',color:'#477857'},
- automotive:{layout:'trades',hero:'split',surface:'outlined',spacing:'compact',serviceStyle:'list',navStyle:'dark',font:'strong',color:'#e95639'},
- professional:{layout:'minimal',hero:'standard',surface:'outlined',spacing:'airy',serviceStyle:'list',navStyle:'clean',font:'modern',color:'#3b658d'}
+ studio:{...coastalPresetStructure,font:'editorial',color:'#526b5a'},
+ trade:{...coastalPresetStructure,font:'modern',color:'#ed903b'},
+ midnight:{...coastalPresetStructure,font:'editorial',color:'#d1ac71'},
+ landscape:{...coastalPresetStructure,font:'editorial',color:'#477857'},
+ automotive:{...coastalPresetStructure,font:'modern',color:'#e95639'},
+ professional:{...coastalPresetStructure,font:'modern',color:'#3b658d'}
 });
 const designDefaults={...coastalPresetStructure,order:'services',photos:'',reviews:'',cta:'Request a free quote',font:'modern',preset:'coastal',trust:'',hours:'',social:'',sectionOrder:['services','gallery','reviews','trust']};
 let design={...designDefaults};try{design={...design,...JSON.parse(localStorage.getItem('launchpad-v4-design')||'{}')}}catch(e){}
@@ -536,7 +464,9 @@ window.ezySetShowcases=function(rows){
 function safeImages(){return design.photos.split('\n').map(x=>x.trim()).filter(x=>/^https:\/\/[^\s]+$/i.test(x)).slice(0,12)}
 function reviewItems(){return design.reviews.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12).map(x=>{let a=x.split('|');return {quote:a[0].trim(),author:(a.slice(1).join('|')||'Customer').trim()}})}
 function renderDesignSite(){
- // Preserve saved layout choices instead of resetting all named presets to one geometry.
+ // Migrate previously saved named styles to the Coastal Clean fit, without changing customer content.
+ if(Object.prototype.hasOwnProperty.call(premiumPresets,design.preset))
+  Object.assign(design,coastalPresetStructure);
  const site=$('site');
  site.classList.remove('layout-classic','layout-bold','layout-minimal','layout-premium','layout-trades','layout-friendly','layout-luxury','hero-standard','hero-split','hero-photo','font-modern','font-editorial','font-strong','surface-soft','surface-sharp','surface-outlined','spacing-balanced','spacing-compact','spacing-airy','preset-coastal','preset-studio','preset-trade','preset-midnight','preset-landscape','preset-automotive','preset-professional');
  site.classList.add('layout-'+design.layout,'hero-'+design.hero,'font-'+design.font,'surface-'+design.surface,'spacing-'+(design.spacing||'balanced'));
