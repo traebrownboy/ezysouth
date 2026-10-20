@@ -484,7 +484,7 @@ body>header .brand span{color:#7bd1a3!important}
    <p class="ezy-inline-hint">Edits save to this device immediately. Save your website to the cloud when you're ready to publish.</p>
   </form>
   <div id="ezy-inline-photo-actions" hidden><p class="muted">Replace your hero image or manage the photo gallery. Existing photos stay safe when you change layouts.</p>
-   <div class="ezy-inline-buttons"><button type="button" class="btn" id="ezy-inline-upload">Upload new photos</button><button type="button" class="btn secondary" id="ezy-inline-gallery">Manage gallery</button></div>
+   <div class="ezy-inline-buttons"><button type="button" class="btn" id="ezy-inline-replace">Replace selected photo</button><button type="button" class="btn secondary" id="ezy-inline-upload">Add photos</button><button type="button" class="btn secondary" id="ezy-inline-gallery">Manage gallery</button></div><input type="file" id="ezy-inline-replace-file" accept="image/jpeg,image/png,image/webp" hidden>
    <p class="ezy-inline-hint">Photos save on your device until you save or publish the website.</p>
   </div>
  </div>
@@ -642,7 +642,7 @@ function installCustomerNavigation(){
 function exportSite(){
  const clone=$('site').cloneNode(true);clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(x=>{if(x.id!=='pv-contact' && !clone.querySelector('a[href="#'+CSS.escape(x.id)+'"]'))x.removeAttribute('id')});clone.classList.remove('editable-preview','ezy-live-edit');
  clone.querySelectorAll('[data-edit],[data-ezy-inline]').forEach(x=>{
-  x.removeAttribute('data-edit');x.removeAttribute('data-ezy-inline');x.removeAttribute('title');
+  x.removeAttribute('data-edit');x.removeAttribute('data-ezy-inline');x.removeAttribute('title');x.removeAttribute('aria-label');
   if(x.getAttribute('role')==='button')x.removeAttribute('role');
   x.removeAttribute('tabindex');
  });
@@ -1460,5 +1460,5 @@ render();renderLeads();renderChat();
  drawTemplates();
 })();
 </script>
-<script src="./ezy-premium-editor.js?v=1"></script>
+<script src="./ezy-premium-editor.js?v=2"></script>
 </body></html>
