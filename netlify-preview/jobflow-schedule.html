@@ -95,7 +95,7 @@ textarea{min-height:90px;resize:vertical}input:disabled{background:#edf2ee}
 <div class="beta">PRIVATE BETA · JOBFLOW TEST SITE</div>
 <header class="top"><div class="top-inner"><a class="brand" href="./index.html">JobFlow <span>by EzySouth</span></a><nav class="top-links"><a href="./jobflow.html">← JobFlow</a><a href="./jobflow-documents.html">Quotes &amp; Invoices</a><a href="./index.html">⌂ Home</a></nav></div></header>
 <main class="shell">
- <div class="heading"><div><div class="eyebrow">JOBFLOW / JOBS &amp; SCHEDULING</div><h1>Everything on schedule.</h1><p class="muted small">Your jobs, your calendar, one calm place to manage the work.</p></div><button id="new-job" class="btn" hidden>＋ New job</button></div>
+ <div class="heading"><div><div class="eyebrow">JOBFLOW / JOBS &amp; SCHEDULING</div><h1>Everything on schedule.</h1><p class="muted small">Your jobs, your calendar, one calm place to manage the work.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button id="refresh-jobs" type="button" class="btn secondary" hidden>↻ Refresh</button><button id="new-job" class="btn" hidden>＋ New job</button></div></div>
  <div id="notice" aria-live="polite"></div>
  <div id="loading" class="panel">Opening your secure JobFlow schedule…</div>
  <div id="gate" class="panel gate" hidden><h2>Sign in to manage your jobs</h2><p class="muted small">Jobs, photos and customer details stay inside your secure Ezysouth workspace.</p><a class="btn" href="./login.html?next=jobflow">Sign in to EzySouth</a></div>
@@ -189,7 +189,7 @@ function nzToUtc(value){
 }
 const timeFor=(job)=>job.scheduled_start?localParts(job.scheduled_start).time:'';
 const dayFor=(job)=>job.scheduled_start?localParts(job.scheduled_start).day:'';
-const statusName=s=>['New','Quote needed','Quote sent','Won'].includes(s)?'Unscheduled':s;
+const statusName=s=>['New','Quote needed','Quote sent','Won'].includes(s)?'Unscheduled':s==='Lost'?'Cancelled':s;
 let client=null,user=null,jobs=[],view='week',date=todayNZ(),editingId=null,busy=false,photoBusy=false;
 let photoUrls=[];
 function notice(msg,error=false){const node=$('notice');node.textContent=msg;node.classList.toggle('error',error);if(msg)node.scrollIntoView({behavior:'smooth',block:'nearest'})}
@@ -302,13 +302,13 @@ async function refresh(){
  }
  render();
 }
-function showGate(){user=null;$('loading').hidden=true;$('workspace').hidden=true;$('gate').hidden=false;$('new-job').hidden=true}
+function showGate(){user=null;$('loading').hidden=true;$('workspace').hidden=true;$('gate').hidden=false;$('new-job').hidden=true;$('refresh-jobs').hidden=true}
 async function start(){
  if(!window.supabase?.createClient){$('loading').textContent='Unable to load the secure account service.';return}
  client=window.supabase.createClient(PROJECT_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
  const {data,error}=await client.auth.getUser();if(error&&!/session missing/i.test(error.message||''))throw error;
  if(!data?.user){showGate();return}
- user=data.user;$('loading').hidden=true;$('gate').hidden=true;$('workspace').hidden=false;$('new-job').hidden=false;
+ user=data.user;$('loading').hidden=true;$('gate').hidden=true;$('workspace').hidden=false;$('new-job').hidden=false;$('refresh-jobs').hidden=false;
  await refresh();
  client.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){closeJob();showGate()}});
 }
@@ -374,6 +374,17 @@ async function saveJob(event){
   const duration_minutes=scheduled_start?Number($('job-duration').value||120):null;
   const original=editingId?getJob(editingId):null;
   if(original?.deleted_at)throw Error('Restore this job before editing it.');
+  if(scheduled_start&&status!=='Cancelled'){
+   const start=Date.parse(scheduled_start),end=start+(duration_minutes||120)*60000;
+   const worker=assignee.toLowerCase();
+   const overlaps=unarchived().filter(j=>j.id!==original?.id&&j.scheduled_start&&!['Cancelled','Completed'].includes(j.status)&&
+     (j.assignee||'').toLowerCase()===worker).find(j=>{
+       const otherStart=Date.parse(j.scheduled_start);
+       const otherEnd=otherStart+(j.duration_minutes||120)*60000;
+       return start<otherEnd&&otherStart<end;
+     });
+   if(overlaps&&!confirm('Possible scheduling clash with “'+overlaps.title+'” for '+(assignee||'an unassigned worker')+'. Save anyway?'))return;
+  }
   const values={title,customer_name,customer_contact,notes,location,assignee,
     scheduled_start,duration_minutes,status,completed_at:status==='Completed'?(original?.completed_at||new Date().toISOString()):null};
   const q=original?client.from('jobflow_jobs').update(values).eq('id',original.id).eq('owner_id',user.id):
@@ -484,6 +495,7 @@ async function addPhotos(files){
  }finally{photoBusy=false;$('photo-upload').value=''}
 }
 $('new-job').addEventListener('click',()=>openJob());
+$('refresh-jobs').addEventListener('click',()=>void op(async()=>{await refresh();notice('✓ Job schedule refreshed.')}));
 $('close-job').addEventListener('click',closeJob);
 $('cancel-job').addEventListener('click',closeJob);
 $('job-form').addEventListener('submit',ev=>void saveJob(ev));
@@ -495,6 +507,7 @@ $('previous').addEventListener('click',()=>{date=view==='month'?addDays(monthSta
 $('next').addEventListener('click',()=>{date=view==='month'?addDays(addDays(monthStart(date),32).slice(0,7)+'-01',0):addDays(date,view==='week'?7:1);render()});
 $('today').addEventListener('click',()=>{date=todayNZ();render()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&user&&!busy&&!editingId)void refresh().catch(()=>{})});
+window.setInterval(()=>{if(user&&!busy&&!editingId&&document.hidden===false)void refresh().catch(()=>{})},30000);
 start().catch(err=>{$('loading').textContent='Could not load schedule: '+err.message;notice(err.message,true)});
 })();
 </script>
