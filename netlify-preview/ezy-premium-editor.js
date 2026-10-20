@@ -7,7 +7,7 @@ const $=id=>document.getElementById(id);
 const dialog=$('ezy-inline-dialog'),form=$('ezy-inline-form'),fields=$('ezy-inline-fields');
 if(!dialog||!form||!$('site'))return;
 window.ezyPremiumInlineEditor=true;
-let currentField=null,previousFocus=null;
+let currentField=null,previousFocus=null,photoTarget=null;
 const allowed={
  name:{label:'Business name',title:'Your business name',limit:120},
  headline:{label:'Headline',title:'Edit your headline',limit:150},
@@ -80,7 +80,7 @@ for(const id of ['v56-live-preview','design-preview','chat-preview']){
 if($('direct-edit')&&!editEnabled)$('direct-edit').click();
 function close(){
  dialog.hidden=true;
- currentField=null;
+ currentField=null;photoTarget=null;
  fields.replaceChildren();
  $('ezy-inline-status').textContent='';
  if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});
@@ -109,10 +109,21 @@ function fieldRow(name,value,multi=false,limit=200){
  }
  return wrap;
 }
-function open(key,source){
+function open(key,source,clicked=source){
  const config=allowed[key];if(!config)return;
  previousFocus=source||document.activeElement;
  currentField=key;
+ photoTarget=null;
+ if(key==='photos'){
+  const image=clicked?.closest?.('.gallery-grid img');
+  if(image){
+   const peers=Array.from(image.closest('.gallery-grid')?.querySelectorAll('img')||[]);
+   photoTarget={index:peers.indexOf(image),url:image.currentSrc||image.src||''};
+  }else if(clicked?.closest?.('.customer-hero-photo')){
+   photoTarget={index:0,url:''};
+  }
+  $('ezy-inline-replace').hidden=!photoTarget;
+ }
  $('ezy-inline-title').textContent=config.title;
  $('ezy-inline-status').textContent='';
  fields.replaceChildren();
@@ -181,6 +192,45 @@ document.addEventListener('keydown',event=>{
   event.preventDefault();form.requestSubmit();
  }
 });
+$('ezy-inline-replace').addEventListener('click',()=>{
+ if(photoTarget)$('ezy-inline-replace-file').click();
+});
+$('ezy-inline-replace-file').addEventListener('change',async event=>{
+ const file=event.target.files?.[0];
+ event.target.value='';
+ if(!file||!photoTarget)return;
+ if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>16*1024*1024){
+  $('ezy-inline-status').textContent='Choose a JPG, PNG or WebP image under 16 MB.';return;
+ }
+ const button=$('ezy-inline-replace');
+ button.disabled=true;
+ const previous=uploadedPhotos.slice(),previousLinks=design.photos;
+ const selection={...photoTarget};
+ try{
+  const resized=await resizePhoto(file);
+  if(selection.index>=0&&selection.index<uploadedPhotos.length){
+   uploadedPhotos[selection.index]=resized;
+  }else{
+   // An external image lives in the URL list; remove its URL and use the uploaded replacement.
+   const links=design.photos.split('\n').map(v=>v.trim()).filter(Boolean);
+   const externalIndex=selection.index-uploadedPhotos.length;
+   if(externalIndex>=0&&externalIndex<links.length){
+    links.splice(externalIndex,1);
+    design.photos=links.join('\n');
+   }
+   if(uploadedPhotos.length>=12)throw Error('Your gallery is full. Remove an image before replacing this one.');
+   uploadedPhotos.unshift(resized);
+  }
+  await savePhotos();
+  try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(err){}
+  refreshPhotos();
+  $('photo-status').textContent='✓ Photo replaced and saved on this device.';
+  close();
+ }catch(err){
+  uploadedPhotos=previous;design.photos=previousLinks;
+  $('ezy-inline-status').textContent='Photo replacement failed: '+(err.message||String(err));
+ }finally{button.disabled=false}
+});
 $('ezy-inline-upload').addEventListener('click',()=>{
  close();
  const upload=$('photo-upload');
@@ -201,7 +251,7 @@ function handleClick(event,root){
  if(!allowed[node.dataset.ezyInline])return;
  event.preventDefault();
  event.stopPropagation();
- open(node.dataset.ezyInline,node);
+ open(node.dataset.ezyInline,node,event.target);
 }
 const roots=[$('site'),$('v56-live-preview'),$('design-preview')].filter(Boolean);
 for(const root of roots){
@@ -212,7 +262,7 @@ for(const root of roots){
   if(!node||!root.contains(node))return;
   event.preventDefault();
   event.stopPropagation();
-  open(node.dataset.ezyInline,node);
+  open(node.dataset.ezyInline,node,event.target);
  });
 }
 // Keep the existing guided three-step layout library up to date when opening the preview.
