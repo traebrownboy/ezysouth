@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://ezcmfbaoivdwkgayznbt.supabase.co wss://ezcmfbaoivdwkgayznbt.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
+<title>JobFlow by EzySouth | Live Business Inbox</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#19342c;background:#f4f8f5;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}
+a{color:#126747}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #85c4a6;outline-offset:2px}
+.top{background:#122c25;color:#fff;padding:18px 20px}.top-inner{max-width:1150px;margin:auto;display:flex;align-items:center;gap:15px;flex-wrap:wrap;justify-content:space-between}
+.brand{font-weight:850;font-size:1.3rem;letter-spacing:-.03em}.brand span{color:#72cfa5}.top-links{display:flex;align-items:center;flex-wrap:wrap;gap:14px}.top-links a{color:#e6fff2}
+.shell{max-width:1150px;margin:auto;padding:27px 18px 85px}.intro{margin-bottom:20px}.intro h1{font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:-.055em;margin:4px 0 5px}.muted{color:#62766d}.micro{font-size:.86rem}.notice{padding:13px 16px;border-radius:12px;background:#e5f2e9;color:#24563c;border:1px solid #bedccb;margin:10px 0}.notice.warn{background:#fff5df;border-color:#eaddb4;color:#75571d}
+.panel,.lead{background:#fff;border:1px solid #dbe8e0;border-radius:16px;padding:20px;box-shadow:0 8px 20px #133b2508}.panel{margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.stat{padding:16px;background:#ecf5ef;border-radius:12px}.stat b{display:block;font-size:1.8rem;line-height:1.1}.stat small{color:#536f60}
+h2{font-size:1.26rem;letter-spacing:-.025em;margin:3px 0 12px}
+.controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:750;background:#147a4f;color:white;min-height:44px}.btn:hover{background:#106441}.btn.secondary{background:#e8f3ed;color:#1a6143}.btn.danger{background:#ffebea;color:#9b2929}.btn.small{padding:8px 12px;font-size:.89rem;min-height:38px}
+input,select,textarea{width:100%;border:1px solid #bcd2c5;border-radius:9px;padding:11px;color:#19342c;background:white;margin:5px 0 11px}label{display:block;font-size:.89rem;font-weight:700}
+.formwidth{max-width:460px}.lead{margin:12px 0}.lead-header{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.lead h3{margin:0 0 4px;font-size:1.08rem}.badge{display:inline-block;border-radius:30px;padding:4px 10px;background:#e7f1eb;font-size:.78rem;font-weight:800;color:#2b6344}
+.detail{white-space:pre-wrap;overflow-wrap:anywhere;margin:9px 0}.private{background:#f6f8f7;padding:10px 12px;border-radius:9px;color:#4b5d53;margin:10px 0}.lead-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lead-actions select{width:auto;max-width:100%;margin:0}.lead-actions .btn{flex-shrink:0}
+.modal[hidden],[hidden]{display:none!important}.modal{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:18px;background:#122d26a8}.modal-content{width:min(100%,550px);max-height:95dvh;overflow-y:auto;border-radius:18px;background:#fff;padding:25px}
+.checkbox-line{display:flex;align-items:flex-start;gap:10px;font-weight:500}.checkbox-line input{width:auto;flex-shrink:0;margin:5px 0}
+#message{min-height:25px;margin:10px 0}#enquiry-list:empty:after{content:"No enquiries match your filter.";display:block;color:#61766b;padding:20px}
+@media(max-width:650px){.grid{grid-template-columns:1fr 1fr}.lead-actions select{width:100%}.lead-actions .btn{flex:1}.panel,.lead{padding:15px}.top-inner{align-items:flex-start}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner"><div class="brand">JobFlow <span>by EzySouth</span></div><div class="top-links"><a href="./index.html">EzySouth Web Builder ↗</a><span class="micro">Secure business inbox</span></div></div></header>
+<main class="shell">
+ <div class="intro"><h1>Customers. Jobs. Completed work.</h1><p class="muted">Manage genuine website enquiries in JobFlow, then choose which completed projects are safe to feature on your EzySouth website.</p></div>
+ <div id="message" aria-live="polite"></div>
+ <section id="auth-panel" class="panel formwidth">
+  <h2>Sign in to JobFlow</h2><p class="muted micro">Use the same EzySouth Cloud email and password as the Website Builder. No website is required to create an account.</p>
+  <form id="auth-form"><label for="auth-email">Email</label><input id="auth-email" type="email" autocomplete="email" required maxlength="254">
+  <label for="auth-password">Password</label><input id="auth-password" type="password" autocomplete="current-password" required minlength="6">
+  <div class="controls"><button class="btn" type="submit">Sign in</button><button class="btn secondary" type="button" id="sign-up">Create account</button></div></form>
+ </section>
+ <section id="app" hidden>
+  <div class="controls"><span id="account-label" class="muted micro"></span><button type="button" id="sign-out" class="btn secondary small">Sign out</button><button type="button" id="refresh" class="btn secondary small">↻ Refresh enquiries</button></div><div class="panel" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px"><div><h2 style="margin-bottom:4px">Quotes &amp; Invoices</h2><p class="muted micro">Create professional documents and keep track of payments from your JobFlow account.</p></div><a class="btn" href="./jobflow-documents.html" style="text-decoration:none">Open Quotes &amp; Invoices →</a></div>
+  <div class="notice" id="connect-note">Enquiries submitted from your published EzySouth website will arrive in this inbox. Each website stays linked to its own customer records.</div>
+  <div class="grid">
+   <div class="stat"><b id="count-all">0</b><small>Enquiries</small></div>
+   <div class="stat"><b id="count-open">0</b><small>Open / quoting</small></div>
+   <div class="stat"><b id="count-complete">0</b><small>Completed</small></div>
+  </div>
+  <section class="panel">
+    <h2>Live JobFlow inbox</h2>
+    <div class="controls">
+     <label for="website-filter">Website <select id="website-filter"><option value="all">All my websites</option></select></label>
+     <label for="status-filter">Status <select id="status-filter"><option value="all">All statuses</option><option>New</option><option>Quote needed</option><option>Quote sent</option><option>Won</option><option>Completed</option><option>Lost</option></select></label>
+    </div>
+    <p class="muted micro">Only you can see customer names, contact details and the original messages. This inbox requires a secure login.</p>
+    <div id="enquiry-list"></div>
+  </section>
+  <section class="panel">
+   <h2>My JobFlow business</h2><p class="muted micro">This workspace belongs to your JobFlow account and works even if you do not own a website.</p>
+   <form id="business-form" class="formwidth"><label for="biz-name">Business name</label><input id="biz-name" maxlength="120" minlength="2" required placeholder="e.g. Southland Property Services">
+    <label for="biz-location">Service area (optional)</label><input id="biz-location" maxlength="120" placeholder="e.g. Invercargill and Bluff">
+    <button class="btn" type="submit" id="biz-save">Save business workspace</button></form>
+   <p class="muted micro" id="biz-info">Set up your first JobFlow business to start managing customers and jobs without a website.</p>
+  </section>
+  <section class="panel" id="customers-panel" hidden>
+   <h2>Customers</h2><form id="customer-form"><label for="customer-name">Name</label><input id="customer-name" maxlength="120" minlength="2" required>
+    <label for="customer-contact">Contact</label><input id="customer-contact" maxlength="200" minlength="3" required placeholder="Email or phone">
+    <button type="submit" class="btn">Add customer</button></form>
+   <div id="customer-list"></div>
+  </section>
+  <section class="panel" id="jobs-panel" hidden>
+   <h2>Standalone jobs</h2><p class="muted micro">Track work that did not start as a website enquiry. These jobs stay separate from inbound website enquiries.</p>
+   <form id="job-form"><label for="job-customer">Customer</label><select id="job-customer" required><option value="">Choose a customer</option></select>
+    <label for="job-title">Job title</label><input id="job-title" maxlength="160" minlength="3" required placeholder="e.g. Fix boundary fence">
+    <label for="job-notes">Notes</label><textarea id="job-notes" maxlength="3000" rows="2"></textarea>
+    <button type="submit" class="btn">Add job</button></form>
+   <div id="job-list"></div>
+  </section>
+  <section class="panel"><h2>Completed work for your website</h2>
+    <p class="muted">After finishing a job, mark it <strong>Completed</strong> and select <strong>Send to Website</strong>. Write a short public-facing project title and summary. They will appear in the builder's Completed Work preview after you refresh. Nothing is published automatically.</p>
+    <p class="notice warn micro">Never publish a customer's original enquiry, contact details, location or photos without permission. Only the title and summary you expressly approve are sent to the builder.</p>
+    <p class="muted micro">Your Website Builder publishes the approved work to your public site only after you review it and press Publish.</p>
+  </section>
+ </section>
+</main>
+<div id="feature-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="feature-title">
+ <div class="modal-content">
+  <h2 id="feature-title">Send completed work to Website Builder</h2>
+  <p class="muted micro" id="feature-website"></p>
+  <p class="muted micro">Write a safe, public description. No customer information is copied automatically.</p>
+  <form id="feature-form"><label for="feature-name">Public project title</label><input id="feature-name" required minlength="4" maxlength="100" placeholder="e.g. Deck restoration in Southland">
+  <label for="feature-summary">Public description</label><textarea id="feature-summary" required minlength="10" maxlength="600" rows="4" placeholder="e.g. Restored and sealed a timber deck, ready for summer."></textarea>
+  <label class="checkbox-line"><input id="feature-confirm" type="checkbox" required> <span>I have permission to share this work publicly, and my title and description contain no private customer information.</span></label>
+  <div class="controls"><button class="btn" id="save-feature" type="submit">Send to Website Builder</button><button class="btn secondary" type="button" id="cancel-feature">Cancel</button></div></form>
+ </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+ 'use strict';
+ const PROJECT_URL='https://ezcmfbaoivdwkgayznbt.supabase.co';
+ const PUBLIC_KEY='sb_publishable_f4Pl6Lxlre4k1kV1G6dRLg_RGuYOY03';
+ const STATUSES=['New','Quote needed','Quote sent','Won','Completed','Lost'];
+ const el=id=>document.getElementById(id);
+ const status=message=>{el('message').textContent=message};
+ let client=null,user=null,sites=[],inbox=[],features=[],editing=null,business=null,customers=[],jobs=[],businessError='';
+ if(!window.supabase?.createClient){status('Cannot load secure account library. Check your connection and reload.');return}
+ client=window.supabase.createClient(PROJECT_URL,PUBLIC_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ async function requireOk(query){const {data,error}=await query;if(error)throw error;return data}
+ async function checkUser(){
+  const {data,error}=await client.auth.getUser();if(error&&!/auth session missing/i.test(error.message||''))throw error;
+  user=data?.user||null;
+  el('auth-panel').hidden=!!user;el('app').hidden=!user;
+  if(!user){sites=[];inbox=[];features=[];business=null;customers=[];jobs=[];el('enquiry-list').replaceChildren();el('customers-panel').hidden=true;el('jobs-panel').hidden=true;return}
+  el('account-label').textContent='Signed in: '+(user.email||'account');
+  await load();
+ }
+ async function busy(fn){
+  try{status('Working…');await fn();if(el('message').textContent==='Working…')status('✓ Ready')}
+  catch(error){status('Error: '+(error?.message||String(error)))}
+ }
+ async function load(){
+  if(!user)return;
+  await loadBusiness();
+  const current=el('website-filter').value;
+  sites=await requireOk(client.from('websites').select('id,name,accepting_enquiries').order('updated_at',{ascending:false}).limit(100));
+  const filter=el('website-filter');filter.replaceChildren();
+  const all=new Option('All my websites','all');filter.append(all);
+  for(const site of sites)filter.append(new Option(site.name,site.id));
+  filter.value=sites.some(s=>s.id===current)?current:'all';
+  if(!sites.length){
+   inbox=[];features=[];
+   el('connect-note').textContent='No EzySouth websites are linked to this account yet. You can keep this JobFlow login and link a website through EzySouth Web later.';
+   render();return;
+  }
+  el('connect-note').textContent='Connected to '+sites.length+' EzySouth website'+(sites.length===1?'':'s')+'. Published enquiry forms can send customer messages straight here.';
+  const ids=sites.map(s=>s.id);
+  inbox=await requireOk(client.from('enquiries').select('id,website_id,customer_name,customer_contact,message,status,created_at').in('website_id',ids).order('created_at',{ascending:false}).limit(1000));
+  try{
+   features=await requireOk(client.from('jobflow_showcases').select('id,website_id,enquiry_id,title,summary').in('website_id',ids).limit(1000));
+  }catch(error){
+   features=[];
+   if(error.code==='42P01'||error.code==='PGRST205')status('Enquiries loaded. Website showcasing requires the secure JobFlow database migration first.');
+   else throw error;
+  }
+  render();
+ }
+ function render(){
+  const web=el('website-filter').value,stat=el('status-filter').value;
+  const filtered=inbox.filter(x=>(web==='all'||x.website_id===web)&&(stat==='all'||x.status===stat));
+  const box=el('enquiry-list');box.replaceChildren();
+  el('count-all').textContent=String(inbox.length);
+  el('count-open').textContent=String(inbox.filter(x=>!['Completed','Lost'].includes(x.status)).length);
+  el('count-complete').textContent=String(inbox.filter(x=>x.status==='Completed').length);
+  if(!filtered.length){const p=document.createElement('p');p.className='muted';p.textContent=sites.length?'No enquiries match these filters.':'Create or connect an EzySouth website to start receiving customer enquiries.';box.append(p)}
+  renderBusiness();
+  for(const item of filtered){
+   const site=sites.find(s=>s.id===item.website_id);
+   const stored=features.find(f=>f.enquiry_id===item.id);
+   const card=document.createElement('article');card.className='lead';
+   const head=document.createElement('div');head.className='lead-header';
+   const left=document.createElement('div');
+   const h=document.createElement('h3');h.textContent=item.customer_name;
+   const sm=document.createElement('small');sm.className='muted';sm.textContent=(site?.name||'Website')+' · '+new Date(item.created_at).toLocaleString('en-NZ');
+   left.append(h,sm);const badge=document.createElement('span');badge.className='badge';badge.textContent=item.status;head.append(left,badge);
+   const privateBox=document.createElement('div');privateBox.className='private';
+   const c=document.createElement('strong');c.textContent='Private contact: '+item.customer_contact;
+   const m=document.createElement('p');m.className='detail';m.textContent=item.message;privateBox.append(c,m);
+   const buttons=document.createElement('div');buttons.className='lead-actions';
+   const select=document.createElement('select');select.setAttribute('aria-label','Change enquiry status for '+item.customer_name);
+   for(const st of STATUSES)select.append(new Option(st,st));
+   select.value=item.status;select.addEventListener('change',()=>busy(async()=>{
+    const next=select.value;
+    if(next!=='Completed'&&stored){
+     if(!confirm('This enquiry is featured in the Website Builder. Remove its showcase draft before changing the job away from Completed?')){select.value=item.status;return}
+     await requireOk(client.from('jobflow_showcases').delete().eq('id',stored.id).select('id'));
+    }
+    await requireOk(client.from('enquiries').update({status:next}).eq('id',item.id).eq('website_id',item.website_id).select('id'));
+    await load();
+   }));
+   buttons.append(select);
+   if(item.status==='Completed'){
+    const add=document.createElement('button');add.className='btn small';add.textContent=stored?'Edit website draft':'Send to Website →';
+    add.addEventListener('click',()=>openFeature(item,stored));buttons.append(add);
+    if(stored){
+     const remove=document.createElement('button');remove.className='btn danger small';remove.textContent='Remove draft';
+     remove.addEventListener('click',()=>busy(async()=>{
+      if(!confirm('Remove this project from the Website Builder draft? Previously published pages will not change until you republish.'))return;
+      await requireOk(client.from('jobflow_showcases').delete().eq('id',stored.id).select('id'));await load();
+     }));buttons.append(remove);
+     const note=document.createElement('small');note.className='muted';note.textContent='✓ Added to builder draft. Review and republish there.';buttons.append(note);
+    }
+   }
+   card.append(head,privateBox,buttons);box.append(card);
+  }
+ }
+
+ async function loadBusiness(){
+  business=null;customers=[];jobs=[];businessError='';
+  const {data:row,error}=await client.from('jobflow_businesses')
+    .select('id,name,location').eq('owner_id',user.id).maybeSingle();
+  if(error){
+   const missing=['42P01','PGRST205'].includes(error.code);
+   businessError=missing?'Standalone business cloud storage needs the JobFlow database migration before it can save records.':'Could not load business: '+error.message;
+   el('biz-info').textContent=businessError;
+   el('customers-panel').hidden=true;el('jobs-panel').hidden=true;
+   return;
+  }
+  business=row;
+  if(!business)return;
+  customers=await requireOk(client.from('jobflow_customers')
+   .select('id,name,contact').eq('business_id',business.id).order('created_at',{ascending:false}).limit(300));
+  jobs=await requireOk(client.from('jobflow_jobs')
+   .select('id,customer_id,title,notes,status,created_at').eq('business_id',business.id).order('created_at',{ascending:false}).limit(300));
+ }
+ function renderBusiness(){
+  const name=el('biz-name'),location=el('biz-location');
+  if(document.activeElement!==name)name.value=business?.name||'';
+  if(document.activeElement!==location)location.value=business?.location||'';
+  el('biz-info').textContent=businessError|| (business?'✓ Business saved securely. '+customers.length+' customers and '+jobs.length+' manually created jobs.':'Create a business workspace to manage customers and standalone jobs. No website required.');
+  el('customers-panel').hidden=!business;el('jobs-panel').hidden=!business;
+  const list=el('customer-list');list.replaceChildren();
+  const selected=el('job-customer').value;const picker=el('job-customer');
+  picker.replaceChildren(new Option('Choose a customer',''));
+  for(const customer of customers){
+   picker.append(new Option(customer.name,customer.id));
+   const row=document.createElement('div');row.className='lead';
+   const title=document.createElement('strong');title.textContent=customer.name;
+   const p=document.createElement('p');p.className='muted micro';p.textContent=customer.contact;
+   const remove=document.createElement('button');remove.className='btn danger small';remove.type='button';remove.textContent='Delete customer';
+   remove.addEventListener('click',()=>busy(async()=>{
+    if(jobs.some(j=>j.customer_id===customer.id))throw Error('Delete linked jobs first to protect job history.');
+    if(!confirm('Delete this customer?'))return;
+    await requireOk(client.from('jobflow_customers').delete().eq('id',customer.id).eq('business_id',business.id).select('id'));
+    await load();status('Customer removed.');
+   }));
+   row.append(title,p,remove);list.append(row);
+  }
+  picker.value=customers.some(c=>c.id===selected)?selected:'';
+  const jobList=el('job-list');jobList.replaceChildren();
+  for(const job of jobs){
+   const customer=customers.find(c=>c.id===job.customer_id);
+   const card=document.createElement('div');card.className='lead';
+   const title=document.createElement('strong');title.textContent=job.title;
+   const detail=document.createElement('p');detail.className='muted detail';detail.textContent=(customer?.name||'Customer')+' · '+(job.notes||'No notes');
+   const actions=document.createElement('div');actions.className='lead-actions';
+   const sel=document.createElement('select');sel.setAttribute('aria-label','Status of '+job.title);
+   for(const st of STATUSES)sel.append(new Option(st,st));sel.value=job.status;
+   sel.addEventListener('change',()=>busy(async()=>{
+    await requireOk(client.from('jobflow_jobs').update({status:sel.value,updated_at:new Date().toISOString()})
+      .eq('id',job.id).eq('business_id',business.id).select('id'));
+    await load();status('Job status saved.');
+   }));
+   const del=document.createElement('button');del.type='button';del.className='btn danger small';del.textContent='Delete job';
+   del.addEventListener('click',()=>busy(async()=>{
+    if(!confirm('Delete this manually created job?'))return;
+    await requireOk(client.from('jobflow_jobs').delete().eq('id',job.id).eq('business_id',business.id).select('id'));
+    await load();status('Job deleted.');
+   }));
+   actions.append(sel,del);card.append(title,detail,actions);jobList.append(card);
+  }
+ }
+ el('business-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  const name=el('biz-name').value.trim(),location=el('biz-location').value.trim();
+  if(name.length<2||name.length>120||location.length>120)throw Error('Check business name and service area.');
+  const values={owner_id:user.id,name,location,updated_at:new Date().toISOString()};
+  await requireOk(client.from('jobflow_businesses').upsert(values,{onConflict:'owner_id'}).select('id'));
+  await load();status('✓ JobFlow business saved.');
+ })});
+ el('customer-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  if(!business)throw Error('Create your business workspace first.');
+  const name=el('customer-name').value.trim(),contact=el('customer-contact').value.trim();
+  if(name.length<2||name.length>120||contact.length<3||contact.length>200)throw Error('Check customer name and contact.');
+  await requireOk(client.from('jobflow_customers').insert({business_id:business.id,name,contact}).select('id'));
+  el('customer-form').reset();await load();status('✓ Customer saved.');
+ })});
+ el('job-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  if(!business)throw Error('Create your business workspace first.');
+  const customerId=el('job-customer').value;
+  if(!customers.some(c=>c.id===customerId))throw Error('Choose a customer.');
+  const title=el('job-title').value.trim(),notes=el('job-notes').value.trim();
+  if(title.length<3||title.length>160||notes.length>3000)throw Error('Check title and notes.');
+  await requireOk(client.from('jobflow_jobs').insert({business_id:business.id,customer_id:customerId,title,notes}).select('id'));
+  el('job-form').reset();await load();status('✓ Job saved.');
+ })});
+ function openFeature(item,stored){
+  if(item.status!=='Completed')return;
+  editing={item,stored};const site=sites.find(s=>s.id===item.website_id);
+  el('feature-website').textContent='Website: '+(site?.name||'Your website');
+  el('feature-name').value=stored?.title||'';
+  el('feature-summary').value=stored?.summary||'';
+  el('feature-confirm').checked=false;
+  el('feature-modal').hidden=false;el('feature-name').focus();
+ }
+ function closeFeature(){editing=null;el('feature-form').reset();el('feature-modal').hidden=true}
+ el('feature-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  if(!editing)throw Error('Select a completed enquiry first.');
+  if(!el('feature-confirm').checked)throw Error('Confirm permission for the public content.');
+  const title=el('feature-name').value.trim(),summary=el('feature-summary').value.trim();
+  if(title.length<4||title.length>100||summary.length<10||summary.length>600)throw Error('Check title and description lengths.');
+  const {item,stored}=editing;
+  const values={website_id:item.website_id,enquiry_id:item.id,title,summary,updated_at:new Date().toISOString()};
+  const q=stored?client.from('jobflow_showcases').update(values).eq('id',stored.id).select('id'):client.from('jobflow_showcases').insert(values).select('id');
+  await requireOk(q);closeFeature();await load();
+  status('✓ Sent to EzySouth Web Builder. Open the website project, refresh completed work, review and publish when ready.');
+ })});
+ el('cancel-feature').addEventListener('click',closeFeature);
+ el('feature-modal').addEventListener('click',e=>{if(e.target===el('feature-modal'))closeFeature()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!el('feature-modal').hidden)closeFeature()});
+ el('auth-form').addEventListener('submit',e=>{e.preventDefault();void busy(async()=>{
+  const {error}=await client.auth.signInWithPassword({email:el('auth-email').value.trim(),password:el('auth-password').value});
+  if(error)throw error;el('auth-password').value='';await checkUser();
+ })});
+ el('sign-up').addEventListener('click',()=>busy(async()=>{
+  const email=el('auth-email').value.trim(),password=el('auth-password').value;
+  if(!email||password.length<6)throw Error('Enter your email and a password of at least 6 characters.');
+  const {data,error}=await client.auth.signUp({email,password});if(error)throw error;
+  if(data.session){await checkUser();status('✓ Your account is ready. You can connect an EzySouth website whenever you wish.')}
+  else status('Account created. Check your email for a confirmation link, then sign in.');
+ }));
+ el('sign-out').addEventListener('click',()=>busy(async()=>{const {error}=await client.auth.signOut();if(error)throw error;await checkUser()}));
+ el('refresh').addEventListener('click',()=>busy(load));
+ el('website-filter').addEventListener('change',render);
+ el('status-filter').addEventListener('change',render);
+ client.auth.onAuthStateChange(()=>{setTimeout(()=>checkUser().catch(e=>status('Account error: '+e.message)),0)});
+ checkUser().catch(e=>status('Account error: '+e.message));
+})();
+</script>
+</body>
+</html>

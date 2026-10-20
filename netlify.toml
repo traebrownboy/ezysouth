@@ -1,3 +1,9 @@
+# EzySouth + JobFlow ISOLATED Netlify test deployment
+# This file exists on the jobflow-netlify-test branch ONLY.
+# NEVER use this branch for the existing ezysouth.netlify.app production site.
 [build]
-  command = "node scripts/build-production.js"
-  publish = "dist"
+  command = ""
+  publish = "netlify-preview"
+
+[build.environment]
+  NODE_ENV = "test"

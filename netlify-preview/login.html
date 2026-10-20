@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#102c25">
+<meta name="description" content="Sign in to EzySouth Web and JobFlow with one secure EzySouth account.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://anldjuaqlpowwodlphqf.supabase.co wss://anldjuaqlpowwodlphqf.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
+<title>Log in to EzySouth · One account. Two tools.</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18382d;background:#f7f9f7;font-synthesis:none}
+*{box-sizing:border-box}
+html{min-height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse 76% 36% at 13% -3%,#dfefe5 0%,transparent 76%),#f7f9f7;line-height:1.5}
+button,input,a{font:inherit}button{cursor:pointer}button:disabled{opacity:.67;cursor:wait}
+a{color:#1d7250;text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid #55aa79;outline-offset:3px}
+[hidden]{display:none!important}
+.staging{background:#edf4ed;color:#476751;border-bottom:1px solid #dcebdd;padding:8px 16px;text-align:center;font-size:.72rem;font-weight:840;letter-spacing:.085em}
+.shell{max-width:1170px;padding:0 25px;margin:0 auto}
+.site-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:89px}
+.brand{display:inline-flex;align-items:center;gap:10px;color:#163c2b;font-size:1.45rem;font-weight:900;letter-spacing:-.075em;text-decoration:none}
+.brand:hover{text-decoration:none}
+.brand-mark{display:grid;place-items:center;width:37px;height:37px;color:#b2f0c6;background:#14422e;border-radius:12px;box-shadow:0 8px 19px #1d513228}
+.back-home{font-size:.83rem;display:inline-flex;align-items:center;gap:7px;color:#2d6044;font-weight:750;background:#eaf2eb;border:1px solid #dbe8de;border-radius:10px;padding:10px 14px}
+.back-home:hover{text-decoration:none;background:#dcecdf}
+.auth-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:30px;align-items:stretch;padding:22px 0 54px;min-height:665px}
+.story{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:48px 43px 33px;overflow:hidden;border-radius:27px;color:#fff;background:linear-gradient(160deg,#183d2e 0%,#0f2d25 56%,#102d31 100%);box-shadow:0 27px 55px #103a2624}
+.story:before{content:"";position:absolute;width:390px;height:390px;right:-178px;top:-208px;border-radius:50%;border:90px solid #66b58312;pointer-events:none}
+.story:after{content:"";position:absolute;left:-180px;bottom:-235px;width:480px;height:480px;border-radius:50%;border:115px solid #65b8830e;pointer-events:none}
+.story>div{position:relative;z-index:1}
+.eyebrow{margin:0 0 22px;color:#acd9bd;font-size:.78rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase}
+.story h1{font-size:clamp(2.3rem,4.4vw,3.8rem);line-height:1.08;letter-spacing:-.065em;font-weight:870;margin:0 0 20px;max-width:460px}
+.story h1 span{color:#a8e5b9}
+.story-lead{max-width:400px;font-size:1rem;line-height:1.78;color:#c5d7cb;margin:0}
+.mock-up{position:relative;background:#f8fcf9;border:1px solid #ffffff35;border-radius:18px;padding:14px 16px 14px;box-shadow:0 19px 42px #071f1640;margin:37px 0 28px;color:#1f4634;transform:rotate(-1.3deg)}
+.mock-top{display:flex;gap:6px;align-items:center;border-bottom:1px solid #e4eee6;padding-bottom:12px;margin-bottom:13px}
+.mock-dot{width:7px;height:7px;border-radius:50%;background:#c1d8ca}.mock-dot:first-child{background:#5eaf79}
+.mock-caption{margin-left:auto;color:#587e68;font-size:.72rem;font-weight:790}
+.mock-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mock-card{min-height:105px;padding:15px;background:#f0f7f2;border:1px solid #ddece0;border-radius:12px}
+.mock-card:last-child{background:#ecf1f6;border-color:#e0e7ec}
+.mock-card .mini-icon{font-size:1.25rem;margin-bottom:7px}
+.mock-card strong{display:block;font-size:.82rem;color:#28543b}
+.mock-card:last-child strong{color:#30546b}
+.mock-card span{display:block;font-size:.68rem;color:#72907b;margin-top:5px}
+.mock-card:last-child span{color:#7d96a5}
+.connected-line{color:#b6d8bf;font-size:.85rem;font-weight:750}
+.connected-line span{color:#a7e4ba;margin-right:8px}
+.account-card{background:#fff;border:1px solid #dce8df;border-radius:27px;padding:43px 45px;box-shadow:0 20px 50px #153b2810;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.account-card .tag{display:inline-flex;align-self:flex-start;gap:7px;align-items:center;padding:7px 10px;border-radius:40px;background:#edf7ee;color:#21734c;font-size:.7rem;font-weight:850;letter-spacing:.1em;text-transform:uppercase;margin-bottom:25px}
+.tag-dot{height:7px;width:7px;border-radius:100%;background:#39a268}
+.account-card h2{margin:0;font-size:clamp(1.9rem,3.3vw,2.38rem);line-height:1.2;letter-spacing:-.057em;font-weight:870;color:#133929}
+.subheading{color:#6a7e6e;font-size:.94rem;line-height:1.62;margin:11px 0 24px}
+.mode-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;background:#f0f4f1;padding:4px;border-radius:12px;margin-bottom:23px}
+.mode-tabs button{border:0;background:transparent;color:#6d8073;border-radius:9px;padding:11px 9px;font-size:.89rem;font-weight:780}
+.mode-tabs button[aria-selected="true"]{color:#164b32;background:#fff;box-shadow:0 2px 8px #173c2420}
+.form-field{margin:0 0 17px}
+.form-field label{display:block;margin-bottom:8px;color:#344e3c;font-weight:760;font-size:.82rem}
+.form-field input{display:block;width:100%;border-radius:12px;border:1px solid #d6e2d9;background:#fbfcfb;padding:14px 15px;color:#183a2c;outline:0;min-height:50px;font-size:16px;transition:background .18s,border .18s,box-shadow .18s}
+.form-field input:focus{border-color:#3c9364;background:#fff;box-shadow:0 0 0 3px #5ab27c22}
+.form-field input::placeholder{color:#9aaba0}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:76px}
+.password-toggle{position:absolute;right:9px;top:8px;border:0;border-radius:9px;background:#edf4ee;color:#437453;font-weight:770;font-size:.77rem;padding:9px 10px;min-height:34px}
+.password-help{margin:-4px 0 0;font-size:.78rem;color:#708677}
+.form-toolbar{display:flex;align-items:center;justify-content:flex-end;margin:-2px 0 20px}
+.form-toolbar button,.plain-link{border:0;background:transparent;padding:4px 0;color:#25764e;font-size:.81rem;font-weight:780}
+.primary{width:100%;min-height:51px;border:0;border-radius:12px;background:#175d3c;color:#fff;font-size:.96rem;font-weight:810;box-shadow:0 9px 17px #125b3924;transition:background .18s,transform .18s}
+.primary:hover{background:#124c31}
+.primary:active{transform:translateY(1px)}
+.primary:disabled{background:#7c9e88;box-shadow:none}
+.notice{font-size:.85rem;line-height:1.56;padding:12px 14px;border-radius:12px;margin:0 0 18px;border:1px solid #d9e7dd;background:#f1f8f2;color:#1d6944}
+.notice.error{border-color:#edc5c2;background:#fff4f2;color:#9a332c}
+.notice.info{border-color:#d7e1ec;background:#f1f6fc;color:#305a72}
+.support{text-align:center;color:#819185;font-size:.8rem;margin:22px 0 0}
+.support a{font-weight:790}
+.footer{padding:10px 0 35px;color:#84978a;font-size:.79rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+.footer strong{color:#52745b}
+.after-login{margin-top:18px}
+.after-login .account-email{font-size:.9rem;overflow-wrap:anywhere;color:#516959;padding:11px 13px;border-radius:11px;background:#f1f7f2;border:1px solid #dcebdd}
+.destination{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0;border:1px solid #dbe8df;border-radius:13px;padding:14px 16px;color:#254f36;text-decoration:none;font-weight:790}
+.destination:hover{text-decoration:none;background:#f1f8f3;border-color:#bbdec8}
+.destination span{color:#4c9270}
+.sign-out{border:0;background:transparent;color:#6f8072;font-size:.84rem;font-weight:770;padding:12px 0}
+@media(max-width:900px){.auth-grid{grid-template-columns:1fr;min-height:auto;padding-top:8px}.account-card{order:0}.story{order:1;min-height:365px;padding:30px}.story h1{max-width:none;font-size:2.6rem}.story-lead{max-width:520px}.mock-up{max-width:470px;margin-bottom:18px}.connected-line{margin-top:8px}}
+@media(max-width:590px){.shell{padding:0 17px}.site-nav{min-height:75px}.brand{font-size:1.33rem}.back-home{font-size:.76rem;padding:9px 10px}.auth-grid{gap:16px;padding:3px 0 28px}.account-card{border-radius:21px;padding:29px 22px 32px;box-shadow:0 9px 27px #12382210}.account-card .tag{margin-bottom:17px}.account-card h2{font-size:1.92rem}.subheading{margin:9px 0 21px}.story{min-height:auto;padding:25px 24px;border-radius:20px}.story h1{font-size:2.05rem}.story-lead{font-size:.89rem}.mock-up{margin:23px 0}.footer{padding-bottom:25px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="staging">🧪 PRIVATE BETA PREVIEW · Test accounts only</div>
+<header class="site-nav shell">
+  <a class="brand" href="./index.html" aria-label="EzySouth homepage"><span class="brand-mark" aria-hidden="true">✦</span>EzySouth</a>
+  <a class="back-home" href="./index.html">← Return to homepage</a>
+</header>
+<main class="shell auth-grid">
+  <section class="story" aria-label="One connected business account">
+    <div>
+      <p class="eyebrow">EzySouth accounts</p>
+      <h1>One account.<br><span>Everything connected.</span></h1>
+      <p class="story-lead">Create your website. Manage the work. Build your portfolio. All through one secure EzySouth login.</p>
+    </div>
+    <div>
+      <div class="mock-up" aria-hidden="true">
+        <div class="mock-top"><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-caption">YOUR WORKSPACE</span></div>
+        <div class="mock-cards">
+          <div class="mock-card"><div class="mini-icon">✦</div><strong>EzySouth Web</strong><span>Your website, made simple</span></div>
+          <div class="mock-card"><div class="mini-icon">▤</div><strong>JobFlow</strong><span>Customers, jobs &amp; projects</span></div>
+        </div>
+      </div>
+      <p class="connected-line"><span>✓</span>One sign-in for both tools</p>
+    </div>
+  </section>
+  <section class="account-card" aria-labelledby="auth-title">
+    <div class="tag"><span class="tag-dot"></span> Your EzySouth account</div>
+    <div id="signed-out-view">
+      <h2 id="auth-title">Welcome back.</h2>
+      <p class="subheading" id="auth-subtitle">Sign in once to access both EzySouth Web and JobFlow.</p>
+      <div class="mode-tabs" id="mode-tabs" role="tablist" aria-label="Account action">
+        <button type="button" id="mode-login" role="tab" aria-selected="true" aria-controls="credentials">Sign in</button>
+        <button type="button" id="mode-register" role="tab" aria-selected="false" aria-controls="credentials">Create account</button>
+      </div>
+      <div class="notice" id="auth-message" role="status" aria-live="polite" hidden></div>
+      <form id="credentials" novalidate>
+        <div class="form-field"><label for="auth-email">Email address</label><input id="auth-email" type="email" name="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@business.co.nz" maxlength="254" required></div>
+        <div class="form-field" id="password-field"><label for="auth-password">Password</label><div class="password-wrap"><input id="auth-password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8"><button type="button" class="password-toggle" id="toggle-password" aria-label="Show password">Show</button></div></div>
+        <div class="form-field" id="confirm-field" hidden><label for="auth-confirm">Confirm password</label><input id="auth-confirm" type="password" name="confirm-password" autocomplete="new-password" placeholder="Repeat your password" minlength="8"></div>
+        <p class="password-help" id="password-help" hidden>Use at least 8 characters for a stronger password.</p>
+        <div class="form-toolbar" id="form-toolbar"><button type="button" id="forgot-password">Forgot password?</button></div>
+        <button type="submit" class="primary" id="submit-auth">Sign in to EzySouth →</button>
+      </form>
+      <p class="support" id="mode-switch-copy">New to EzySouth? <a href="./login.html?mode=register" id="register-link">Create an account</a></p>
+      <p class="support" id="mode-recovery-back" hidden><button type="button" class="plain-link" id="back-to-login">← Back to sign in</button></p>
+    </div>
+    <div id="signed-in-view" hidden>
+      <p class="notice error" id="signed-in-message" role="alert" hidden></p>
+      <h2 id="signed-in-title">You're all set.</h2>
+      <p class="subheading">Your account works across EzySouth Web and JobFlow. Choose where to continue.</p>
+      <div class="after-login">
+        <p class="account-email" id="account-email"></p>
+        <a class="destination" href="./web.html">EzySouth Web <span>→</span></a>
+        <a class="destination" href="./jobflow.html">JobFlow by EzySouth <span>→</span></a>
+        <a class="destination" href="./index.html">Return to homepage <span>→</span></a>
+        <button type="button" class="sign-out" id="sign-out">Sign out of EzySouth</button>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="shell footer"><strong>✦ EzySouth</strong><span>One account, two connected tools. Private staging only.</span></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+ 'use strict';
+ // Uses the exact same project, publishable key and same-origin session as
+ // web.html and jobflow.html. Never substitute production Supabase credentials.
+ const STAGING_URL='https://anldjuaqlpowwodlphqf.supabase.co';
+ const STAGING_KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
+ const el=id=>document.getElementById(id);
+ const params=new URLSearchParams(location.search);
+ const targets={home:'./index.html',web:'./web.html',jobflow:'./jobflow.html'};
+ const nextKey=params.get('next');
+ const next=Object.prototype.hasOwnProperty.call(targets,nextKey)?targets[nextKey]:targets.home;
+ const redirectUrl=new URL('./login.html',location.href);
+ redirectUrl.search='';
+ redirectUrl.hash='';
+ const client=window.supabase?.createClient?.(STAGING_URL,STAGING_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ let mode='login',currentUser=null,working=false,recoveryEvent=false;
+ function showMessage(message,kind){
+  const box=el('auth-message');box.textContent=message||'';box.className='notice'+(kind?' '+kind:'');box.hidden=!message;
+ }
+ function setWorking(on){
+  working=on;el('submit-auth').disabled=on;
+  el('submit-auth').textContent=on?'Please wait…':({login:'Sign in to EzySouth →',register:'Create your EzySouth account →',forgot:'Send password reset link →',update:'Save new password →'})[mode];
+ }
+ function showSignedIn(user){
+  currentUser=user;
+  el('signed-out-view').hidden=!!user;
+  el('signed-in-view').hidden=!user;
+  if(user)el('account-email').textContent='Signed in as '+(user.email||'your account');
+ }
+ function setMode(selected){
+  if(!['login','register','forgot','update'].includes(selected))selected='login';
+  mode=selected;working=false;
+  el('mode-tabs').hidden=selected==='forgot'||selected==='update';
+  el('mode-login').setAttribute('aria-selected',String(selected==='login'));
+  el('mode-register').setAttribute('aria-selected',String(selected==='register'));
+  el('password-field').hidden=selected==='forgot';
+  el('confirm-field').hidden=!(selected==='register'||selected==='update');
+  el('auth-password').autocomplete=(selected==='register'||selected==='update')?'new-password':'current-password';
+  el('auth-password').required=selected!=='forgot';
+  el('auth-confirm').required=selected==='register'||selected==='update';
+  el('password-help').hidden=!(selected==='register'||selected==='update');
+  el('form-toolbar').hidden=selected!=='login';
+  el('mode-switch-copy').hidden=selected!=='login';
+  el('mode-recovery-back').hidden=!(selected==='forgot'||selected==='update');
+  el('auth-password').type='password';
+  el('toggle-password').textContent='Show';
+  el('toggle-password').setAttribute('aria-label','Show password');
+  el('auth-title').textContent={login:'Welcome back.',register:'Start something good.',forgot:'Reset your password.',update:'Choose a new password.'}[mode];
+  el('auth-subtitle').textContent={login:'Sign in once to access both EzySouth Web and JobFlow.',register:'Create one account for both of your EzySouth workspaces.',forgot:'Enter your email and we’ll send you a secure reset link.',update:'Set a new password to keep your EzySouth account secure.'}[mode];
+  el('submit-auth').textContent={login:'Sign in to EzySouth →',register:'Create your EzySouth account →',forgot:'Send password reset link →',update:'Save new password →'}[mode];
+  el('submit-auth').disabled=false;
+  el('auth-password').value='';
+  el('auth-confirm').value='';
+  showMessage('');
+ }
+ function clearHashSecrets(){
+  if(location.hash&&(location.hash.includes('access_token=')||location.hash.includes('refresh_token='))){
+   history.replaceState(null,'',location.pathname+location.search);
+  }
+ }
+ async function refreshUser(){
+  if(!client)return;
+  const {data,error}=await client.auth.getUser();
+  if(error&&!/auth session missing/i.test(error.message||''))throw error;
+  const user=data?.user||null;
+  if(mode==='update'){
+   // Password reset callbacks carry a temporary recovery session.
+   // Do not replace the update form with the signed-in view.
+   if(!user)showMessage('That reset link is invalid or has expired. Request a new one.','error');
+   return;
+  }
+  showSignedIn(user);
+ }
+ async function submitForm(e){
+  e.preventDefault();
+  if(!client){showMessage('Sign-in is unavailable right now. Reload the page and try again.','error');return}
+  if(working)return;
+  const email=el('auth-email').value.trim().toLowerCase();
+  const password=el('auth-password').value;
+  const confirm=el('auth-confirm').value;
+  if(mode!=='update'&&(!email||!el('auth-email').checkValidity())){showMessage('Enter a valid email address.','error');el('auth-email').focus();return}
+  if(mode!=='forgot'&&password.length<(mode==='login'?6:8)){showMessage('Enter '+(mode==='login'?'your password.':'a password with at least 8 characters.'),'error');return}
+  if((mode==='register'||mode==='update')&&password!==confirm){showMessage('The passwords do not match.','error');return}
+  setWorking(true);showMessage('');
+  try{
+   if(mode==='login'){
+    const {data,error}=await client.auth.signInWithPassword({email,password});
+    if(error)throw error;
+    if(!data?.session)throw Error('Sign-in could not be confirmed. Please try again.');
+    el('auth-password').value='';
+    location.assign(next);
+    return;
+   }
+   if(mode==='register'){
+    const signUpUrl=new URL(redirectUrl.href);
+    signUpUrl.searchParams.set('confirmed','1');
+    const {data,error}=await client.auth.signUp({email,password,options:{emailRedirectTo:signUpUrl.href}});
+    if(error)throw error;
+    el('auth-password').value='';el('auth-confirm').value='';
+    if(data.session){location.assign(next);return}
+    showMessage('Check your email to confirm your new account. Return here afterwards to sign in.','info');
+    return;
+   }
+   if(mode==='forgot'){
+    const resetUrl=new URL(redirectUrl.href);
+    resetUrl.searchParams.set('mode','recovery');
+    const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:resetUrl.href});
+    if(error)throw error;
+    showMessage('If the email is registered, a password reset link will arrive shortly. Check your inbox and spam folder.','info');
+    return;
+   }
+   if(mode==='update'){
+    const {data,error}=await client.auth.getUser();
+    if(error||!data?.user)throw Error('That reset session has expired. Request a fresh password reset link.');
+    const result=await client.auth.updateUser({password});
+    if(result.error)throw result.error;
+    el('auth-password').value='';el('auth-confirm').value='';
+    recoveryEvent=false;
+    mode='login';
+    showSignedIn(result.data?.user||data.user);
+    return;
+   }
+  }catch(err){
+   const msg=err?.message||'Could not complete this request. Try again.';
+   showMessage(msg==='Email not confirmed'?'Confirm your email using the link we sent before signing in.':msg,'error');
+  }finally{setWorking(false)}
+ }
+ el('credentials').addEventListener('submit',submitForm);
+ el('mode-login').addEventListener('click',()=>setMode('login'));
+ el('mode-register').addEventListener('click',()=>setMode('register'));
+ el('register-link').addEventListener('click',e=>{e.preventDefault();setMode('register')});
+ el('forgot-password').addEventListener('click',()=>setMode('forgot'));
+ el('back-to-login').addEventListener('click',()=>setMode('login'));
+ el('toggle-password').addEventListener('click',()=>{
+  const input=el('auth-password');const reveal=input.type==='password';
+  input.type=reveal?'text':'password';
+  el('toggle-password').textContent=reveal?'Hide':'Show';
+  el('toggle-password').setAttribute('aria-label',reveal?'Hide password':'Show password');
+ });
+ el('sign-out').addEventListener('click',async()=>{
+  if(!client)return;
+  el('sign-out').disabled=true;
+  el('signed-in-message').hidden=true;
+  try{const {error}=await client.auth.signOut();if(error)throw error;showSignedIn(null);setMode('login')}
+  catch(err){
+   el('signed-in-message').textContent='Could not sign out: '+(err?.message||String(err));
+   el('signed-in-message').hidden=false;
+   showSignedIn(currentUser);
+  }
+  finally{el('sign-out').disabled=false}
+ });
+ if(!client){setMode('login');showMessage('Could not load secure account sign-in. Please check your connection and reload.','error');return}
+ client.auth.onAuthStateChange((event,session)=>{
+  if(event==='PASSWORD_RECOVERY'){
+   recoveryEvent=true;setMode('update');showSignedIn(null);
+  }else if(event==='SIGNED_OUT'){
+   setTimeout(()=>{showSignedIn(null);setMode('login')},0);
+  }else if(event==='SIGNED_IN'||event==='TOKEN_REFRESHED'){
+   if(mode!=='update')setTimeout(()=>refreshUser().catch(()=>{}),0);
+  }
+ });
+ const requested=params.get('mode');
+ if(requested==='register')setMode('register');
+ else if(requested==='forgot')setMode('forgot');
+ else if(requested==='recovery')setMode('update');
+ else setMode('login');
+ (async()=>{
+  try{
+   const result=await client.auth.getSession();
+   if(result.error)throw result.error;
+   // Let Supabase process auth redirects, then remove bearer tokens from URL.
+   clearHashSecrets();
+   await refreshUser();
+   if(params.get('confirmed')==='1'&&!currentUser&&mode==='login'){
+    showMessage('Email confirmed. You can sign in to both EzySouth tools now.','info');
+   }
+  }catch(err){
+   showMessage('Account connection problem: '+(err?.message||String(err)),'error');
+  }
+ })();
+})();
+</script>
+</body>
+</html>

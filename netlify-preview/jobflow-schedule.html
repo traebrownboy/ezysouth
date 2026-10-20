@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#102b25">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'unsafe-inline'; img-src 'self' data: blob: https://anldjuaqlpowwodlphqf.supabase.co; connect-src https://anldjuaqlpowwodlphqf.supabase.co wss://anldjuaqlpowwodlphqf.supabase.co; form-action 'self'; base-uri 'none'; object-src 'none'">
+<title>Job Schedule | JobFlow by EzySouth</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#173629;background:#f5f8f6;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;line-height:1.5}button,input,textarea,select{font:inherit}button{cursor:pointer}
+a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #64b986;outline-offset:3px}
+[hidden]{display:none!important}
+.beta{font-size:.68rem;background:#e5f3e9;color:#2a6e48;text-align:center;padding:5px 12px;font-weight:800;letter-spacing:.08em}
+.top{background:#102b25;color:#f6fcf8;padding:15px clamp(18px,4vw,42px)}
+.top-inner{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:-.055em;font-size:1.22rem;text-decoration:none}.brand span{color:#91d7ab;font-weight:550}
+.top-links{display:flex;gap:20px;align-items:center;font-size:.83rem}.top-links a{text-decoration:none;color:#d1e8d9}
+.shell{max-width:1280px;margin:auto;padding:clamp(18px,3vw,38px) clamp(15px,3vw,28px) 80px}
+.eyebrow{font-size:.71rem;color:#448061;letter-spacing:.11em;font-weight:850}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:2px 0 23px}
+h1{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.13;letter-spacing:-.055em;margin:8px 0}
+h2{font-size:1.16rem;letter-spacing:-.025em;margin:0}
+h3{font-size:.95rem;letter-spacing:-.025em;margin:0}
+.muted{color:#718476}.tiny{font-size:.75rem}.small{font-size:.85rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 16px;border-radius:10px;border:1px solid #176e4a;background:#17784e;color:#fff;text-decoration:none;font-weight:750;font-size:.88rem;transition:transform .15s,background .15s;min-height:43px}
+.btn:hover{background:#116b44;transform:translateY(-1px)}.btn.secondary{background:#fff;color:#235c43;border-color:#d0e0d5}.btn.secondary:hover{background:#e9f4ec}.btn.danger{background:#fff;color:#a34236;border:1px solid #ead5d1}.btn.danger:hover{background:#fff2f0}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.panel{background:#fff;border:1px solid #e0e9e1;border-radius:17px;padding:clamp(16px,3vw,24px);box-shadow:0 6px 32px #123a2710;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.stat{padding:17px 19px;background:#fff;border:1px solid #e0e9e2;border-radius:14px}
+.stat b{font-size:1.63rem;letter-spacing:-.05em;display:block;line-height:1.2}.stat small{font-size:.75rem;color:#718676}
+.tools{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.tabs{display:inline-flex;gap:3px;padding:4px;background:#eaf1eb;border-radius:11px;flex-wrap:wrap}
+.tab{border:0;background:transparent;color:#567361;border-radius:8px;padding:9px 14px;font-weight:750;font-size:.8rem}
+.tab.active{background:#fff;color:#185238;box-shadow:0 2px 8px #0a332016}
+.date-controls{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.date-label{font-weight:800;min-width:150px;text-align:center;font-size:.93rem}
+.icon-btn{border:1px solid #dae5dc;background:#fff;color:#28563e;border-radius:9px;min-width:37px;min-height:37px;padding:6px 9px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.day{min-width:0;border:1px solid #e2ebe4;background:#fff;border-radius:12px;min-height:188px;padding:11px}
+.day.today{border-color:#8cc6a6;background:#f7fcf8}.day-head{display:flex;justify-content:space-between;gap:5px;align-items:center;margin-bottom:12px}
+.day-head button{border:0;background:transparent;text-align:left;color:#204c36;font-weight:800;font-size:.83rem;padding:0}
+.day-head small{color:#809285;font-size:.68rem}.job-chip{display:block;text-align:left;border:1px solid #d4e6dc;border-left:3px solid #248c60;background:#f0f7f2;border-radius:8px;margin:0 0 6px;padding:8px;width:100%;color:#1c5438}
+.job-chip b{display:block;font-size:.73rem;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
+.job-chip small{font-size:.69rem;color:#698475;display:block}
+.job-chip.progress{background:#eef3fd;border-color:#d8e2fa;border-left-color:#5181cd;color:#234776}
+.day.empty{background:#fafcfb}
+.month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.month-label{text-align:center;font-weight:800;color:#738476;font-size:.68rem;padding:7px 0}
+.month-cell{border:1px solid #e0eae3;border-radius:9px;background:#fff;min-height:94px;text-align:left;padding:9px;display:flex;flex-direction:column;gap:4px;align-items:start}
+.month-cell.other{opacity:.38}.month-cell.today{border-color:#6cad87;background:#eff9f2}.month-cell b{font-size:.76rem}
+.month-cell span{display:block;font-size:.66rem;line-height:1.3;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.month-cell em{font-size:.66rem;color:#207b4e;font-style:normal;font-weight:700}
+.agenda{display:flex;flex-direction:column;gap:10px}
+.agenda-row{display:flex;align-items:start;gap:12px;text-align:left;width:100%;border:1px solid #e0eae3;background:#fff;border-radius:11px;padding:14px;color:#254b35}
+.agenda-row:hover,.job-chip:hover,.month-cell:hover{border-color:#7db995;background:#eff8f1}
+.agenda-time{min-width:87px;font-size:.79rem;font-weight:750;color:#468263}
+.agenda-row strong{font-size:.86rem}.agenda-row small{color:#718374;font-size:.75rem;display:block}
+.queue-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.queue{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.queue-item{display:flex;gap:11px;align-items:center;justify-content:space-between;border:1px solid #e0eae4;border-radius:12px;padding:14px;text-align:left;background:#fff;min-width:0}
+.queue-item:hover{border-color:#91c6a6;background:#f7fbf8}
+.queue-item strong{display:block;font-size:.86rem;overflow-wrap:anywhere}.queue-item small{display:block;font-size:.73rem;color:#728676}
+.queue-arrow{color:#55936e;font-weight:750}
+.empty{padding:20px;border:1px dashed #d9e8dc;border-radius:11px;text-align:center;color:#788b7c;font-size:.86rem;background:#fbfdfb}
+.foot{font-size:.78rem;color:#73877a;margin-top:16px}
+#notice:empty{display:none}#notice{margin-bottom:15px;padding:13px 16px;border:1px solid #cfe5d4;border-radius:10px;background:#ebf6ed;color:#206044;font-size:.84rem}
+#notice.error{border-color:#edc9c5;background:#fff0ee;color:#9d352c}
+.gate{max-width:510px;margin:40px auto;padding:25px;text-align:center}
+.modal{position:fixed;inset:0;z-index:50;background:#091c1699;display:flex;justify-content:flex-end;align-items:stretch}
+.drawer{height:100%;width:min(100%,560px);overflow-y:auto;background:#fff;box-shadow:-12px 0 50px #0b282630;padding:clamp(18px,4vw,32px)}
+.drawer-top{display:flex;justify-content:space-between;align-items:start;gap:14px;margin-bottom:20px}
+.drawer h2{font-size:1.5rem;letter-spacing:-.045em}
+label{display:block;font-size:.77rem;font-weight:750;color:#566f5d;margin:0 0 6px}
+input,textarea,select{width:100%;padding:11px 12px;background:white;border:1px solid #d6e3d9;border-radius:10px;color:#183d2a;min-height:43px}
+textarea{min-height:90px;resize:vertical}input:disabled{background:#edf2ee}
+.field{margin:0 0 15px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.actions>.btn{flex:1}
+.divider{height:1px;background:#e0eae2;margin:22px 0}
+.pill{background:#edf7ef;color:#247c4e;font-size:.75rem;font-weight:750;padding:4px 9px;border-radius:8px}
+.photo-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+.photo{position:relative;background:#f2f5f2;border:1px solid #deeadf;border-radius:9px;overflow:hidden;aspect-ratio:1/1}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo button{position:absolute;right:5px;bottom:5px;background:#ffffffed;border:1px solid #dce6dd;border-radius:6px;font-size:.69rem;color:#943629;padding:5px 8px;font-weight:750}
+.helper{font-size:.76rem;line-height:1.55;color:#758779}
+.state-note{padding:12px;background:#f1f7f2;border-radius:10px;color:#3d7352;font-size:.81rem}
+@media(max-width:960px){.cal-grid{grid-template-columns:repeat(7,minmax(137px,1fr));overflow:auto;padding-bottom:8px}.day{min-height:190px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.shell{padding:18px 13px 55px}.heading{align-items:start}.queue{grid-template-columns:1fr}.day{min-height:145px}.month-cell{min-height:75px;padding:6px}.month-cell span{display:none}.fields{grid-template-columns:1fr}.drawer{padding:17px}.photo-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.top-links{gap:10px}.date-label{min-width:110px;font-size:.83rem}.tab{padding:8px 10px}}
+</style>
+</head>
+<body>
+<div class="beta">PRIVATE BETA · JOBFLOW TEST SITE</div>
+<header class="top"><div class="top-inner"><a class="brand" href="./index.html">JobFlow <span>by EzySouth</span></a><nav class="top-links"><a href="./jobflow.html">← JobFlow</a><a href="./jobflow-documents.html">Quotes &amp; Invoices</a><a href="./index.html">⌂ Home</a></nav></div></header>
+<main class="shell">
+ <div class="heading"><div><div class="eyebrow">JOBFLOW / JOBS &amp; SCHEDULING</div><h1>Everything on schedule.</h1><p class="muted small">Your jobs, your calendar, one calm place to manage the work.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button id="refresh-jobs" type="button" class="btn secondary" hidden>↻ Refresh</button><button id="new-job" class="btn" hidden>＋ New job</button></div></div>
+ <div id="notice" aria-live="polite"></div>
+ <div id="loading" class="panel">Opening your secure JobFlow schedule…</div>
+ <div id="gate" class="panel gate" hidden><h2>Sign in to manage your jobs</h2><p class="muted small">Jobs, photos and customer details stay inside your secure Ezysouth workspace.</p><a class="btn" href="./login.html?next=jobflow">Sign in to EzySouth</a></div>
+ <div id="workspace" hidden>
+  <div class="stats">
+   <div class="stat"><b id="stat-ready">0</b><small>Ready to schedule</small></div>
+   <div class="stat"><b id="stat-scheduled">0</b><small>Scheduled work</small></div>
+   <div class="stat"><b id="stat-progress">0</b><small>In progress</small></div>
+   <div class="stat"><b id="stat-done">0</b><small>Completed</small></div>
+  </div>
+  <div class="tools">
+   <div class="tabs" id="views" role="tablist" aria-label="Schedule views">
+    <button type="button" class="tab active" data-view="week">Week</button>
+    <button type="button" class="tab" data-view="month">Month</button>
+    <button type="button" class="tab" data-view="day">Day</button>
+    <button type="button" class="tab" data-view="all">All jobs</button>
+    <button type="button" class="tab" data-view="completed">Completed</button>
+    <button type="button" class="tab" data-view="archive">Archived</button>
+    <button type="button" class="tab" data-view="trash">Trash</button>
+   </div>
+   <div class="date-controls" id="date-controls">
+    <button class="icon-btn" id="previous" aria-label="Previous period">←</button>
+    <span class="date-label" id="date-label">Loading…</span>
+    <button class="icon-btn" id="next" aria-label="Next period">→</button>
+    <button class="btn secondary" id="today">Today</button>
+   </div>
+  </div>
+  <section class="panel" id="calendar-panel"><div id="calendar"></div></section>
+  <section class="panel" id="ready-panel">
+   <div class="queue-header"><div><h2>Ready to schedule</h2><p class="muted tiny">Accepted quotes and jobs waiting for a date</p></div><span id="ready-badge" class="pill">0 jobs</span></div>
+   <div id="ready-list" class="queue"></div>
+  </section>
+  <p class="foot">Your schedule is saved to the staging cloud. Times use the New Zealand time zone. Archiving hides work from your active lists; Trash can be restored before permanent deletion.</p>
+ </div>
+</main>
+<div class="modal" id="job-modal" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+ <aside class="drawer">
+  <div class="drawer-top"><div><div class="eyebrow">JOB DETAILS</div><h2 id="drawer-title">New job</h2><p id="job-origin" class="muted small"></p></div><button id="close-job" class="icon-btn" type="button" aria-label="Close job">×</button></div>
+  <form id="job-form">
+   <div class="field"><label for="job-title">Job title *</label><input id="job-title" required minlength="3" maxlength="160" placeholder="e.g. Replace boundary fence"></div>
+   <div class="fields"><div class="field"><label for="job-customer">Customer *</label><input id="job-customer" maxlength="120" required placeholder="Customer name"></div><div class="field"><label for="job-contact">Email or phone</label><input id="job-contact" maxlength="200" placeholder="021 ... or name@example.com"></div></div>
+   <div class="field"><label for="job-location">Work address / location</label><input id="job-location" maxlength="240" placeholder="Street or site location"></div>
+   <div class="fields"><div class="field"><label for="job-date">Date &amp; start time (NZ)</label><input id="job-date" type="datetime-local" step="900"></div><div class="field"><label for="job-duration">Estimated duration</label><select id="job-duration"><option value="">Not set</option><option value="30">30 min</option><option value="60">1 hour</option><option value="120" selected>2 hours</option><option value="180">3 hours</option><option value="240">4 hours</option><option value="360">6 hours</option><option value="480">8 hours</option><option value="720">12 hours</option><option value="1440">Full day</option></select></div></div>
+   <div class="fields"><div class="field"><label for="job-assignee">Assigned to</label><input id="job-assignee" maxlength="100" placeholder="Worker's name"></div><div class="field"><label for="job-status">Job status</label><select id="job-status"><option>Unscheduled</option><option>Scheduled</option><option>In Progress</option><option>Completed</option><option>Cancelled</option></select></div></div>
+   <div class="field"><label for="job-notes">Work notes</label><textarea id="job-notes" maxlength="3000" rows="4" placeholder="Details, instructions and anything worth remembering"></textarea></div>
+   <div id="linked-quote" hidden class="state-note">This job was created from an accepted quote. Its quote and invoice remain separate and won't be deleted with the job. <a href="./jobflow-documents.html?tab=quote">View quotes →</a></div>
+   <div class="actions"><button id="save-job" type="submit" class="btn">Save job</button><button id="cancel-job" type="button" class="btn secondary">Cancel</button></div>
+  </form>
+  <div id="photo-section" hidden>
+   <div class="divider"></div><h3>Work photos</h3><p class="helper">Private job photos, not published to your website. Add up to six photos.</p>
+   <div id="job-photos" class="photo-tiles"></div>
+   <label for="photo-upload" class="btn secondary" style="display:inline-flex">＋ Add photos</label><input id="photo-upload" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+   <p id="photo-status" class="helper" role="status"></p>
+  </div>
+  <div id="job-management" hidden><div class="divider"></div><div id="management-actions" class="actions"></div><p class="helper" id="management-helper"></p></div>
+ </aside>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script>
+(()=>{
+'use strict';
+const PROJECT_URL='https://anldjuaqlpowwodlphqf.supabase.co';
+const KEY='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
+const BUCKET='jobflow-work-photos';
+const $=id=>document.getElementById(id);
+const e=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const DAY=86400000;
+const todayNZ=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Pacific/Auckland',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const isoDay=(d)=>d.toISOString().slice(0,10);
+const addDays=(day,n)=>{const d=new Date(day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return isoDay(d)};
+const weekStart=(day)=>addDays(day,-((new Date(day+'T12:00:00Z').getUTCDay()+6)%7));
+const monthStart=(day)=>day.slice(0,7)+'-01';
+const weekday=(day)=>new Intl.DateTimeFormat('en-NZ',{weekday:'short',timeZone:'UTC'}).format(new Date(day+'T12:00:00Z'));
+const readable=(day,opt={day:'numeric',month:'short'})=>new Intl.DateTimeFormat('en-NZ',{timeZone:'UTC',...opt}).format(new Date(day+'T12:00:00Z'));
+const localParts=(ms)=>{
+ const parts=new Intl.DateTimeFormat('en-NZ',{timeZone:'Pacific/Auckland',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(ms));
+ const fields=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+ return {day:fields.year+'-'+fields.month+'-'+fields.day,time:fields.hour+':'+fields.minute};
+};
+function nzToUtc(value){
+ if(!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value))throw Error('Enter a valid New Zealand date and time.');
+ const [date,time]=value.split('T'),[yr,mo,da]=date.split('-').map(Number),[hr,mi]=time.split(':').map(Number);
+ const target=Date.UTC(yr,mo-1,da,hr,mi);let candidate=target;
+ for(let n=0;n<4;n++){
+  const p=localParts(candidate),[y,m,d]=p.day.split('-').map(Number),[h,min]=p.time.split(':').map(Number);
+  const wall=Date.UTC(y,m-1,d,h,min);candidate+=target-wall;
+ }
+ const check=localParts(candidate);
+ if(check.day!==date||check.time!==time)throw Error('That local time does not exist because of daylight-saving changes. Choose another time.');
+ return new Date(candidate).toISOString();
+}
+const timeFor=(job)=>job.scheduled_start?localParts(job.scheduled_start).time:'';
+const dayFor=(job)=>job.scheduled_start?localParts(job.scheduled_start).day:'';
+const statusName=s=>['New','Quote needed','Quote sent','Won'].includes(s)?'Unscheduled':s==='Lost'?'Cancelled':s;
+const requestedQuote=new URLSearchParams(location.search).get('quote');
+let client=null,user=null,jobs=[],view='week',date=todayNZ(),editingId=null,busy=false,photoBusy=false;
+let photoUrls=[];
+function notice(msg,error=false){const node=$('notice');node.textContent=msg;node.classList.toggle('error',error);if(msg)node.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function unarchived(){return jobs.filter(j=>!j.deleted_at&&!j.archived_at)}
+function readyJob(j){return !j.scheduled_start&&['Unscheduled','New','Quote needed','Quote sent','Won'].includes(j.status)}
+function getJob(id){return jobs.find(j=>j.id===id)}
+function sortJobs(list){return [...list].sort((a,b)=>String(a.scheduled_start||'').localeCompare(String(b.scheduled_start||''))||String(a.created_at).localeCompare(String(b.created_at)))}
+function renderStats(){
+ const active=unarchived();
+ $('stat-ready').textContent=String(active.filter(readyJob).length);
+ $('stat-scheduled').textContent=String(active.filter(j=>statusName(j.status)==='Scheduled').length);
+ $('stat-progress').textContent=String(active.filter(j=>j.status==='In Progress').length);
+ $('stat-done').textContent=String(active.filter(j=>j.status==='Completed').length);
+}
+function chip(j){
+ const b=document.createElement('button');b.type='button';b.className='job-chip'+(j.status==='In Progress'?' progress':'');
+ const time=timeFor(j);b.innerHTML='<small>'+e(time)+(j.duration_minutes?' · '+Math.round(j.duration_minutes/60*10)/10+' h':'')+'</small><b>'+e(j.title)+'</b><small>'+e(j.customer_name||'Customer')+'</small>';
+ b.addEventListener('click',()=>openJob(j.id));return b;
+}
+function renderWeek(){
+ const start=weekStart(date),end=addDays(start,6);
+ $('date-label').textContent=readable(start)+' – '+readable(end);
+ const grid=document.createElement('div');grid.className='cal-grid';
+ for(let i=0;i<7;i++){
+  const day=addDays(start,i),list=sortJobs(unarchived().filter(j=>dayFor(j)===day&&j.status!=='Cancelled'));
+  const col=document.createElement('div');col.className='day'+(day===todayNZ()?' today':'')+(list.length?'':' empty');
+  const head=document.createElement('div');head.className='day-head';
+  const open=document.createElement('button');open.type='button';open.textContent=weekday(day)+' '+new Date(day+'T12:00:00Z').getUTCDate();
+  open.addEventListener('click',()=>{date=day;view='day';render()});
+  const sub=document.createElement('small');sub.textContent=list.length?list.length+' job'+(list.length===1?'':'s'):'Open';
+  head.append(open,sub);col.append(head);list.forEach(j=>col.append(chip(j)));grid.append(col);
+ }
+ $('calendar').replaceChildren(grid);
+}
+function renderMonth(){
+ const start=monthStart(date),first=weekStart(start),m=date.slice(0,7);
+ $('date-label').textContent=readable(start,{month:'long',year:'numeric'});
+ const grid=document.createElement('div');grid.className='month-grid';
+ for(const day of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']){const label=document.createElement('div');label.className='month-label';label.textContent=day;grid.append(label)}
+ for(let i=0;i<42;i++){
+  const d=addDays(first,i),list=sortJobs(unarchived().filter(j=>dayFor(j)===d&&j.status!=='Cancelled'));
+  const btn=document.createElement('button');btn.type='button';btn.className='month-cell'+(d.slice(0,7)!==m?' other':'')+(d===todayNZ()?' today':'');
+  const number=document.createElement('b');number.textContent=String(new Date(d+'T12:00:00Z').getUTCDate());btn.append(number);
+  if(list.length){const count=document.createElement('em');count.textContent=list.length+' job'+(list.length===1?'':'s');btn.append(count);
+   list.slice(0,2).forEach(j=>{const span=document.createElement('span');span.textContent=j.title;btn.append(span)})}
+  btn.addEventListener('click',()=>{date=d;view='day';render()});grid.append(btn);
+ }
+ $('calendar').replaceChildren(grid);
+}
+function renderDay(){
+ $('date-label').textContent=weekday(date)+' '+readable(date,{day:'numeric',month:'long',year:'numeric'});
+ const list=sortJobs(unarchived().filter(j=>dayFor(j)===date&&j.status!=='Cancelled'));
+ const box=document.createElement('div');box.className='agenda';
+ if(!list.length){const p=document.createElement('div');p.className='empty';p.textContent='No jobs on this day. A clear calendar is a beautiful thing.';box.append(p)}
+ list.forEach(j=>{
+  const b=document.createElement('button');b.type='button';b.className='agenda-row';
+  const t=document.createElement('span');t.className='agenda-time';t.textContent=timeFor(j);
+  const info=document.createElement('span');const name=document.createElement('strong');name.textContent=j.title;
+  const sub=document.createElement('small');sub.textContent=(j.customer_name||'Customer')+' · '+statusName(j.status)+(j.assignee?' · '+j.assignee:'');
+  info.append(name,sub);b.append(t,info);b.addEventListener('click',()=>openJob(j.id));box.append(b);
+ });$('calendar').replaceChildren(box);
+}
+function renderSpecial(){
+ $('date-controls').hidden=true;
+ const items=jobs.filter(j=>view==='trash'?Boolean(j.deleted_at):view==='archive'?Boolean(j.archived_at)&&!j.deleted_at:view==='completed'?Boolean(!j.deleted_at&&!j.archived_at&&j.status==='Completed'):Boolean(!j.deleted_at&&!j.archived_at))
+  .sort((a,b)=>String(b[view==='trash'?'deleted_at':view==='archive'?'archived_at':'updated_at']).localeCompare(String(a[view==='trash'?'deleted_at':view==='archive'?'archived_at':'updated_at'])));
+ const wrap=document.createElement('div');wrap.className='agenda';
+ if(!items.length){const msg=document.createElement('div');msg.className='empty';msg.textContent=view==='trash'?'Nothing in Trash.':view==='archive'?'No archived jobs.':view==='completed'?'No completed jobs yet.':'No active jobs yet.';wrap.append(msg)}
+ items.forEach(j=>{
+  const b=document.createElement('button');b.className='agenda-row';b.type='button';
+  b.innerHTML='<span class="agenda-time">'+e(view==='trash'?'In Trash':view==='archive'?'Archived':j.scheduled_start?readable(dayFor(j))+' · '+timeFor(j):'To schedule')+'</span><span><strong>'+e(j.title)+'</strong><small>'+e(j.customer_name||'Customer')+' · '+e(statusName(j.status))+'</small></span>';
+  b.addEventListener('click',()=>openJob(j.id));wrap.append(b);
+ });
+ $('calendar').replaceChildren(wrap);
+}
+function renderReady(){
+ const queue=$('ready-list');queue.replaceChildren();
+ const arr=unarchived().filter(readyJob).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+ $('ready-badge').textContent=arr.length+' job'+(arr.length===1?'':'s');
+ if(!arr.length){const empty=document.createElement('p');empty.className='empty';empty.textContent='Nothing waiting. Accepted quotes will appear here automatically.';queue.append(empty)}
+ arr.forEach(j=>{
+  const btn=document.createElement('button');btn.className='queue-item';btn.type='button';
+  const info=document.createElement('span');const title=document.createElement('strong');title.textContent=j.title;
+  const note=document.createElement('small');note.textContent=(j.customer_name||'Customer')+(j.source_quote_id?' · Accepted quote':' · Manual job');
+  info.append(title,note);const arrow=document.createElement('span');arrow.textContent='Schedule →';arrow.className='queue-arrow';btn.append(info,arrow);
+  btn.addEventListener('click',()=>openJob(j.id));queue.append(btn);
+ });
+}
+function render(){
+ if(!user)return;
+ renderStats();
+ document.querySelectorAll('[data-view]').forEach(t=>{const active=t.dataset.view===view;t.classList.toggle('active',active);t.setAttribute('aria-selected',String(active))});
+ $('date-controls').hidden=['archive','trash','all','completed'].includes(view);$('ready-panel').hidden=['archive','trash','all','completed'].includes(view);
+ if(view==='week')renderWeek();else if(view==='month')renderMonth();else if(view==='day')renderDay();else renderSpecial();
+ if(!['archive','trash','all','completed'].includes(view))renderReady();
+}
+async function refresh(){
+ const {data,error}=await client.from('jobflow_jobs')
+ .select('id,business_id,customer_id,source_quote_id,customer_name,customer_contact,title,notes,status,created_at,updated_at,scheduled_start,duration_minutes,assignee,location,archived_at,deleted_at,completed_at,photo_paths')
+ .eq('owner_id',user.id).order('created_at',{ascending:false}).limit(1000);
+ if(error)throw error;jobs=data||[];
+ // Existing standalone jobs predate these customer snapshots.
+ const legacy=jobs.filter(j=>j.customer_id&&!j.customer_name).map(j=>j.customer_id);
+ if(legacy.length){
+  const businessIds=[...new Set(jobs.filter(j=>j.business_id).map(j=>j.business_id))];
+  if(businessIds.length){
+   const {data:cs}=await client.from('jobflow_customers').select('id,name,contact').in('business_id',businessIds).in('id',legacy);
+   const names=new Map((cs||[]).map(c=>[c.id,c]));jobs=jobs.map(j=>!j.customer_name&&names.has(j.customer_id)?{...j,customer_name:names.get(j.customer_id).name,customer_contact:names.get(j.customer_id).contact}:j);
+  }
+ }
+ render();
+}
+function showGate(){user=null;$('loading').hidden=true;$('workspace').hidden=true;$('gate').hidden=false;$('new-job').hidden=true;$('refresh-jobs').hidden=true}
+async function start(){
+ if(!window.supabase?.createClient){$('loading').textContent='Unable to load the secure account service.';return}
+ client=window.supabase.createClient(PROJECT_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ const {data,error}=await client.auth.getUser();if(error&&!/session missing/i.test(error.message||''))throw error;
+ if(!data?.user){showGate();return}
+ user=data.user;$('loading').hidden=true;$('gate').hidden=true;$('workspace').hidden=false;$('new-job').hidden=false;$('refresh-jobs').hidden=false;
+ await refresh();
+ if(requestedQuote){const linked=jobs.find(j=>j.source_quote_id===requestedQuote&&!j.deleted_at);if(linked)openJob(linked.id);else notice('Linked job is not ready to view. Refresh the schedule to check again.',true)}
+ client.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){closeJob(true);showGate()}});
+}
+function clearPhotoURLs(){for(const u of photoUrls)URL.revokeObjectURL(u);photoUrls=[]}
+function resetDialog(){
+ $('job-form').reset();$('job-duration').value='120';$('job-status').value='Unscheduled';$('job-management').hidden=true;
+ $('photo-section').hidden=true;$('linked-quote').hidden=true;$('job-photos').replaceChildren();
+ $('job-management').hidden=true;$('management-actions').replaceChildren();$('photo-status').textContent='';
+}
+function openJob(id=null){
+ if(busy)return;
+ editingId=id;
+ resetDialog();
+ const job=id?getJob(id):null;
+ if(id&&!job){notice('Job is not available.',true);return}
+ $('drawer-title').textContent=job?'Job details':'New job';
+ $('job-origin').textContent=job?.deleted_at?'In Trash · '+(job.customer_name||'Customer'):job?.source_quote_id?'Created from an accepted quote.':job?'Customer: '+(job.customer_name||'Customer'):'Save once and see it across your schedule.';
+ $('job-title').value=job?.title||'';
+ $('job-customer').value=job?.customer_name||'';
+ $('job-contact').value=job?.customer_contact||'';
+ $('job-location').value=job?.location||'';
+ $('job-assignee').value=job?.assignee||'';
+ $('job-notes').value=job?.notes||'';
+ $('job-status').value=job?statusName(job.status):'Unscheduled';
+ $('job-duration').value=job?.duration_minutes?String(job.duration_minutes):'120';
+ $('job-date').value=job?.scheduled_start?(dayFor(job)+'T'+timeFor(job)):'';
+ $('job-form').hidden=Boolean(job?.deleted_at);
+ $('linked-quote').hidden=!job?.source_quote_id;
+ $('photo-section').hidden=!job||Boolean(job.deleted_at);
+ $('job-management').hidden=!job;
+ if(job){buildActions(job);if(!job.deleted_at)void loadPhotos(job).catch(err=>{$('photo-status').textContent='Photos unavailable: '+err.message})}
+ $('job-modal').hidden=false;
+ if(!job?.deleted_at)$('job-title').focus();
+}
+function closeJob(force=false){if(!force&&(busy||photoBusy))return;$('job-modal').hidden=true;editingId=null;clearPhotoURLs();resetDialog()}
+function button(label,style,onClick){const b=document.createElement('button');b.type='button';b.className='btn '+style;b.textContent=label;b.addEventListener('click',onClick);return b}
+function buildActions(job){
+ const box=$('management-actions');box.replaceChildren();
+ if(job.deleted_at){
+  box.append(button('Restore job','secondary',()=>void mutate('restore',job)),button('Delete permanently','danger',()=>void mutate('permanent',job)));
+  $('management-helper').textContent='Trash hides the job. Permanent deletion cannot be undone and removes its private photos. Linked quotes and invoices are kept.';
+ }else if(job.archived_at){
+  box.append(button('Return to active jobs','secondary',()=>void mutate('unarchive',job)),button('Move to Trash','danger',()=>void mutate('trash',job)));
+  $('management-helper').textContent='Archived jobs stay saved, but no longer appear in your calendar or active job lists.';
+ }else{
+  box.append(button('Archive job','secondary',()=>void mutate('archive',job)),button('Move to Trash','danger',()=>void mutate('trash',job)));
+  $('management-helper').textContent='Archive completed or old work to keep your calendar tidy. Trash is recoverable; permanent deletion is separate.';
+ }
+}
+async function op(task){if(busy)return;busy=true;try{await task()}catch(err){notice(err?.message||'Something went wrong.',true)}finally{busy=false}}
+async function saveJob(event){
+ event.preventDefault();if(busy)return;
+ await op(async()=>{
+  if(!user)throw Error('Please sign in again.');
+  const title=$('job-title').value.trim(),customer_name=$('job-customer').value.trim(),customer_contact=$('job-contact').value.trim();
+  const notes=$('job-notes').value.trim(),location=$('job-location').value.trim(),assignee=$('job-assignee').value.trim(),dateValue=$('job-date').value;
+  let status=$('job-status').value;
+  if(title.length<3||title.length>160||customer_name.length<2||customer_name.length>120||notes.length>3000||customer_contact.length>200||location.length>240||assignee.length>100)throw Error('Please check the required job details.');
+  if(!['Unscheduled','Scheduled','In Progress','Completed','Cancelled'].includes(status))throw Error('Choose a valid job status.');
+  const scheduled_start=dateValue?nzToUtc(dateValue):null;
+  if(['Scheduled','In Progress'].includes(status)&&!scheduled_start)throw Error('Select a date and time before marking a job Scheduled or In Progress.');
+  if(!scheduled_start&&status==='Unscheduled'){}
+  const duration_minutes=scheduled_start?Number($('job-duration').value||120):null;
+  const original=editingId?getJob(editingId):null;
+  if(original?.deleted_at)throw Error('Restore this job before editing it.');
+  if(scheduled_start&&status!=='Cancelled'){
+   const start=Date.parse(scheduled_start),end=start+(duration_minutes||120)*60000;
+   const worker=assignee.toLowerCase();
+   const overlaps=unarchived().filter(j=>j.id!==original?.id&&j.scheduled_start&&!['Cancelled','Completed'].includes(j.status)&&
+     (j.assignee||'').toLowerCase()===worker).find(j=>{
+       const otherStart=Date.parse(j.scheduled_start);
+       const otherEnd=otherStart+(j.duration_minutes||120)*60000;
+       return start<otherEnd&&otherStart<end;
+     });
+   if(overlaps&&!confirm('Possible scheduling clash with “'+overlaps.title+'” for '+(assignee||'an unassigned worker')+'. Save anyway?'))return;
+  }
+  const values={title,customer_name,customer_contact,notes,location,assignee,
+    scheduled_start,duration_minutes,status,completed_at:status==='Completed'?(original?.completed_at||new Date().toISOString()):null};
+  const q=original?client.from('jobflow_jobs').update(values).eq('id',original.id).eq('owner_id',user.id):
+    client.from('jobflow_jobs').insert({...values,owner_id:user.id});
+  const {data,error}=await q.select('id');if(error)throw error;
+  if(!data?.length)throw Error('Job was not saved.');
+  const wasNew=!original;if(scheduled_start){date=dateValue.slice(0,10);view='week'}else if(['trash','archive','completed'].includes(view)){view='all'}closeJob(true);await refresh();notice('✓ '+(wasNew?'Job created.':'Job updated.')+(scheduled_start?' Saved to your calendar.':''));
+ });
+}
+async function mutate(action,job){
+ if(busy)return;
+ if(action==='trash'&&!confirm('Move “'+job.title+'” to Trash? You can restore it later.'))return;
+ if(action==='permanent'){
+  const answer=prompt('Permanent deletion cannot be undone. Type DELETE to remove this job and its private photos. Quotes and invoices will be retained.');
+  if(answer!=='DELETE')return;
+ }
+ await op(async()=>{
+  const id=job.id;let values=null;
+  if(action==='archive')values={archived_at:new Date().toISOString()};
+  else if(action==='unarchive')values={archived_at:null};
+  else if(action==='trash')values={deleted_at:new Date().toISOString()};
+  else if(action==='restore')values={deleted_at:null};
+  if(values){
+   const {data,error}=await client.from('jobflow_jobs').update(values).eq('id',id).eq('owner_id',user.id).select('id');
+   if(error)throw error;if(!data?.length)throw Error('Could not update this job.');
+  }else if(action==='permanent'){
+   const paths=Array.isArray(job.photo_paths)?job.photo_paths.filter(p=>typeof p==='string'):[];
+   if(paths.length){
+    const {error:removeErr}=await client.storage.from(BUCKET).remove(paths);
+    if(removeErr)throw Error('Private photos could not be deleted. Job remains in Trash. '+removeErr.message);
+   }
+   const {data,error}=await client.from('jobflow_jobs').delete().eq('id',id).eq('owner_id',user.id).select('id');
+   if(error)throw error;if(!data?.length)throw Error('Job could not be deleted.');
+  }else throw Error('Unknown action');
+  closeJob(true);await refresh();notice(action==='archive'?'✓ Job archived.':action==='trash'?'✓ Job moved to Trash.':action==='permanent'?'✓ Job deleted permanently.':'✓ Job restored.');
+ });
+}
+async function compressImage(file){
+ if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>14*1024*1024)throw Error('Choose a JPG, PNG or WebP under 14 MB.');
+ const url=URL.createObjectURL(file);
+ const image=new Image();
+ try{
+  await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=()=>reject(Error('Could not open photo.'));image.src=url});
+  const size=Math.min(1,1600/Math.max(image.naturalWidth,image.naturalHeight));
+  const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(image.naturalWidth*size));canvas.height=Math.max(1,Math.round(image.naturalHeight*size));
+  const context=canvas.getContext('2d');if(!context)throw Error('Photo processing unavailable.');
+  context.drawImage(image,0,0,canvas.width,canvas.height);
+  let blob=await new Promise(done=>canvas.toBlob(done,'image/jpeg',.82));
+  if(blob?.size>3*1024*1024)blob=await new Promise(done=>canvas.toBlob(done,'image/jpeg',.68));
+  canvas.width=0;canvas.height=0;
+  if(!blob||!blob.size||blob.size>3*1024*1024)throw Error('Photo could not be compressed under 3 MB.');
+  return blob;
+ }finally{URL.revokeObjectURL(url)}
+}
+async function loadPhotos(job){
+ if(editingId!==job.id)return;
+ clearPhotoURLs();const wrap=$('job-photos');wrap.replaceChildren();
+ const paths=Array.isArray(job.photo_paths)?job.photo_paths:[];
+ if(!paths.length){const p=document.createElement('span');p.className='helper';p.textContent='No photos attached yet.';wrap.append(p);return}
+ const {data,error}=await client.storage.from(BUCKET).createSignedUrls(paths,600);
+ if(error)throw error;
+ for(let i=0;i<paths.length;i++){
+  const url=data?.[i]?.signedUrl;if(!url)continue;
+  const tile=document.createElement('div');tile.className='photo';
+  const img=document.createElement('img');img.src=url;img.loading='lazy';img.alt='Private work photo '+(i+1);
+  const remove=document.createElement('button');remove.textContent='Remove';remove.type='button';remove.setAttribute('aria-label','Remove work photo '+(i+1));
+  remove.addEventListener('click',()=>void removePhoto(job.id,paths[i]));tile.append(img,remove);wrap.append(tile);
+ }
+}
+async function removePhoto(id,path){
+ if(photoBusy||busy)return;if(!confirm('Remove this private work photo?'))return;
+ photoBusy=true;$('photo-status').textContent='Removing photo…';
+ try{
+  const job=getJob(id);if(!job||job.deleted_at)throw Error('Job is unavailable.');
+  const remaining=(job.photo_paths||[]).filter(p=>p!==path);
+  const {error}=await client.from('jobflow_jobs').update({photo_paths:remaining}).eq('id',job.id).eq('owner_id',user.id);
+  if(error)throw error;
+  const cleanup=await client.storage.from(BUCKET).remove([path]);
+  await refresh();
+  const updated=getJob(id);if(updated)await loadPhotos(updated);
+  $('photo-status').textContent=cleanup.error?'Photo removed from the job, but stored-file cleanup needs retrying.':'Photo removed.';
+ }catch(err){$('photo-status').textContent=err.message}
+ finally{photoBusy=false}
+}
+async function addPhotos(files){
+ if(photoBusy||busy)return;const job=getJob(editingId);if(!job||job.deleted_at)return;
+ const selected=[...files||[]];if(!selected.length)return;
+ const existing=Array.isArray(job.photo_paths)?job.photo_paths:[];
+ if(selected.length+existing.length>6){$('photo-status').textContent='Six private photos maximum per job.';return}
+ photoBusy=true;$('photo-status').textContent='Preparing photos…';
+ const uploaded=[];
+ try{
+  for(let n=0;n<selected.length;n++){
+   $('photo-status').textContent='Uploading private photo '+(n+1)+' of '+selected.length+'…';
+   const blob=await compressImage(selected[n]);
+   const path=user.id+'/'+job.id+'/'+crypto.randomUUID()+'.jpg';
+   const {error}=await client.storage.from(BUCKET).upload(path,blob,{contentType:'image/jpeg',upsert:false,cacheControl:'3600'});
+   if(error)throw Error('Upload failed: '+error.message);
+   uploaded.push(path);
+  }
+  const {error}=await client.from('jobflow_jobs').update({photo_paths:[...existing,...uploaded]}).eq('id',job.id).eq('owner_id',user.id);
+  if(error)throw error;
+  await refresh();const updated=getJob(job.id);if(updated)await loadPhotos(updated);
+  $('photo-status').textContent='✓ '+uploaded.length+' private photo'+(uploaded.length===1?'':'s')+' saved.';
+ }catch(err){
+  if(uploaded.length)await client.storage.from(BUCKET).remove(uploaded);
+  $('photo-status').textContent=err.message;
+ }finally{photoBusy=false;$('photo-upload').value=''}
+}
+$('new-job').addEventListener('click',()=>openJob());
+$('refresh-jobs').addEventListener('click',()=>void op(async()=>{await refresh();notice('✓ Job schedule refreshed.')}));
+$('close-job').addEventListener('click',closeJob);
+$('cancel-job').addEventListener('click',closeJob);
+$('job-form').addEventListener('submit',ev=>void saveJob(ev));
+$('photo-upload').addEventListener('change',ev=>void addPhotos(ev.target.files));
+$('job-modal').addEventListener('click',ev=>{if(ev.target===$('job-modal'))closeJob()});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&!$('job-modal').hidden)closeJob()});
+$('views').addEventListener('click',ev=>{const btn=ev.target.closest('[data-view]');if(!btn)return;view=btn.dataset.view;render()});
+$('previous').addEventListener('click',()=>{date=view==='month'?addDays(monthStart(date),-1).slice(0,7)+'-01':addDays(date,view==='week'?-7:-1);render()});
+$('next').addEventListener('click',()=>{date=view==='month'?addDays(addDays(monthStart(date),32).slice(0,7)+'-01',0):addDays(date,view==='week'?7:1);render()});
+$('today').addEventListener('click',()=>{date=todayNZ();render()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&user&&!busy&&!editingId)void refresh().catch(()=>{})});
+window.setInterval(()=>{if(user&&!busy&&!editingId&&document.hidden===false)void refresh().catch(()=>{})},30000);
+start().catch(err=>{$('loading').textContent='Could not load schedule: '+err.message;notice(err.message,true)});
+})();
+</script>
+</body></html>

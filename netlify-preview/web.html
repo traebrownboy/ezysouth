@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EzySouth Web | STAGING ONLY</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#14223b;background:#f4f6fa}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}header{background:#111c33;color:white;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.brand{font-size:20px;font-weight:850;letter-spacing:-.5px}.brand span{color:#83d9b4}.tag{font-size:12px;background:#30405a;padding:5px 9px;border-radius:30px}nav{display:flex;gap:7px;flex-wrap:wrap;padding:15px 20px;background:white;border-bottom:1px solid #e3e8ef}.chat-log{min-height:150px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;margin:18px 0;padding:12px;background:#f3f6fa;border-radius:12px}.chat-msg{max-width:94%;padding:11px 13px;border-radius:11px;font-size:14px;line-height:1.5;white-space:pre-wrap}.chat-msg.user{align-self:flex-end;background:#dce9ff}.chat-msg.bot{align-self:flex-start;background:white;border:1px solid #e1e7ef}nav button,nav a{display:inline-block;text-decoration:none;background:#eef2f7;color:#34425a;border-radius:9px;padding:10px 13px;font-weight:700}nav a:hover{background:#d9e8e0}nav button.active{background:#173e8a;color:white}.wrap{max-width:1200px;margin:24px auto;padding:0 17px}.panel{background:white;border:1px solid #e4e9f0;border-radius:17px;padding:22px;box-shadow:0 5px 20px #14223b08}.grid{display:grid;grid-template-columns:360px 1fr;gap:18px}.field{margin:12px 0}label{display:block;font-size:12px;font-weight:750;color:#536079;margin-bottom:6px}input,textarea,select{width:100%;border:1px solid #cbd5e2;border-radius:9px;padding:11px;color:#15243d;background:white}textarea{min-height:85px;resize:vertical}.btn{padding:11px 15px;background:#1b5de2;color:white;border-radius:10px;font-weight:750}.btn.secondary{background:#eaf0fb;color:#1c438d}.btn.dark{background:#14223b}.btn:disabled{opacity:.5;cursor:not-allowed}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.muted{color:#65738a;font-size:13px;line-height:1.6}h1,h2,h3{letter-spacing:-.6px}h2{margin:0 0 9px}.hidden{display:none!important}.preview{border:1px solid #dfe5ef;border-radius:14px;overflow:hidden;background:white}.preview-head{background:#edf1f6;padding:9px 13px;font-size:12px;color:#5d6b82}.site{--accent:#207b67}.site .site-nav{padding:17px 23px;display:flex;align-items:center;justify-content:space-between;font-weight:850}.site .site-nav a{color:var(--accent);text-decoration:none;font-size:13px}.hero{background:linear-gradient(135deg,#e8f6ef,#f7fafc);padding:54px 30px}.hero small{color:var(--accent);font-weight:800;letter-spacing:1px}.hero h1{font-size:clamp(28px,4vw,45px);max-width:650px;line-height:1.08;margin:12px 0}.hero p{max-width:540px;color:#4d5b70;line-height:1.6}.site-cta{display:inline-block;background:var(--accent);color:white;border-radius:9px;padding:12px 19px;font-weight:800;text-decoration:none;margin-top:8px}.site-section{padding:28px 30px}.service-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.service{padding:16px;border:1px solid #e3e9ef;border-radius:11px;font-weight:700}.service:before{content:"✓";color:var(--accent);margin-right:8px}.contact{background:#f4f7fb}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.stat{background:#f1f5fb;border-radius:13px;padding:17px}.stat strong{display:block;font-size:29px}.stat span{color:#64748b;font-size:12px}.lead{border:1px solid #e1e7f0;border-radius:12px;padding:15px;margin:10px 0}.lead-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.pill{font-size:12px;background:#e7edf6;border-radius:20px;padding:5px 9px}.lead p{color:#5d6b80;font-size:14px}.lead select{max-width:200px}.notice{background:#fff7e6;border:1px solid #f1d59a;border-radius:10px;padding:13px;font-size:13px;line-height:1.5;margin:14px 0}.success{background:#e7f7ed;border-color:#b3e0c2}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.footer{padding:20px;text-align:center;color:#768399;font-size:12px}@media(max-width:780px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.hero{padding:35px 23px}.site-section{padding:24px 22px}}@media(max-width:420px){.stats{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+.site.layout-bold .hero{background:#15243c;color:white}.site.layout-bold .hero p{color:#d9e2ef}.site.layout-bold .hero small{color:#9fe5c7}.site.layout-bold .site-nav{background:#15243c;color:white}.site.layout-bold .site-nav a{color:#9fe5c7}.site.layout-bold .hero h1{font-size:clamp(36px,5vw,58px)}.site.layout-minimal .hero{background:#fff;padding-top:72px;padding-bottom:72px}.site.layout-minimal .hero h1{font-weight:550;letter-spacing:-2px}.site.layout-minimal .service{border:0;background:#f3f6f9}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}.gallery-grid img{width:100%;height:155px;object-fit:cover;border-radius:10px;background:#e5ebf2}.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.review-card{background:#f6f8fb;border-radius:12px;padding:18px;line-height:1.55}.review-card strong{display:block;margin-top:12px;font-size:13px} .uploaded-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:10px;margin-top:12px}.uploaded-item{border:1px solid #dce3ec;border-radius:10px;padding:7px;min-width:0}.uploaded-item img{width:100%;height:95px;object-fit:cover;border-radius:7px}.uploaded-item .actions{margin:5px 0;gap:4px}.uploaded-item button{padding:6px 8px;background:#eaf0fb;color:#193e83;border-radius:6px;font-size:12px}.uploaded-item small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.design-empty{padding:20px;border:1px dashed #cad3df;border-radius:12px;color:#6b7890;font-size:13px}.preview-tools{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}.preview-tools button{padding:9px 13px;border-radius:9px;background:#eaf0fb;color:#183f87;font-weight:750}.preview-tools button.active{background:#183f87;color:white}.phone-mode{max-width:390px;margin:0 auto}.editable-preview [data-edit]{outline:2px dashed #2973dc;outline-offset:3px;cursor:pointer;border-radius:3px}.editable-preview [data-edit]:active{background:#e4f0ff}.compare-wrap{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:12px;background:#e5eaf1;touch-action:pan-y}.compare-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.compare-wrap .after-clip{position:absolute;inset:0;overflow:hidden;width:50%}.compare-wrap .after-clip img{width:200%;max-width:none}.compare-wrap input{position:absolute;left:6%;bottom:12px;width:88%;z-index:4;accent-color:#fff}.compare-label{position:absolute;top:12px;z-index:3;background:#16243bc9;color:white;padding:5px 9px;border-radius:7px;font-size:12px}.compare-label.before{left:12px}.compare-label.after{right:12px}.compare-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.compare-item{border:1px solid #dfe5ed;padding:10px;border-radius:12px}.compare-item button{margin-top:9px}.editing-hint{font-size:12px;color:#3562a0;margin:8px 0}
+/* V4.3 design library */
+.site{--card-radius:16px;--card-bg:#f3f6fa;--ink:#17263c;--paper:#fff;--font-stack:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-family:var(--font-stack);color:var(--ink);background:var(--paper)}
+.site.font-editorial{--font-stack:Georgia,"Times New Roman",serif}.site.font-strong{--font-stack:Impact,"Arial Narrow",Arial,sans-serif}.site.font-strong p,.site.font-strong .service,.site.font-strong .review-card{font-family:Arial,sans-serif}
+.site.surface-sharp{--card-radius:2px}.site.surface-outlined{--card-bg:transparent}.site.surface-outlined .service,.site.surface-outlined .review-card{border:1px solid currentColor}
+.site .service,.site .review-card,.site .gallery-grid img,.site .compare-wrap{border-radius:var(--card-radius)}.site .service,.site .review-card{background:var(--card-bg)}
+.site.layout-premium{--ink:#29362e;--paper:#faf9f5;--card-bg:#f0eee5}.site.layout-premium .hero{background:#e8e9df;color:#253b30;padding:80px 30px}.site.layout-premium .hero h1{font-family:Georgia,serif;font-weight:400;letter-spacing:-2px}
+.site.layout-trades{--ink:#18212c;--card-bg:#e8edf2}.site.layout-trades .hero,.site.layout-trades .site-nav{background:#111a25;color:#fff}.site.layout-trades .hero h1{font-weight:950;text-transform:uppercase;letter-spacing:-1.5px}.site.layout-trades .site-cta{background:#f28b28!important;color:#111!important}
+.site.layout-friendly{--ink:#25425b;--paper:#f8fbff;--card-bg:#e7f3fa;--card-radius:22px}.site.layout-friendly .hero{background:#e6f2f8;color:#25425b}.site.layout-friendly .site-cta{border-radius:50px}
+.site.layout-luxury{--ink:#f2ece0;--paper:#171a20;--card-bg:#262b32}.site.layout-luxury .hero,.site.layout-luxury .site-nav{background:#101318;color:#f2ece0}.site.layout-luxury .hero h1{font-family:Georgia,serif;font-weight:400;letter-spacing:-1px}.site.layout-luxury .site-section{color:#f2ece0}.site.layout-luxury .review-card{color:#f2ece0}.site.layout-luxury .site-cta{background:#c6a76c!important;color:#171a20!important}
+.site.hero-split .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;min-height:330px}.site.hero-split .hero::after{content:"";display:block;min-height:260px;background:linear-gradient(135deg,#0002,#0005),var(--hero-image,linear-gradient(135deg,#b6d6d1,#497e80));background-size:cover;background-position:center;border-radius:var(--card-radius)}
+.site.hero-photo .hero{background-image:linear-gradient(90deg,#000b,#0004),var(--hero-image,linear-gradient(135deg,#2c5364,#203a43))!important;background-size:cover!important;background-position:center!important;color:#fff!important;min-height:390px;display:flex;flex-direction:column;justify-content:center}.site.hero-photo .hero p,.site.hero-photo .hero small{color:#fff!important}
+.reveal-photo{opacity:0;transform:translateY(22px) scale(.96);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}.reveal-photo.is-visible{opacity:1;transform:none}.gallery-grid img{transition:transform .45s ease,box-shadow .45s ease}.gallery-grid img:hover{transform:scale(1.035);box-shadow:0 12px 30px #0002}
+.compare-wrap{--split:50%}.compare-wrap .after-clip{width:var(--split)!important}.compare-wrap .after-clip img{width:100%!important;max-width:none!important;object-fit:cover!important;object-position:left center!important;position:absolute;inset:0}.compare-wrap .after-clip{overflow:hidden}.compare-wrap .after-clip img{width:var(--comparison-width,300px)!important;max-width:none!important}.compare-wrap:after{content:"";position:absolute;z-index:2;top:0;bottom:0;left:var(--split);width:3px;background:#fff;box-shadow:0 0 8px #0007;transform:translateX(-50%);pointer-events:none}.compare-wrap input{opacity:.7}
+@media(max-width:620px){.site.hero-split .hero{grid-template-columns:1fr}.site.hero-split .hero::after{min-height:170px}.site.hero-photo .hero{min-height:310px}}
+@media(prefers-reduced-motion:reduce){.reveal-photo{opacity:1;transform:none;transition:none}.gallery-grid img{transition:none}}
+
+/* V4.4 premium structure */
+.site.nav-sticky .site-nav{position:sticky;top:0;z-index:15;background:var(--paper);box-shadow:0 4px 16px #10182812}
+.site.nav-dark .site-nav{background:#111b2a;color:white}.site.nav-dark .site-nav a{color:#f5d59d}
+.site .service-list{gap:15px}.site.service-icons .service{padding:25px 17px;text-align:center;box-shadow:0 8px 24px #1018280a}.site.service-icons .service:before{content:"✦";display:block;font-size:25px;margin:0 0 12px}
+.site.service-list-style .service-list{display:block}.site.service-list-style .service{border:0;border-bottom:1px solid #a0aab555;border-radius:0;background:transparent;padding:17px 4px}
+.site .trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.site .trust-chip{padding:20px;background:var(--card-bg);border-radius:var(--card-radius);font-weight:700}
+.site .pro-footer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;padding:40px 30px;background:#152235;color:#f4f7fa;font-size:14px}
+.site .pro-footer p{color:#cad4df;line-height:1.6;overflow-wrap:anywhere}.site .pro-footer a{color:#a8d6fa}
+.sort-row{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f2f5fa;padding:10px;border-radius:9px;margin:7px 0;font-size:13px;font-weight:700}.sort-row button{padding:8px 12px;border-radius:7px;background:#e0e9f8;color:#163f86;margin-left:5px}.sort-row button:disabled{opacity:.35}
+.customer-modal{position:fixed;inset:0;z-index:10000;background:white;display:flex;flex-direction:column}.customer-bar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 16px;background:#101a2c;color:white}.customer-bar span{font-size:12px;color:#bdcce0}.customer-modal iframe{width:100%;border:0;flex:1;min-height:0}
+@media(max-width:640px){.site .pro-footer{grid-template-columns:1fr;gap:12px}.customer-bar span{display:none}}
+
+.project-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #d9e1ee;border-radius:12px;padding:15px;margin:10px 0;flex-wrap:wrap}
+.project-row small{color:#66758a}
+@media(max-width:640px){.project-row .actions{width:100%}}
+
+/* V5.5: premium, simple design system */
+.template-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:12px 0 18px}
+.template-choice{border:2px solid #e1e8f0;background:#fff;border-radius:15px;padding:9px;text-align:left;color:#26354c;transition:border-color .15s,transform .15s;min-width:0}
+.template-choice:hover{transform:translateY(-2px)}.template-choice.selected{border-color:#1b5de2;box-shadow:0 0 0 3px #1b5de218}
+.template-swatch{display:block;height:88px;border-radius:9px;overflow:hidden;margin-bottom:9px;padding:10px 12px}
+.template-swatch:before{content:'';display:block;width:42%;height:5px;border-radius:4px;background:currentColor;opacity:.65;margin-bottom:15px}
+.template-swatch:after{content:'';display:block;width:75%;height:16px;border-radius:3px;background:currentColor;box-shadow:0 23px 0 -5px currentColor;opacity:.55}
+.template-choice strong{display:block;font-size:13px}.template-choice small{display:block;color:#637187;font-size:11px;margin-top:3px;line-height:1.4}
+.template-choice[data-template=coastal] .template-swatch{background:#eaf4f4;color:#226b6a}
+.template-choice[data-template=studio] .template-swatch{background:#f2efe9;color:#544737}
+.template-choice[data-template=trade] .template-swatch{background:#17202c;color:#f6a14e}
+.template-choice[data-template=midnight] .template-swatch{background:#171a20;color:#d5bc88}
+.design-quick-tip{background:#edf6f3;border-radius:12px;padding:12px 14px;color:#235e50;font-size:13px;line-height:1.5}
+.site{--space-scale:1;--section-space:clamp(40px,6vw,76px)}
+.site .site-section{padding:var(--section-space) clamp(24px,5vw,60px)}
+.site .hero{padding:clamp(60px,9vw,120px) clamp(24px,5vw,60px)}
+.site .hero h1{line-height:1.07;letter-spacing:-.035em}
+.site .hero p{font-size:clamp(15px,1.7vw,18px);line-height:1.75}
+.site .site-nav{gap:12px;padding:20px clamp(22px,4vw,42px)}
+.site .site-nav span{overflow-wrap:anywhere}
+.site .site-cta{transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 7px 22px #00000014}
+.site .site-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px #00000022}
+.site .service{line-height:1.5;min-height:70px;display:flex;align-items:center}
+.site .gallery-grid img{height:clamp(180px,23vw,260px)}
+.site .site-section h2{font-size:clamp(24px,3vw,36px);line-height:1.15;margin-bottom:23px}
+.site.spacing-compact{--section-space:clamp(24px,4vw,44px)}
+.site.spacing-compact .hero{padding-top:clamp(40px,6vw,70px);padding-bottom:clamp(40px,6vw,70px)}
+.site.spacing-airy{--section-space:clamp(64px,9vw,110px)}
+.site.spacing-airy .hero{padding-top:clamp(90px,12vw,160px);padding-bottom:clamp(90px,12vw,160px)}
+.site.layout-premium .hero,.site.layout-minimal .hero{background:#f6f4ef}
+.site.layout-premium .site-cta,.site.layout-minimal .site-cta{border-radius:5px}
+.site.layout-friendly .hero{background:#eaf5f6}
+@media(max-width:620px){.template-library{grid-template-columns:repeat(2,minmax(0,1fr))}.site .site-nav{padding:15px 18px;align-items:center}.site .site-nav a{padding:10px 12px;border-radius:8px;background:var(--accent);color:#fff!important;font-size:12px;white-space:nowrap}.site .hero{padding:52px 22px}.site.spacing-airy .hero{padding:72px 22px}.site .site-section{padding:42px 22px}.site .pro-footer{padding:32px 22px}.site .gallery-grid img{height:185px}}
+@media(prefers-reduced-motion:reduce){.template-choice,.site .site-cta{transition:none}}
+
+/* V5.7 guided onboarding */
+#v57-advanced-editor[hidden]{display:none!important}.v57-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;margin:16px 0}.v57-fields .field{min-width:0}.v57-fields .field:nth-child(4),.v57-fields .field:nth-child(5),.v57-fields .two{grid-column:1/-1}.v57-step-actions{display:flex;gap:10px;flex-wrap:wrap}.v57-step-actions .btn{min-height:45px}#v57-step-error:not(:empty){color:#ad3030;font-weight:650}.v56-steps button{min-height:44px}@media(max-width:620px){.v57-fields{grid-template-columns:1fr}.v57-fields .field:nth-child(4),.v57-fields .field:nth-child(5),.v57-fields .two{grid-column:auto}.v57-step-actions .btn{flex:1}}
+/* V5.6 design and usability extensions */
+.v56-hub{margin:0 0 22px;padding:22px;border:1px solid #dce6ef;border-radius:19px;background:linear-gradient(125deg,#f7fafc,#edf5f2)}.v56-hub h2{margin:0 0 5px}.v56-steps{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}.v56-steps button{background:#fff;color:#27425a;border:1px solid #d2dee7;padding:10px 14px;border-radius:11px;font-weight:750}.v56-steps button.selected{background:#173e45;color:white}.v56-step{display:none}.v56-step.active{display:block}.v56-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.v56-templates{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}.v56-template{border:1px solid #d7e0e7;background:white;border-radius:15px;padding:10px;text-align:left;min-width:0}.v56-template.selected{outline:3px solid #2e8b79}.v56-template strong{display:block;padding:8px 2px 2px}.v56-template small{color:#627488}.v56-mock{height:112px;border-radius:9px;padding:12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}.v56-mock span{height:8px;border-radius:10px;background:currentColor;opacity:.35;width:66%}.v56-mock span:first-child{width:35%;height:5px;opacity:.65}.v56-mock span:nth-child(2){width:85%;height:17px;opacity:.8}.v56-mock em{font-size:10px;font-style:normal;border-radius:5px;padding:6px;background:currentColor;width:64px;opacity:.3}.v56-tool{border:1px solid #dfe6ed;border-radius:14px;padding:16px;margin:15px 0;background:#fff}.v56-tool h3{margin:0 0 10px}.v56-tool input,.v56-tool textarea,.v56-tool select{margin:6px 0 10px}.v56-items{display:grid;gap:8px}.v56-item{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:10px;background:#f3f6fa;border-radius:10px}.v56-item button{padding:7px 9px;background:#e4eaf2;border-radius:7px}.v56-check{padding:9px 12px;margin:7px 0;border-radius:9px;background:#f2f6fa}.v56-check.warn{background:#fff4df}.v56-preview-controls{display:flex;gap:7px;margin:12px 0}.v56-preview-controls button{padding:9px 12px;background:#e9f0f5;border-radius:9px}.v56-preview-controls button.active{background:#173e45;color:white}.v56-preview-frame{max-width:100%;transition:max-width .2s;margin:auto}.v56-preview-frame.phone{max-width:390px;border:8px solid #1b2735;border-radius:25px;overflow:hidden}.v56-extra{scroll-margin-top:70px}.v56-extra p{white-space:pre-line;line-height:1.65}.v56-faq details{margin:8px 0;padding:12px;border:1px solid #dce3e9;border-radius:9px}.v56-faq summary{font-weight:750;cursor:pointer}.v56-extra .v56-pricing{font-size:24px;font-weight:850;color:var(--accent)}@media(max-width:600px){.v56-hub{padding:15px}.v56-steps button{flex:1}.v56-template{min-width:0}}
+
+/* V5.8 mobile-first editing */
+@media(max-width:780px){
+  header{padding:13px 16px}
+  nav{position:sticky;top:0;z-index:30;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;
+      scrollbar-width:thin;padding:9px 12px;gap:8px;-webkit-overflow-scrolling:touch}
+  nav button{flex:0 0 auto;white-space:nowrap;min-height:44px;padding:11px 14px}
+  .wrap{margin:14px auto;padding:0 12px 88px}
+  .panel{padding:16px;border-radius:14px}
+  .v56-hub{padding:15px}
+  .v56-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .v56-steps button{padding:12px 5px;min-height:48px;font-size:12px}
+  .v56-templates{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .btn,.preview-tools button,.v56-preview-controls button,.v56-actions button{min-height:44px}
+  input,textarea,select{font-size:16px;min-height:46px}
+  input[type=file]{min-height:52px;padding:13px 9px}
+  .v57-step-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .v57-step-actions .btn{flex:1 1 150px}
+  .v56-preview-frame.phone{border-width:5px;border-radius:19px}
+  .customer-bar{gap:8px}
+  .customer-bar span{display:none}
+}
+#v58-mobile-preview{display:none}
+@media(max-width:780px){
+  #v58-mobile-preview{display:flex;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    z-index:75;align-items:center;justify-content:center;gap:8px;padding:14px 19px;min-height:52px;
+    border-radius:999px;background:#173e45;color:#fff;font-size:14px;font-weight:800;
+    box-shadow:0 9px 26px #102e3970;border:1px solid #ffffff33}
+  body.v58-preview-open #v58-mobile-preview{display:none}
+}
+
+/* V6.5 guided onboarding */
+.ezy-header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ezy-beta-badge{display:inline-flex;align-items:center;gap:6px;background:#fff3c4;color:#5b4300;border:1px solid #e5c84f;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 2px 8px #0002}.ezy-beta-badge:before{content:"●";font-size:9px;color:#d79b00}.ezy-header-guide{background:#e9fff4;color:#174c37;border:1px solid #84d1ad;border-radius:999px;padding:8px 12px;font-weight:850}.ezy-guide{margin:0 0 20px;background:linear-gradient(135deg,#f0fff8,#f5f8ff);border:2px solid #9fd6bd;border-radius:18px;padding:18px;box-shadow:0 8px 28px #173e4512}.ezy-guide-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.ezy-guide-kicker{font-size:11px;font-weight:900;letter-spacing:.12em;color:#276349}.ezy-guide h2{margin:4px 0 4px}.ezy-guide p{margin:4px 0}.ezy-guide-close{background:transparent;color:#526479;padding:7px 8px;border-radius:8px;font-weight:750}.ezy-guide-progress{height:10px;background:#dfe8e4;border-radius:999px;overflow:hidden;margin:14px 0 6px}.ezy-guide-progress>span{display:block;height:100%;width:0;background:#207b67;border-radius:999px;transition:width .25s ease}.ezy-guide-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}.ezy-guide-step{display:flex;align-items:center;gap:8px;min-width:0;text-align:left;background:#fff;border:1px solid #d9e4df;border-radius:11px;padding:10px;color:#425268}.ezy-guide-step strong{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ezy-guide-step span{width:24px;height:24px;flex:0 0 24px;border-radius:50%;display:grid;place-items:center;background:#eef2f0;font-size:12px;font-weight:900}.ezy-guide-step.done{border-color:#9fd6bd;background:#f4fff9;color:#225941}.ezy-guide-step.done span{background:#207b67;color:white}.ezy-guide-step.current{outline:3px solid #cfe8db;border-color:#4b9d78}.ezy-guide-next{display:flex;align-items:center;justify-content:space-between;gap:14px;background:white;border:1px solid #d9e4df;border-radius:13px;padding:14px}.ezy-guide-next-copy{min-width:0}.ezy-guide-next-copy strong{display:block;margin-bottom:4px}.ezy-guide-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.ezy-guide-skip{background:#eef2f7;color:#425268;border-radius:10px;padding:10px 12px;font-weight:750}.ezy-guide-complete{border-color:#7dc89f;background:#effcf5}.ezy-advanced{margin:18px 0;border:1px solid #d8e0e8;border-radius:14px;background:#fafbfc}.ezy-advanced>summary{cursor:pointer;padding:14px 16px;font-weight:850;color:#44546b}.ezy-advanced-body{padding:0 14px 14px}.ezy-focus{animation:ezyFocus 1.25s ease 2}@keyframes ezyFocus{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 5px #92d6b980}}
+@media(max-width:780px){.ezy-guide{padding:14px}.ezy-guide-top{align-items:center}.ezy-guide-steps{grid-template-columns:1fr}.ezy-guide-step{padding:9px 10px}.ezy-guide-next{align-items:stretch;flex-direction:column}.ezy-guide-actions{justify-content:stretch}.ezy-guide-actions .btn,.ezy-guide-actions .ezy-guide-skip{width:100%}.ezy-header-guide{padding:7px 10px}.ezy-header-actions .tag{display:none}}
+
+.staging-ribbon{background:#fff1d9;padding:9px 12px;text-align:center;color:#85551e;font-weight:850;font-size:12px;letter-spacing:.045em;border-bottom:1px solid #eed9b9}
+body>header{background:#122e26!important;color:#fff!important;box-shadow:0 8px 24px #183b2816}
+body>header .brand{color:#fff!important}
+body>header .brand span{color:#7bd1a3!important}
+.ezy-main-nav{position:sticky;top:0;z-index:40;display:flex;flex-wrap:wrap;gap:7px;background:#fff!important;border-bottom:1px solid #dae8de;padding:10px 4%;box-shadow:0 6px 20px #1030210d}
+.ezy-main-nav button,.ezy-main-nav>a,.ezy-main-nav summary{white-space:nowrap;display:inline-flex;align-items:center;min-height:41px;padding:10px 12px;border-radius:10px;font-size:.85rem;text-decoration:none}
+.ezy-main-nav>a{background:#ecf7ef;color:#1c7047;border:1px solid #d2ead9;font-weight:800}
+.ezy-main-nav details{position:relative}
+.ezy-main-nav summary{cursor:pointer;background:#f1f5f1;border:1px solid #dce6df;font-weight:800;color:#355544;list-style:none}
+.ezy-main-nav summary::-webkit-details-marker{display:none}
+.ezy-main-nav .more-tools{position:absolute;z-index:42;top:calc(100% + 8px);right:0;display:grid;gap:5px;min-width:190px;padding:8px;border:1px solid #d4e3d9;border-radius:13px;background:#fff;box-shadow:0 15px 32px #102b1d25}
+.ezy-main-nav .more-tools button{text-align:left;width:100%;border:0}
+#ezy-advanced-publishing{display:none!important}
+.completed-projects .review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.completed-projects .review-card{overflow:hidden;padding:0!important;border-radius:16px}
+.completed-projects .portfolio-images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.completed-projects .portfolio-images img{width:100%;height:128px;object-fit:cover;display:block}
+.completed-projects .portfolio-images img:only-child{grid-column:span 2;height:185px}
+.completed-projects .portfolio-body{padding:16px}
+.completed-projects .portfolio-body strong{display:block;margin-bottom:7px}
+.completed-projects .portfolio-body p{margin:0}
+.portfolio-preview-card{margin:12px 0;padding:14px;border:1px solid #dce7df;border-radius:14px;background:#fff}
+.portfolio-preview-card strong{display:block;color:#174e33}
+.portfolio-preview-card p{margin:6px 0 12px}
+.portfolio-preview-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:8px}
+.portfolio-preview-images img{width:100%;height:130px;object-fit:cover;border-radius:9px}
+@media(max-width:750px){.ezy-main-nav{flex-wrap:nowrap;overflow-x:auto;padding:8px 10px}.ezy-main-nav button,.ezy-main-nav>a,.ezy-main-nav summary{font-size:.77rem;padding:8px 10px}.ezy-main-nav .more-tools{position:fixed;top:140px;left:12px;right:12px;min-width:0}.completed-projects .review-grid{grid-template-columns:1fr}}
+
+.ezy-unified-auth{background:linear-gradient(145deg,#f4faf5,#eef5f0);border:1px solid #d6e9da;border-radius:17px;padding:19px;display:flex;align-items:flex-start;gap:14px;margin:14px 0}
+.ezy-unified-auth-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;color:#b8eed0;background:#1d6345;font-size:1.25rem;flex-shrink:0}
+.ezy-unified-auth h3{margin:0 0 6px;font-size:1.11rem;color:#1f4e35}
+.ezy-unified-auth p{margin:0 0 15px;line-height:1.6}
+.ezy-unified-auth a.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-height:42px;font-weight:800}
+.ezy-unified-auth .ezy-unified-auth-primary{background:#1b6748;color:#fff!important}
+.ezy-unified-auth .ezy-unified-auth-secondary{background:#e2f1e5;color:#1d6846}
+.ezy-direct-auth{padding:17px 0;border-top:1px solid #e3eae5;margin-top:19px}
+.ezy-direct-auth summary{cursor:pointer;color:#567665;font-size:.89rem;font-weight:780}
+.ezy-direct-auth>.field:first-of-type{margin-top:18px}
+@media(max-width:650px){.ezy-unified-auth{flex-direction:column;gap:11px;padding:16px}.ezy-unified-auth .actions{align-items:stretch}.ezy-unified-auth a.btn{width:100%}}
+
+/* V6.6: shared Coastal Clean geometry for all seven named design styles.
+   Included in exported HTML using document.querySelector('style'). */
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional){
+ --card-radius:22px;--section-space:clamp(40px,6vw,76px);
+ --font-stack:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ font-family:var(--font-stack);background:var(--paper);color:var(--ink);line-height:1.55
+}
+.site.preset-coastal{--ink:#25425b;--paper:#f8fbff;--card-bg:#e7f3fa;--hero-panel:#e6f2f8;--hero-ink:#25425b;--nav-panel:#f8fbff;--nav-ink:#25425b;--contact-panel:#edf6fa}
+.site.preset-studio{--ink:#2d4038;--paper:#fbfaf7;--card-bg:#f0f0eb;--hero-panel:#f2f0e9;--hero-ink:#344a3f;--nav-panel:#fbfaf7;--nav-ink:#2d4038;--contact-panel:#f3f2ed}
+.site.preset-trade{--ink:#253746;--paper:#f8fafc;--card-bg:#e9eef2;--hero-panel:#182939;--hero-ink:#fff9ef;--nav-panel:#182939;--nav-ink:#f9f8f2;--contact-panel:#edf2f6}
+.site.preset-midnight{--ink:#f3ecdf;--paper:#191f28;--card-bg:#29313b;--hero-panel:#121a23;--hero-ink:#f8f0e4;--nav-panel:#121a23;--nav-ink:#f8f0e4;--contact-panel:#242c35}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-nav{
+ display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+ padding:20px clamp(22px,4vw,42px);min-height:72px;background:var(--nav-panel);color:var(--nav-ink);
+ border-bottom:1px solid #899e9526
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-nav a{
+ color:var(--nav-ink)!important;background:transparent;padding:10px 12px;border-radius:10px;
+ border:1px solid currentColor;font-size:13px;font-weight:750;text-decoration:none
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero{
+ display:block;min-height:0;padding:clamp(60px,9vw,120px) clamp(24px,5vw,60px);
+ background:var(--hero-panel)!important;color:var(--hero-ink)
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero:after{content:none;display:none}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero h1{
+ font-size:clamp(31px,4vw,52px);line-height:1.07;max-width:650px;font-weight:760;
+ letter-spacing:-.035em;text-transform:none;margin:12px 0;color:inherit
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero p{
+ max-width:540px;font-size:clamp(15px,1.7vw,18px);line-height:1.75;color:inherit;opacity:.86
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero small{
+ color:inherit;opacity:.82;font-size:12px;letter-spacing:.11em
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-cta{
+ border-radius:50px!important;padding:12px 22px;font-family:var(--font-stack);font-weight:800;text-transform:none
+}
+.site.preset-trade .site-cta,.site.preset-midnight .site-cta{color:#13211e!important}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-section{
+ padding:var(--section-space) clamp(24px,5vw,60px)
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .service-list{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:15px
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .service{
+ border:1px solid #8b9c951f;border-radius:var(--card-radius);background:var(--card-bg);
+ padding:18px;min-height:75px;display:flex;align-items:center;font-family:var(--font-stack);
+ font-size:15px;font-weight:700;text-align:left;box-shadow:none;color:var(--ink)
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .review-card,
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .trust-chip{
+ border-radius:var(--card-radius);background:var(--card-bg);color:var(--ink)
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .contact{
+ background:var(--contact-panel);color:var(--ink)
+}
+.site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .pro-footer{
+ grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;
+ padding:40px clamp(24px,5vw,60px);background:#182a32;color:#f4f7fa
+}
+.site.preset-studio .hero h1,.site.preset-studio .site-section h2,
+.site.preset-midnight .hero h1,.site.preset-midnight .site-section h2{
+ font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.035em
+}
+.site.preset-trade .hero h1{font-weight:875;letter-spacing:-.045em}
+.site.preset-midnight .pro-footer{background:#10161d}
+.site.preset-midnight .design-empty,.site.preset-midnight .site-section .muted{color:#d8ded9}
+.site.preset-midnight .service,.site.preset-midnight .review-card,.site.preset-midnight .trust-chip{border-color:#ffffff1b}
+.site.preset-midnight .site-section h2{color:#f8f0e4}
+@media(max-width:640px){
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-nav{
+  min-height:0;gap:8px;padding:15px 18px
+ }
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .hero{padding:52px 22px}
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .site-section{padding:42px 22px}
+ .site:is(.preset-coastal,.preset-studio,.preset-trade,.preset-midnight,.preset-landscape,.preset-automotive,.preset-professional) .pro-footer{
+  grid-template-columns:1fr;gap:12px;padding:32px 22px
+ }
+}
+
+/* Isolated stage publish flow. Real customer Netlify hosting remains disabled. */
+#ezysouth-publish-panel{display:block!important;background:linear-gradient(150deg,#fff,#f1f8f3);border-radius:19px!important;box-shadow:0 10px 34px #173b2712;padding:24px!important}
+#ezysouth-publish-panel h3{color:#17442d;letter-spacing:-.035em;font-size:1.35rem}
+#ezysouth-oneclick{min-height:48px;border-radius:12px;background:#166744;color:#fff;font-weight:840;box-shadow:0 8px 19px #1b70422e}
+#ezysouth-live-open{display:inline-flex;align-items:center;text-decoration:none;color:#fff;background:#1e6947}
+#ezysouth-live-url{font-size:15px;text-overflow:ellipsis}
+.staging-publish-approval{display:flex;align-items:flex-start;gap:10px;border:1px solid #d5e8d9;background:#ecf6ef;border-radius:13px;margin:16px 0 12px;padding:14px;color:#355b43;font-size:.88rem;line-height:1.55;cursor:pointer}
+.staging-publish-approval input{flex:none;width:21px;height:21px;min-height:21px;margin:0;accent-color:#177a4d}
+@media(max-width:650px){#ezysouth-publish-panel{padding:16px!important}#ezysouth-oneclick{width:100%}#ezysouth-live-tools .actions .btn{flex:1}}
+
+/* Customer website: shared responsive presentation, included in standalone exports. */
+.site{container-type:inline-size;isolation:isolate;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased}
+.site [hidden]{display:none!important}.site *{min-width:0}.site img{max-width:100%}
+.site .site-nav{position:relative;gap:20px!important;padding:20px max(24px,calc((100% - 1120px)/2))!important}
+.site .site-nav>span{font-size:19px;letter-spacing:-.04em;flex:1}
+.site .customer-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:none;border:0;padding:0}
+.site .customer-links a{font:600 13px var(--font-stack);border:0!important;white-space:nowrap;padding:12px!important;background:none!important;color:inherit!important}
+.site .customer-links .nav-quote{border:1px solid currentColor!important;border-radius:999px}
+.site .hero{padding:clamp(64px,9%,130px) max(24px,calc((100% - 1120px)/2))!important;position:relative}
+.site .hero .hero-copy{max-width:780px;margin-inline:auto;text-align:center}
+.site .hero .hero-copy h1{font-family:var(--font-stack);font-size:clamp(40px,6.3vw,84px);font-size:clamp(40px,6.3cqi,84px);font-weight:750;letter-spacing:-.055em;line-height:1.04;max-width:850px;margin:18px auto 24px;text-wrap:balance;text-transform:none}
+.site .hero .hero-copy p{font-size:clamp(17px,2cqi,21px);line-height:1.65;max-width:580px;margin:0 auto 25px;opacity:.82;text-wrap:pretty}
+.site .hero .hero-copy small{display:block;font-size:11px;letter-spacing:.16em;font-weight:750}
+.site .hero .site-cta{font-size:14px;min-height:48px;padding:14px 24px;border-radius:999px!important;box-shadow:none;font-weight:650}
+.site .hero.has-customer-photo{display:grid!important;grid-template-columns:1fr 1fr;gap:clamp(28px,5cqi,72px);align-items:center}
+.site .hero.has-customer-photo .hero-copy{text-align:left;margin:0}
+.site .hero.has-customer-photo .hero-copy h1{font-size:clamp(38px,5.2cqi,72px)}
+.site .hero.has-customer-photo .hero-copy p{margin-left:0}
+.site .hero.has-customer-photo:after{display:none!important;content:none!important}
+.site .customer-hero-photo{margin:0;aspect-ratio:4/5;max-height:620px;overflow:hidden;border-radius:24px;background:var(--card-bg)}
+.site .customer-hero-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.site .site-section{padding:clamp(56px,8cqi,100px) max(24px,calc((100% - 1120px)/2))!important;scroll-margin-top:24px}
+.site .site-section h2{font-family:var(--font-stack);font-size:clamp(29px,4cqi,48px);letter-spacing:-.045em;font-weight:700;line-height:1.13;margin:0 0 32px;text-wrap:balance}
+.site .service-list{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))!important;gap:16px!important}
+.site .service{padding:30px 24px!important;min-height:116px!important;line-height:1.5;font-weight:600!important;border:1px solid #88999020!important;border-radius:20px!important;align-items:flex-start!important}
+.site .service:before{content:'↗';margin-right:16px;font-size:22px;line-height:1}
+.site .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}
+.site .gallery-grid img{height:auto!important;aspect-ratio:4/3;border-radius:20px;opacity:1;transform:none}
+.site .review-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px}
+.site .review-card{padding:28px;font-size:17px;line-height:1.7;border:1px solid #88999020}
+.site .review-card strong{font-size:13px;font-weight:650}.site .completed-projects,.site .comparison-section{margin-top:56px}
+.site .contact{text-align:center;background:var(--contact-panel,var(--card-bg));border-top:1px solid #88999020}
+.site .contact>p{line-height:1.8;max-width:620px;margin:16px auto}.site .contact a{color:inherit;text-underline-offset:4px}
+.site #ezysouth-quote{text-align:left;background:var(--paper);color:var(--ink);margin:32px auto 0!important;padding:clamp(20px,4cqi,40px)!important}
+.site #ezysouth-quote h2{font-size:28px}.site #ezysouth-quote label{color:inherit;font-size:14px;font-weight:600}
+.site #ezysouth-quote button{background:var(--accent)!important;color:white!important;min-height:48px;cursor:pointer;font:600 15px var(--font-stack)}
+.site .pro-footer{padding:48px max(24px,calc((100% - 1120px)/2))!important;background:var(--nav-panel,var(--card-bg))!important;color:var(--nav-ink,var(--ink))!important;border-top:1px solid #88999020;gap:32px}
+.site .pro-footer p,.site .pro-footer a{color:inherit!important;opacity:.8;overflow-wrap:anywhere}.site a:focus-visible,.site button:focus-visible,.site input:focus-visible,.site textarea:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+@container(max-width:680px){.site .hero.has-customer-photo{grid-template-columns:1fr!important;gap:32px}.site .hero.has-customer-photo .hero-copy{text-align:center;margin:auto}.site .hero.has-customer-photo .hero-copy p{margin-inline:auto}.site .customer-hero-photo{aspect-ratio:4/3;width:100%;max-height:420px}.site .site-nav{flex-wrap:wrap;gap:12px!important}.site .site-nav>span{font-size:17px}.site .customer-links{gap:0;justify-content:flex-end;flex:1}.site .customer-links a{font-size:12px;padding:10px!important}.site .pro-footer{grid-template-columns:1fr!important}.site .hero .hero-copy h1{font-size:clamp(36px,8cqi,54px)}.site .site-section h2{font-size:32px}}
+@container(max-width:390px){.site .site-nav>span{flex-basis:100%}.site .customer-links{justify-content:flex-start}.site .hero,.site .site-section{padding-left:20px!important;padding-right:20px!important}}
+@media(prefers-reduced-motion:reduce){.site *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* EzySouth Web: seven visual themes on ONE Coastal Clean layout.
+   Do not override display, grid, padding, width, aspect ratio or breakpoints here.
+   Core navigation, hero, cards and responsive behaviour are shared above. */
+.site.preset-landscape{--ink:#294935;--paper:#f5f6ed;--card-bg:#e8eee0;--hero-panel:#e2e8d8;--hero-ink:#213b2a;--nav-panel:#f5f6ed;--nav-ink:#294935;--contact-panel:#dde7d4}
+.site.preset-automotive{--ink:#eaf0f5;--paper:#141d27;--card-bg:#26313d;--hero-panel:#1c2b38;--hero-ink:#f7f8fa;--nav-panel:#101b26;--nav-ink:#f5f7fa;--contact-panel:#202d39}
+.site.preset-professional{--ink:#263949;--paper:#fff;--card-bg:#f0f4f8;--hero-panel:#ecf2f8;--hero-ink:#223d53;--nav-panel:#fff;--nav-ink:#263949;--contact-panel:#e8eff6}
+.site.preset-coastal .hero{background:#e7f3ed!important;color:#294a3c}
+.site.preset-studio .hero{background:linear-gradient(125deg,#f6f2e8,#e7ebe2)!important;color:#344a3f}
+.site.preset-trade .hero{background:linear-gradient(135deg,#182939,#2e4556)!important;color:#fff7e7}
+.site.preset-midnight .hero{background:linear-gradient(145deg,#111820,#263544)!important;color:#f8f0e4}
+.site.preset-landscape .hero{background:linear-gradient(140deg,#eaf0e1,#dce9d1)!important;color:#264331}
+.site.preset-automotive .hero{background:linear-gradient(140deg,#172430,#293a46)!important;color:#f8f7f4}
+.site.preset-professional .hero{background:linear-gradient(125deg,#edf3fa,#e3edf6)!important;color:#223d53}
+.site.preset-studio .hero h1,.site.preset-studio .site-section h2,
+.site.preset-midnight .hero h1,.site.preset-midnight .site-section h2,
+.site.preset-landscape .hero h1,.site.preset-landscape .site-section h2{
+ font-family:Georgia,"Times New Roman",serif;font-weight:500
+}
+.site.preset-trade .hero h1,.site.preset-automotive .hero h1{font-weight:800}
+.site.preset-trade .site-cta{background:#ed903b!important;color:#192938!important}
+.site.preset-midnight .site-cta{background:#d1ac71!important;color:#161d23!important}
+.site.preset-landscape .site-cta{background:#477857!important;color:white!important}
+.site.preset-automotive .site-cta{background:#e95639!important;color:white!important}
+.site.preset-professional .site-cta{background:#3b658d!important;color:white!important}
+.site.preset-midnight .site-section .muted,.site.preset-automotive .site-section .muted,
+.site.preset-midnight .design-empty,.site.preset-automotive .design-empty{color:#c6d0d6}
+.site.preset-midnight .service,.site.preset-midnight .review-card,
+.site.preset-automotive .service,.site.preset-automotive .review-card{border-color:#ffffff2d!important}
+.site.preset-midnight .site-section h2,.site.preset-automotive .site-section h2{color:var(--ink)}
+/* Template thumbnails reflect the colour personality; the actual site keeps one layout. */
+.v56-template,.template-choice{transition:transform .18s,border-color .18s,box-shadow .18s}
+.v56-template:hover,.template-choice:hover{transform:translateY(-3px);box-shadow:0 10px 25px #1e3f3018}
+.v56-template.selected,.template-choice.selected{outline:3px solid #64a987!important;outline-offset:2px;border-color:#286f50!important}
+.v56-template .v56-mock{position:relative}
+.v56-template .v56-mock:after{content:"";position:absolute;right:10px;top:18px;width:31%;height:69%;background:currentColor;opacity:.18;border-radius:13px}
+.v56-template[data-v56-template="coastal"] .v56-mock:after{border-radius:18px}
+.v56-template[data-v56-template="studio"] .v56-mock:after{border-radius:3px}
+.v56-template[data-v56-template="trade"] .v56-mock:after{border-radius:1px}
+.v56-template[data-v56-template="midnight"] .v56-mock:after{border:1px solid currentColor;background:transparent;opacity:.5}
+.v56-template[data-v56-template="landscape"] .v56-mock:after{border-radius:50% 50% 6px 6px}
+.v56-template[data-v56-template="automotive"] .v56-mock:after{border-radius:2px;transform:skew(-5deg)}
+.v56-template[data-v56-template="professional"] .v56-mock:after{border-radius:1px}
+.template-choice[data-template="landscape"] .template-swatch{background:linear-gradient(120deg,#edf2e2 50%,#619274 50%)}
+.template-choice[data-template="automotive"] .template-swatch{background:linear-gradient(140deg,#141c24 50%,#e95e46 50%)}
+.template-choice[data-template="professional"] .template-swatch{background:linear-gradient(120deg,#e8f0f8 55%,#4576a2 55%)}
+
+/* Premium contextual editor stays in builder only, never embedded in published HTML. */
+.ezy-inline-dialog[hidden]{display:none!important}
+.ezy-inline-dialog{position:fixed;inset:0;background:#071b1591;backdrop-filter:blur(7px);z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}
+.ezy-inline-sheet{width:min(100%,540px);background:#fff;color:#173a2a;border:1px solid #cfdfd2;border-radius:20px;padding:clamp(20px,4vw,29px);box-shadow:0 22px 64px #021b1150;max-height:95dvh;overflow:auto}
+.ezy-inline-top{display:flex;justify-content:space-between;align-items:start;gap:18px;margin-bottom:19px}
+.ezy-inline-top h2{font-size:1.32rem;letter-spacing:-.035em}
+.ezy-inline-sheet textarea{min-height:120px;line-height:1.5;resize:vertical}
+.ezy-inline-sheet label{font-size:.8rem;font-weight:750;color:#506c5a}
+.ezy-inline-buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.ezy-inline-buttons .btn{flex:1;min-height:44px}
+.ezy-inline-close{border:1px solid #d8e5dd;border-radius:9px;background:#fff;color:#426a53;font-size:1.28rem;padding:7px 12px}
+.ezy-inline-status{min-height:17px;font-size:.76rem;color:#a14232;margin-top:6px}
+.ezy-inline-hint{font-size:.76rem;color:#748779;line-height:1.5;margin-top:8px}
+.ezy-live-edit [data-ezy-inline]{cursor:pointer!important;outline-offset:4px;transition:outline-color .15s,background-color .15s}
+.ezy-live-edit [data-ezy-inline]:hover,.ezy-live-edit [data-ezy-inline]:focus-visible{outline:2px solid #428e65!important;border-radius:4px;background:#5fb97b19}
+.ezy-edit-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:14px 0}
+.ezy-edit-toolbar button{font-size:.8rem}
+@container(max-width:700px){
+ .site.preset-studio .hero,.site.preset-trade .hero,.site.preset-landscape .hero,.site.preset-automotive .hero{grid-template-columns:1fr!important;gap:25px}
+ .site.preset-studio .service-list,.site.preset-trade .service-list,.site.preset-coastal .service-list,.site.preset-landscape .service-list,.site.preset-automotive .service-list,.site.preset-professional .service-list,.site.preset-midnight .service-list{grid-template-columns:1fr!important}
+ .site.preset-studio .gallery-grid,.site.preset-trade .gallery-grid,.site.preset-midnight .gallery-grid,.site.preset-landscape .gallery-grid,.site.preset-automotive .gallery-grid,.site.preset-professional .gallery-grid,.site.preset-coastal .gallery-grid{grid-template-columns:1fr 1fr!important}
+ .site.preset-studio .gallery-grid img:first-child,.site.preset-landscape .gallery-grid img:first-child{grid-row:auto;height:auto!important;aspect-ratio:4/3}
+ .site.preset-studio .hero .hero-copy h1,.site.preset-trade .hero .hero-copy h1,.site.preset-automotive .hero .hero-copy h1{font-size:clamp(35px,8cqi,55px)}
+}
+@container(max-width:410px){
+ .site.preset-studio .gallery-grid,.site.preset-trade .gallery-grid,.site.preset-midnight .gallery-grid,.site.preset-landscape .gallery-grid,.site.preset-automotive .gallery-grid,.site.preset-professional .gallery-grid,.site.preset-coastal .gallery-grid{grid-template-columns:1fr!important}
+}
+
+
+</style></head><body><div class="staging-ribbon">🧪 PRIVATE BETA PREVIEW · Fictional data only · Publishing disabled</div>
+<header><div class="brand">✦ EzySouth <span>Web</span></div><div class="ezy-header-actions"><span class="ezy-beta-badge">Private preview</span><button type="button" id="ezy-guide-open" class="ezy-header-guide">🧭 Setup guide</button></div></header>
+<nav class="ezy-main-nav" aria-label="Main product navigation"><a href="./index.html">⌂ Return to homepage</a><button class="active" data-tab="builder">Build website</button><button data-tab="design">Design Studio</button><button data-tab="cloud">Save &amp; manage</button><button data-tab="launch">Publish &amp; JobFlow</button><a href="./jobflow.html">Open JobFlow ↗</a><details><summary>More tools ▾</summary><div class="more-tools"><button data-tab="assistant">Quick commands</button><button data-tab="projects">Local drafts</button></div></details></nav>
+<button type="button" id="v58-mobile-preview" aria-label="Preview website as customer">👁 Preview website</button><main class="wrap"><section id="ezy-onboarding" class="ezy-guide" aria-label="Website setup guide">
+  <div class="ezy-guide-top"><div><div class="ezy-guide-kicker">SETUP GUIDE</div><h2 id="ezy-guide-title">Set up your website</h2><p class="muted" id="ezy-guide-subtitle">Build, preview and connect your workspace.</p></div><button type="button" class="ezy-guide-close" id="ezy-guide-hide">Hide guide</button></div>
+  <div class="ezy-guide-progress" aria-hidden="true"><span id="ezy-guide-bar"></span></div><p class="muted" id="ezy-guide-progress-text">0 of 5 steps complete</p>
+  <div class="ezy-guide-steps">
+    <button type="button" class="ezy-guide-step" data-ezy-guide-step="0"><span>1</span><strong>Business details</strong></button>
+    <button type="button" class="ezy-guide-step" data-ezy-guide-step="1"><span>2</span><strong>Choose a look</strong></button>
+    <button type="button" class="ezy-guide-step" data-ezy-guide-step="2"><span>3</span><strong>Save to cloud</strong></button>
+    <button type="button" class="ezy-guide-step" data-ezy-guide-step="3"><span>4</span><strong>Turn on JobFlow</strong></button>
+    <button type="button" class="ezy-guide-step" data-ezy-guide-step="4"><span>5</span><strong>Publish preview</strong></button>
+  </div>
+  <div class="ezy-guide-next" id="ezy-guide-next-card"><div class="ezy-guide-next-copy"><strong id="ezy-guide-next-title">Start with your business details</strong><p class="muted" id="ezy-guide-next-copy">Add your real business name, service area, services and at least one way for customers to contact you.</p></div><div class="ezy-guide-actions"><button type="button" class="btn" id="ezy-guide-next">Start here →</button><button type="button" class="ezy-guide-skip hidden" id="ezy-guide-skip">Skip JobFlow for now</button></div></div>
+</section>
+<section id="builder"><section class="v56-hub" id="v56-hub"><h2>✨ Create a beautiful website in 3 steps</h2><p class="muted">Start simple. Fine-tune the details whenever you're ready.</p><div class="v56-steps"><button type="button" data-v56-step="0" class="selected">1 · Business</button><button type="button" data-v56-step="1">2 · Design</button><button type="button" data-v56-step="2">3 · Preview</button></div><div class="v56-step active" data-v56-panel="0"><p class="muted">Start with the essentials. Everything you enter is saved automatically on this device.</p><div class="v57-fields"><div class="field"><label for="v57-name">Business name *</label><input id="v57-name" placeholder="e.g. Southland Plumbing"></div><div class="field"><label for="v57-type">Business type</label><input id="v57-type" placeholder="e.g. Plumbing, marine services, dog grooming"></div><div class="field"><label for="v57-location">Service area *</label><input id="v57-location" placeholder="e.g. Invercargill & Bluff"></div><div class="field"><label for="v57-services">Services (one per line) *</label><textarea id="v57-services" rows="3" placeholder="Plumbing repairs&#10;Hot water cylinders"></textarea></div><div class="field"><label for="v57-description">What makes your business special?</label><textarea id="v57-description" rows="2" placeholder="Reliable local service and free quotes"></textarea></div><div class="two"><div class="field"><label for="v57-phone">Phone</label><input id="v57-phone" type="tel" placeholder="021..."></div><div class="field"><label for="v57-email">Email</label><input id="v57-email" type="email" placeholder="hello@example.co.nz"></div></div></div><p id="v57-step-error" class="muted" role="alert" aria-live="polite"></p><div class="v57-step-actions"><button type="button" class="btn" id="v57-continue">Choose a design →</button><button type="button" class="btn secondary" id="v57-advanced">Advanced editor ↓</button></div></div><div class="v56-step" data-v56-panel="1"><p class="muted">Seven polished styles, one trusted Coastal Clean layout. Every style fits the same on phone and desktop, and your content stays intact.</p><div id="v56-template-grid" class="v56-templates"></div><button class="btn" data-v56-next="2">Preview my website →</button></div><div class="v56-step" data-v56-panel="2"><div class="v56-preview-controls"><button data-v56-device="phone" class="active">📱 Mobile</button><button data-v56-device="desktop">🖥 Desktop</button></div><p class="muted" style="font-size:.82rem;margin:11px 0">✏️ Tap a headline, service, button or photo below to edit it directly. No advanced settings needed.</p><div id="v56-preview-frame" class="v56-preview-frame phone"><div id="v56-live-preview"></div></div><div class="v56-actions"><button class="btn secondary" data-v56-next="1">← Change design</button><button class="btn" id="v56-open-launch">Go to launch →</button></div></div></section><div class="grid" id="v57-advanced-editor" hidden><div class="panel"><h2>Build your website</h2><p class="muted">Tailored for NZ service businesses. Changes appear instantly and save in this browser.</p>
+<div class="field"><label>Business type</label><input id="type" placeholder="e.g. Plumbing, marine services, dog grooming"></div>
+<div class="field"><label>Business name</label><input id="name" placeholder="e.g. Canterbury Lawn Co"></div>
+<div class="field"><label>Location / service area</label><input id="location" placeholder="e.g. Christchurch & Selwyn"></div>
+<div class="field"><label>What makes your business special?</label><textarea id="description" placeholder="e.g. Reliable local service, free quotes, tidy results"></textarea></div>
+<div class="field"><label>Services (one per line)</label><textarea id="services"></textarea></div>
+<div class="two"><div class="field"><label>Phone</label><input id="phone" type="tel"></div><div class="field"><label>Email</label><input id="email" type="email"></div></div>
+<div class="field"><label>Website colour</label><select id="color"><option value="#207b67">Forest green</option><option value="#1b5de2">Ocean blue</option><option value="#c2642a">Terracotta</option><option value="#202c44">Charcoal</option></select></div>
+<div class="actions"><button class="btn" id="generate">✨ Suggest copy</button><button class="btn secondary" id="reset">Clear details</button></div><p class="muted">“Suggest copy” uses simple industry-aware starter text when it recognises the business type. It is not connected to an AI model.</p></div>
+<div class="panel"><h2>Live preview</h2><p class="muted">Tap text, services or images to edit directly. Customer Preview shows the final site without editor controls.</p><div class="preview-tools"><button class="active" data-view="desktop">🖥 Desktop</button><button data-view="phone">📱 Phone</button><button id="direct-edit">✏️ Tap to edit: Off</button><button class="customer-preview">👁 Preview as customer</button></div><p class="editing-hint" id="edit-hint">Switch on tap-to-edit, then tap text in the preview to change it.</p><div class="preview" id="builder-preview"><div class="preview-head">● ● ● &nbsp; your-business.example · preview only</div><div class="site" id="site"><div class="site-nav"><span id="pv-name">Your business</span><a href="#pv-contact">Get a quote →</a></div><div class="hero"><small id="pv-location">SERVING YOUR AREA</small><h1 id="pv-heading">Local service, done properly.</h1><p id="pv-desc"></p><a class="site-cta" href="#pv-contact">Request a free quote</a></div><div class="site-section"><h2>Our services</h2><div class="service-list" id="pv-services"></div></div><div class="site-section contact" id="pv-contact"><h2>Let's talk about your job</h2><p id="pv-contact-details"></p><p class="muted">Enable live JobFlow in Launch & Export to include a working customer enquiry form on exported sites.</p></div></div></div></div></div></section>
+<section id="projects" class="hidden"><div class="panel"><h2>📁 My websites <small style="font-size:12px;color:#207b67">V5.2.1 fix</small></h2><p class="muted">Save separate website projects, including gallery photos and before-and-after comparisons. Projects are saved in this browser on this device, not in an online account. Use the same Netlify address and browser to reopen them. Do not clear website data.</p><div class="field"><label>Project name</label><input id="project-name" placeholder="e.g. Smith Painting website"></div><div class="actions"><button class="btn" id="project-save">💾 Save current website</button><button class="btn secondary" id="project-new">＋ New website</button></div><p class="muted" id="project-message" aria-live="polite"></p><div id="project-list"></div></div></section>
+<section id="design" class="hidden"><section class="v56-tool" id="v56-brand"><h3>🎨 Instant Brand Kit</h3><p class="muted">Choose your logo and colour. We'll match your website accents automatically.</p><label>Business logo (optional)</label><input id="v56-logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml"><div id="v56-logo-preview"></div><label>Brand colour</label><input id="v56-color" type="color" value="#207b67" style="height:46px;padding:4px;max-width:130px"><button class="btn secondary" id="v56-brand-apply">Apply brand colour</button></section><section class="v56-tool" id="v56-sections"><h3>➕ Add a section</h3><p class="muted">Add the useful bits. Move them around without breaking your website.</p><select id="v56-section-type"><option value="about">About us</option><option value="faq">Frequently asked questions</option><option value="pricing">Pricing guide</option><option value="area">Service areas</option><option value="team">Meet the team</option></select><label>Section heading</label><input id="v56-section-title" placeholder="e.g. About our business"><label>Section text</label><textarea id="v56-section-body" placeholder="Write a few clear sentences. For FAQs use Question | Answer, one per line."></textarea><button class="btn" id="v56-add-section">Add section</button><div class="v56-items" id="v56-section-list"></div></section><section class="v56-tool" id="v56-seo"><h3>🔎 Simple SEO Assistant</h3><p class="muted">Help Google understand your business. These details go into the exported site's metadata.</p><label>Search title</label><input id="v56-seo-title" maxlength="70" placeholder="Business name | Service area"><label>Search description</label><textarea id="v56-seo-desc" maxlength="170" placeholder="What you offer, where you work and why customers choose you"></textarea><button class="btn secondary" id="v56-seo-suggest">Suggest from my website</button><button class="btn" id="v56-seo-save">Save SEO details</button><p id="v56-seo-msg" class="muted"></p></section><section class="v56-tool" id="v56-history"><h3>↶ Version History</h3><p class="muted">Save named snapshots on this device before big changes. Cloud project saving remains separate.</p><button class="btn secondary" id="v56-snapshot">Save snapshot</button><div id="v56-history-list" class="v56-items"></div></section><section class="v56-tool" id="v56-quality"><h3>✓ Website Quality Checker</h3><button class="btn secondary" id="v56-check">Check my website</button><div id="v56-check-results" aria-live="polite"></div></section><div class="grid"><div class="panel"><h2>🎨 Website Design Studio</h2><p class="muted">Pick a polished style, add work photos and showcase genuine customer feedback. Your work saves on this device.</p><div class="design-quick-tip"><strong>One tidy foundation.</strong> Every style uses Coastal Clean's fitted hero, service cards, work gallery, navigation and mobile spacing. Only the colours, fonts and overall feel change. Advanced custom layouts remain optional.</div><h3 style="margin:19px 0 5px">Choose your style</h3><div class="template-library" id="template-library" role="group" aria-label="Website style presets"><button type="button" class="template-choice" data-template="coastal"><span class="template-swatch"></span><strong>Coastal Clean</strong><small>Fresh, calm and welcoming</small></button><button type="button" class="template-choice" data-template="studio"><span class="template-swatch"></span><strong>Modern Studio</strong><small>Editorial and understated</small></button><button type="button" class="template-choice" data-template="trade"><span class="template-swatch"></span><strong>Trade Pro</strong><small>Bold and trustworthy</small></button><button type="button" class="template-choice" data-template="midnight"><span class="template-swatch"></span><strong>Midnight Luxe</strong><small>Dark and sophisticated</small></button><button type="button" class="template-choice" data-template="landscape"><span class="template-swatch"></span><strong>Field & Form</strong><small>Landscaping and outdoor work</small></button><button type="button" class="template-choice" data-template="automotive"><span class="template-swatch"></span><strong>Auto Works</strong><small>Automotive and workshop</small></button><button type="button" class="template-choice" data-template="professional"><span class="template-swatch"></span><strong>Clearpoint</strong><small>Professional services</small></button></div><div class="field"><label for="design-spacing">Website spacing</label><select id="design-spacing"><option value="balanced">Balanced · Recommended</option><option value="compact">Compact · More on screen</option><option value="airy">Airy · Premium breathing room</option></select></div><div class="field"><label>Website layout</label><select id="design-layout"><option value="classic">Classic · Clear and friendly</option><option value="bold">Bold · High impact</option><option value="minimal">Minimal · Clean and spacious</option><option value="premium">Premium Minimal · Editorial</option><option value="trades">Bold Trades · Industrial</option><option value="friendly">Friendly Local · Warm</option><option value="luxury">Luxury Dark · Refined</option></select></div><div class="field"><label>Hero layout</label><select id="design-hero"><option value="standard">Classic centred</option><option value="split">Split-screen</option><option value="photo">Full-width photo</option></select></div><div class="field"><label>Font pairing</label><select id="design-font"><option value="modern">Modern sans</option><option value="editorial">Editorial serif</option><option value="strong">Bold industrial</option></select></div><div class="field"><label>Section styling</label><select id="design-surface"><option value="soft">Soft cards</option><option value="sharp">Sharp edges</option><option value="outlined">Outlined cards</option></select></div><div class="field"><label>Service presentation</label><select id="design-service-style"><option value="cards">Professional cards</option><option value="icons">Icon tiles</option><option value="list">Minimal service list</option></select></div>
+<div class="field"><label>Navigation style</label><select id="design-nav-style"><option value="clean">Clean</option><option value="sticky">Sticky header</option><option value="dark">Dark header</option></select></div>
+<div class="field"><label>Trust / credentials (only genuine claims)</label><textarea id="design-trust" placeholder="Locally owned and operated&#10;Fully insured"></textarea></div>
+<div class="field"><label>Opening hours</label><input id="design-hours" placeholder="Mon–Fri · 8am–5pm"></div>
+<div class="field"><label>Business social link (https://)</label><input id="design-social" type="url" placeholder="https://instagram.com/yourbusiness"></div>
+<div class="field"><label>Arrange sections</label><p class="muted">Move sections up or down. Changes apply when you tap Apply design.</p><div id="section-sort" class="section-sort"></div></div><div class="field"><label>📷 Upload work photos from your phone</label><input id="photo-upload" type="file" accept="image/*" multiple><p class="muted">Choose photos from your camera roll or take new ones. Photos are resized on your device. Maximum 12 uploaded photos.</p><div id="uploaded-photos" class="uploaded-photos"></div><p class="muted" id="photo-status" aria-live="polite"></p></div><div class="field"><label>📸 Before-and-after comparison</label><p class="muted">Choose a before photo and an after photo from your camera roll. Both photos stay on this device and are included in exported HTML.</p><div class="two"><div><label for="before-file">Before photo</label><input type="file" accept="image/*" id="before-file"></div><div><label for="after-file">After photo</label><input type="file" accept="image/*" id="after-file"></div></div><div class="actions"><button class="btn" id="compare-add">Add comparison</button></div><p class="muted" id="compare-status" aria-live="polite"></p><div id="compare-list" class="compare-list"></div></div><div class="field"><label>Optional additional photos · image URLs, one per line</label><textarea id="design-photos" placeholder="https://example.com/your-work-photo.jpg"></textarea><p class="muted">Use your own hosted images or images you have permission to use. Links must start with https://. Uploaded photos are saved locally in this browser, not on a server.</p></div><div class="field"><label>Testimonials · one per line</label><textarea id="design-reviews" placeholder="Fantastic job and excellent communication. | Jamie, Christchurch"></textarea><p class="muted">Format: Review text | Customer name. Only use real reviews with permission.</p></div><div class="field"><label>Button text</label><input id="design-cta" placeholder="Request a free quote"></div><div class="actions"><button class="btn" id="design-apply">Apply design</button><button class="btn secondary customer-preview">👁 Preview as customer</button><button class="btn secondary" id="design-clear">Clear gallery & reviews</button></div><p class="muted" id="design-status" aria-live="polite"></p><div class="panel" style="box-shadow:none;background:#f7fbf8"><h3>✓ Completed work from JobFlow</h3><p class="muted">Only approved project descriptions and selected photos arrive here. Customer names, contact details and private messages stay in JobFlow.</p><div id="jobflow-showcase-list" class="muted">Open your cloud website to view approved completed work.</div><div class="actions"><button class="btn secondary" type="button" id="jobflow-showcase-refresh">↻ Refresh completed work</button><a class="btn secondary" href="./jobflow.html" style="text-decoration:none">Open JobFlow ↗</a></div></div></div><div class="panel"><h2>Design preview</h2><div id="design-preview" class="preview"></div></div></div></section>
+<section id="cloud" class="hidden"><div class="panel"><h2>☁️ Save your website</h2><p class="muted">Cloud saving gives this website a permanent project identity so publishing, JobFlow and its web address stay attached to the right site.</p><div class="notice"><strong>First time?</strong> 1) Create an account. 2) Confirm your email if asked. 3) Come back here and save the current website. Existing users can simply log in and open their project.</div><div id="cloud-auth"><div class="ezy-unified-auth">
+ <div class="ezy-unified-auth-mark" aria-hidden="true">✦</div>
+ <div><h3>One EzySouth account. Two connected tools.</h3><p class="muted">Log in once to save your website, manage jobs and keep your work together.</p>
+ <div class="actions"><a class="btn ezy-unified-auth-primary" href="./login.html?next=web">Log in with EzySouth →</a><a class="btn secondary ezy-unified-auth-secondary" href="./login.html?mode=register&amp;next=web">Create account</a></div></div>
+ </div>
+ <details class="ezy-direct-auth"><summary>Use direct email sign-in instead</summary>
+  <div class="field"><label>Email</label><input id="cloud-email" type="email" autocomplete="email" placeholder="you@business.co.nz"></div>
+  <div class="field"><label>Password</label><input id="cloud-password" type="password" autocomplete="current-password" placeholder="At least 6 characters"></div>
+  <div class="actions"><button class="btn" id="cloud-signup">Create account</button><button class="btn secondary" id="cloud-login">Log in</button><button class="btn secondary" id="cloud-reset">Reset password</button></div>
+ </details></div><div id="cloud-signed" class="hidden"><p>Signed in as <strong id="cloud-user"></strong></p><div class="actions"><button class="btn secondary" id="cloud-logout">Sign out</button></div><div class="field"><label>Cloud project name</label><input id="cloud-name" placeholder="e.g. Smith Painting"></div><div class="actions"><button class="btn" id="cloud-save">☁️ Save current website to cloud</button><button class="btn secondary" id="cloud-new">Save as new cloud project</button></div><p class="muted">Your website saves privately to the cloud. Approved completed-job photos are uploaded through JobFlow.</p><h3>My cloud websites</h3><div id="cloud-list"></div></div><p id="cloud-status" class="muted" aria-live="polite">Connecting to cloud service…</p></div></section>
+<section id="assistant" class="hidden"><div class="grid"><div class="panel"><h2>💬 Build by chatting</h2><p class="muted">Describe your business or ask for changes in plain English. This is a working offline command interpreter, not a connected AI model. It will tell you when it cannot understand something.</p><div class="notice">Try: “I run a painting business in Christchurch called Fresh Coat Painting. We offer interior painting and exterior painting.” Or: “Make the site blue”, “Add service fence painting”, “Change phone to 021 123 4567”, “Make the headline Fresh paint, fresh start”.</div><div id="chat-log" class="chat-log" aria-live="polite"></div><label for="chat-input">Your instruction</label><textarea id="chat-input" placeholder="Tell EzySouth Web about your business or what you'd like to change..."></textarea><div class="actions"><button class="btn" id="chat-send">Apply changes</button><button class="btn secondary" id="chat-undo">↶ Undo last change</button><button class="btn secondary" id="chat-clear">Clear chat</button></div><p class="muted">Chat instructions and website details stay on this device. No messages are sent to an AI provider.</p></div><div class="panel"><h2>Website preview</h2><p class="muted">Changes made in chat also appear in the main Website Builder tab.</p><div id="chat-preview" class="preview"></div></div></div></section>
+<section id="leads" class="hidden"><div class="panel"><h2>JobFlow has moved to its own workspace</h2><p class="muted">Manage real customer enquiries securely in <a href="./jobflow.html">JobFlow by EzySouth</a>. Website Builder is for website design and publishing.</p><details class="ezy-advanced"><summary>Demo enquiries (local testing only)</summary><div class="ezy-advanced-body"><p class="muted">This sandbox is only for learning JobFlow. Real customer enquiries are in the Live JobFlow section below.</p><div class="stats"><div class="stat"><strong id="count-new">0</strong><span>New enquiries</span></div><div class="stat"><strong id="count-quoted">0</strong><span>Quotes sent</span></div><div class="stat"><strong id="count-won">0</strong><span>Jobs won</span></div></div><div class="grid"><div><h3>Try a customer enquiry</h3><div class="field"><label>Customer name</label><input id="lead-name" placeholder="e.g. Sarah"></div><div class="field"><label>Phone or email</label><input id="lead-contact" placeholder="e.g. 021..."></div><div class="field"><label>Job details</label><textarea id="lead-details" placeholder="e.g. Mow an overgrown backyard in Riccarton"></textarea></div><button class="btn" id="add-lead">Add enquiry</button><p class="muted">For testing only. This is not a public form and does not send notifications.</p></div><div><h3>Enquiries</h3><div id="lead-list"></div></div></div></div></details><hr><h3>☁️ Live JobFlow enquiries</h3><div class="stats"><div class="stat"><strong id="live-count-new">0</strong><span>New enquiries</span></div><div class="stat"><strong id="live-count-quoted">0</strong><span>Quotes sent</span></div><div class="stat"><strong id="live-count-won">0</strong><span>Jobs won</span></div></div><p class="muted">New enquiries are checked every 30 seconds while this dashboard is open and you are signed in. Each enquiry is tied to the cloud website currently open. This is an in-app alert, not an email or background phone notification.</p><div class="actions"><button class="btn secondary" id="jobflow-export">⬇ Export enquiries CSV</button><button class="btn secondary" id="jobflow-alerts">🔔 Enable browser alerts</button></div><p id="jobflow-alert-status" class="muted" aria-live="polite"></p><p class="muted">Open a cloud project, then load enquiries submitted from its published website. These are real customer messages, not demo entries.</p><div class="actions"><button class="btn" id="load-live-leads">Refresh live enquiries</button></div><div id="live-leads-list" class="muted">Sign in and open a cloud website to see live enquiries.</div></div></section>
+<section id="launch" class="hidden"><div class="panel"><h2>🚀 Publish &amp; connect JobFlow</h2><p class="muted">Save your website to the cloud, connect JobFlow enquiries and publish a shareable test preview. Republishing keeps the same preview URL.</p><div id="checklist"></div><div class="notice success"><strong>Connected workflow:</strong> EzySouth Web and JobFlow share one secure cloud website. Save and enable below to test the full journey.</div><div id="jobflow-controls" class="actions"><button class="btn" id="enable-live-jobflow">☁️ Save &amp; enable JobFlow</button><button class="btn secondary" id="disable-live-jobflow">Disable live JobFlow</button></div><p id="jobflow-publish-status" class="muted"></p><div class="panel" id="ezysouth-publish-panel" style="margin:18px 0;border:2px solid #9bc7b5"><h3>🌍 Publish your test website</h3><p class="muted">One click saves your latest design and approved JobFlow projects, then creates a public, shareable <strong>staging preview</strong>. Updates always reuse your website’s existing test URL. This is not live Netlify hosting.</p><div id="ezysouth-state-card" style="display:flex;gap:12px;align-items:center;padding:12px 14px;margin:12px 0;border:1px solid #d8e2df;border-radius:12px;background:#f6f8f7"><span id="ezysouth-state-badge" style="font-weight:800;font-size:12px;letter-spacing:.05em;padding:6px 9px;border-radius:999px;background:#ecefed;color:#42504c">DRAFT</span><div><strong id="ezysouth-state-title" style="display:block">Draft</strong><span id="ezysouth-state-detail" class="muted">This website has not been published yet.</span></div></div><div id="ezysouth-live-tools" class="hidden" style="padding:14px;margin:12px 0;border:1px solid #cfe0d7;border-radius:12px;background:#f8fcf9"><label for="ezysouth-live-url" style="display:block;font-weight:800;margin-bottom:7px">Your shareable test website link</label><input id="ezysouth-live-url" readonly inputmode="url" aria-label="Live website address" style="width:100%;padding:11px 12px;border:1px solid #cbd7d1;border-radius:9px;background:white;color:#173d31"><div class="actions" style="margin:10px 0 4px"><a class="btn" id="ezysouth-live-open" target="_blank" rel="noopener noreferrer" style="text-decoration:none;display:inline-flex;align-items:center">🌐 Open preview website</a><button class="btn secondary" id="ezysouth-live-copy" type="button">🔗 Copy link</button><button class="btn secondary" id="ezysouth-unpublish" type="button">⏸ Take offline</button><button class="btn secondary" id="ezysouth-remove-live" type="button">🗑 Remove preview</button></div><p id="ezysouth-live-copy-status" class="muted" role="status" style="margin:4px 0 0">Your customer-facing link will stay here after publishing.</p><p class="muted" style="margin:7px 0 0">Taking a test site offline keeps its web address reserved. Publish again to restore that same URL.</p></div><label class="staging-publish-approval"><input type="checkbox" id="ezysouth-publish-confirm"><span>I confirm this test website contains only fictional or approved public details. Anyone with its preview link can view it.</span></label><div class="actions"><button class="btn" id="ezysouth-oneclick">🚀 Publish test website</button></div><p id="ezysouth-oneclick-status" class="muted" role="status" aria-live="polite">Ready to publish when you are.</p></div><details class="ezy-advanced" id="ezy-advanced-publishing"><summary>Advanced / backup publishing tools</summary><div class="ezy-advanced-body"><p class="muted">Most customers do not need anything in here. These controls are kept as fallback and testing tools.</p><div class="panel" style="margin:18px 0;border:2px solid #cbd9ee"><h3>🚀 Direct Netlify publishing (beta)</h3><p class="muted">Publish updates to an existing Netlify site without downloading or uploading files. Requires your own Netlify personal access token and Site ID. The token stays in this browser tab only, is never saved in the project or Supabase, and is sent directly to Netlify. This experimental browser connection may be blocked by Netlify CORS policy. Never use a team-wide or production administrator token for testing.</p><div class="field"><label>Netlify Site ID (UUID from Site configuration)</label><input id="netlify-site-id" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off"></div><div class="field"><label>Netlify personal access token (temporary)</label><input id="netlify-token" type="password" placeholder="Paste token for this session only" autocomplete="off"></div><div class="actions"><button class="btn" id="netlify-publish">⚡ Publish website to Netlify</button><button class="btn secondary" id="netlify-clear">Clear token</button></div><p id="netlify-status" class="muted" aria-live="polite">No deployment attempted.</p><p class="muted">Find Site ID in Netlify → Site configuration. Create a token in Netlify → User settings → Applications → Personal access tokens. If this fails due to browser restrictions, use the reliable manual publish below. Never share your token in chat.</p></div><section class="v59-audit" style="margin:18px 0;padding:18px;border:1px solid #cddedb;border-radius:15px;background:#f6faf9;color:#173e45"><h3 style="margin:0 0 7px">🛡 V5.9 Pre-launch audit</h3><p style="margin:0 0 12px">Run checks before exporting or publishing. Automatic checks cannot verify your public website or live form.</p><button type="button" class="btn" id="v59-run">Run launch checks</button><div id="v59-results" aria-live="polite" style="margin-top:12px"></div><div style="margin-top:14px;padding-top:12px;border-top:1px solid #d5e3e0"><strong>Manual go-live tests</strong><p class="muted">After deployment, open the public URL on a phone, tap every contact button, submit a real test enquiry and confirm it appears in the correct JobFlow cloud project. Verify privacy information before collecting customer details.</p><label style="display:flex;gap:9px;align-items:center"><input type="checkbox" id="v59-manual" style="width:20px;height:20px;min-height:20px"> I understand live checks must be done after publishing</label></div></section><div class="actions"><button class="btn" id="publish-download">🚀 Download publish-ready website</button><a class="btn secondary" href="https://app.netlify.com/drop" target="_blank" rel="noopener">Open Netlify Drop ↗</a></div><p class="muted" id="publish-message" aria-live="polite"></p><div class="notice">This beta includes one-click EzySouth hosting, secure JobFlow form handling, layout presets, camera-roll photo galleries, testimonials and standalone HTML export. Uploaded photos stay on this device until you save or publish the project. It does not process payments or send enquiry email/SMS notifications yet. Live JobFlow requires a cloud project, enabling enquiries, and republishing the site. Always review privacy information and test the public form before launch.</div><div class="actions"><button class="btn" id="export">⬇ Export website HTML</button><button class="btn secondary" id="copy">Copy website text</button></div><p id="launch-msg" class="muted"></p></div></details></div></section>
+</main><div id="ezy-inline-dialog" class="ezy-inline-dialog" role="dialog" aria-modal="true" aria-labelledby="ezy-inline-title" hidden>
+ <div class="ezy-inline-sheet">
+  <div class="ezy-inline-top"><div><p class="muted" style="margin:0 0 4px;font-size:.7rem;font-weight:800;letter-spacing:.1em">LIVE WEBSITE EDITING</p><h2 id="ezy-inline-title">Edit website text</h2></div><button type="button" id="ezy-inline-close" class="ezy-inline-close" aria-label="Close editor">×</button></div>
+  <form id="ezy-inline-form">
+   <div id="ezy-inline-fields"></div><div class="ezy-inline-status" id="ezy-inline-status" role="status" aria-live="polite"></div>
+   <div class="ezy-inline-buttons"><button type="submit" class="btn" id="ezy-inline-save">Save changes</button><button type="button" class="btn secondary" id="ezy-inline-cancel">Cancel</button></div>
+   <p class="ezy-inline-hint">Edits save to this device immediately. Save your website to the cloud when you're ready to publish.</p>
+  </form>
+  <div id="ezy-inline-photo-actions" hidden><p class="muted">Replace your hero image or manage the photo gallery. Existing photos stay safe when you change layouts.</p>
+   <div class="ezy-inline-buttons"><button type="button" class="btn" id="ezy-inline-replace">Replace selected photo</button><button type="button" class="btn secondary" id="ezy-inline-upload">Add photos</button><button type="button" class="btn secondary" id="ezy-inline-gallery">Manage gallery</button></div><input type="file" id="ezy-inline-replace-file" accept="image/jpeg,image/png,image/webp" hidden>
+   <p class="ezy-inline-hint">Photos save on your device until you save or publish the website.</p>
+  </div>
+ </div>
+</div>
+<div id="customer-modal" class="customer-modal hidden" role="dialog" aria-modal="true" aria-label="Customer website preview"><div class="customer-bar"><strong>👁 Customer view</strong><span>Exactly how the exported website appears</span><button id="close-customer" class="btn secondary">✕ Close preview</button></div><iframe id="customer-frame" title="Customer website preview" sandbox="allow-scripts allow-same-origin"></iframe></div><div class="footer">EzySouth Web V6.5.1 · Public Beta beta</div>
+<script>
+const $=id=>document.getElementById(id);const key='launchpad-v2';const legacyDemo={type:'Lawn mowing & gardening',name:'Canterbury Lawn Co',location:'Christchurch & Selwyn',description:'Friendly, reliable lawn mowing and garden care. We turn up when we say we will, leave things tidy and provide straightforward quotes.',services:'Lawn mowing\nHedge trimming\nGarden tidy-ups\nGreen waste removal',phone:'021 555 0123',email:'hello@example.co.nz',color:'#207b67'};const defaults={type:'',name:'',location:'',description:'',services:'',phone:'',email:'',color:'#207b67'};
+let saved;try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){saved={}}const legacyKeys=['type','name','location','description','services','phone','email'];const untouchedLegacyDemo=legacyKeys.every(k=>saved[k]===legacyDemo[k]);if(untouchedLegacyDemo){saved={};try{localStorage.removeItem(key)}catch(e){}}let data={...defaults,...saved};let undoStack=[];let chatMessages=[{role:'bot',text:'Hi! Tell me about your service business, or ask me to edit your website. I can update names, locations, services, colours, descriptions, headlines and contact details.'}];let leads=[];try{leads=JSON.parse(localStorage.getItem('launchpad-v2-leads')||'[]')}catch(e){}
+const fields=['type','name','location','description','services','phone','email','color'];
+const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch(e){console.warn('Local storage unavailable',e)}}
+function render(){fields.forEach(f=>{if(document.activeElement!==$(f))$(f).value=data[f]||''});$('site').style.setProperty('--accent',data.color);$('pv-name').textContent=data.name||'Your business';$('pv-location').textContent='SERVING '+(data.location||'YOUR AREA').toUpperCase();$('pv-heading').textContent=heading();$('pv-desc').textContent=data.description||'Tell customers what you do and why they should choose you.';$('pv-services').innerHTML=(data.services||'').split('\n').filter(s=>s.trim()).map(s=>'<div class="service">'+escapeHtml(s)+'</div>').join('')||'<div class="service">Add your services</div>';$('pv-contact-details').textContent=[data.phone,data.email].filter(Boolean).join(' · ');renderChecklist();renderDesignSite()}
+
+// Coastal Clean proportions are the foundation for every named preset.
+// Advanced custom layouts remain independent when preset='custom'.
+const coastalPresetStructure=Object.freeze({layout:'friendly',hero:'standard',surface:'soft',spacing:'balanced',serviceStyle:'cards',navStyle:'clean'});
+// Named styles share the same proven geometry; only the visual palette and fonts change.
+const premiumPresets=Object.freeze({
+ coastal:{...coastalPresetStructure,font:'modern',color:'#207b67'},
+ studio:{...coastalPresetStructure,font:'editorial',color:'#526b5a'},
+ trade:{...coastalPresetStructure,font:'modern',color:'#ed903b'},
+ midnight:{...coastalPresetStructure,font:'editorial',color:'#d1ac71'},
+ landscape:{...coastalPresetStructure,font:'editorial',color:'#477857'},
+ automotive:{...coastalPresetStructure,font:'modern',color:'#e95639'},
+ professional:{...coastalPresetStructure,font:'modern',color:'#3b658d'}
+});
+const designDefaults={...coastalPresetStructure,order:'services',photos:'',reviews:'',cta:'Request a free quote',font:'modern',preset:'coastal',trust:'',hours:'',social:'',sectionOrder:['services','gallery','reviews','trust']};
+let design={...designDefaults};try{design={...design,...JSON.parse(localStorage.getItem('launchpad-v4-design')||'{}')}}catch(e){}
+if(!Array.isArray(design.sectionOrder))design.sectionOrder=['services','gallery','reviews','trust'];
+let uploadedPhotos=[];let comparisons=[];let pendingBefore=null,pendingAfter=null;
+let jobflowShowcases=[];
+window.ezySetShowcases=function(rows){
+ jobflowShowcases=Array.isArray(rows)?rows.filter(x=>typeof x.title==='string'&&typeof x.summary==='string').slice(0,18):[];
+ const list=document.getElementById('jobflow-showcase-list');
+ if(list){
+  list.replaceChildren();
+  if(!jobflowShowcases.length)list.textContent='No completed projects yet. Finish an enquiry in JobFlow and send it to your website.';
+  for(const item of jobflowShowcases){
+   const card=document.createElement('article');card.className='portfolio-preview-card';
+   const h=document.createElement('strong');h.textContent=item.title;
+   const p=document.createElement('p');p.textContent=item.summary;card.append(h,p);
+   if(item.images?.length){const pics=document.createElement('div');pics.className='portfolio-preview-images';
+    for(const url of item.images.slice(0,4)){const img=document.createElement('img');img.src=url;img.alt='Approved photo for '+item.title;img.loading='lazy';pics.append(img)}card.append(pics)}
+   list.append(card);
+  }
+ }
+ renderDesignSite();renderDesignPreview();
+};
+function safeImages(){return design.photos.split('\n').map(x=>x.trim()).filter(x=>/^https:\/\/[^\s]+$/i.test(x)).slice(0,12)}
+function reviewItems(){return design.reviews.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,12).map(x=>{let a=x.split('|');return {quote:a[0].trim(),author:(a.slice(1).join('|')||'Customer').trim()}})}
+function renderDesignSite(){
+ // Migrate previously saved named styles to the Coastal Clean fit, without changing customer content.
+ if(Object.prototype.hasOwnProperty.call(premiumPresets,design.preset))
+  Object.assign(design,coastalPresetStructure);
+ const site=$('site');
+ site.classList.remove('layout-classic','layout-bold','layout-minimal','layout-premium','layout-trades','layout-friendly','layout-luxury','hero-standard','hero-split','hero-photo','font-modern','font-editorial','font-strong','surface-soft','surface-sharp','surface-outlined','spacing-balanced','spacing-compact','spacing-airy','preset-coastal','preset-studio','preset-trade','preset-midnight','preset-landscape','preset-automotive','preset-professional');
+ site.classList.add('layout-'+design.layout,'hero-'+design.hero,'font-'+design.font,'surface-'+design.surface,'spacing-'+(design.spacing||'balanced'));
+ if(Object.prototype.hasOwnProperty.call(premiumPresets,design.preset))site.classList.add('preset-'+design.preset);site.style.setProperty('--hero-image',([...uploadedPhotos.map(p=>p.data),...safeImages()][0] ? 'url(\"'+([...uploadedPhotos.map(p=>p.data),...safeImages()][0]).replace(/\"/g,'')+'\")' : 'linear-gradient(135deg,#345,#789)'));site.querySelectorAll('.site-cta').forEach(el=>el.textContent=design.cta||'Request a quote');site.querySelectorAll('.v4-section').forEach(el=>el.remove());let serviceSection=$('pv-services').closest('.site-section');let contact=$('pv-contact');const gallery=document.createElement('div');gallery.className='site-section v4-section';gallery.innerHTML='<h2>Our work</h2><div class="gallery-grid">'+([...uploadedPhotos.map(p=>p.data),...safeImages()].slice(0,12).map(url=>'<img src="'+escapeHtml(url)+'" alt="Business work example" class="reveal-photo" loading="lazy" referrerpolicy="no-referrer">').join('')||'<div class="design-empty">Your work photos will appear here.</div>')+'</div>';const reviews=document.createElement('div');reviews.className='site-section v4-section';reviews.id='customer-reviews';reviews.innerHTML='<h2>What customers say</h2><div class="review-grid">'+(reviewItems().map(r=>'<div class="review-card">“'+escapeHtml(r.quote)+'”<strong>— '+escapeHtml(r.author)+'</strong></div>').join('')||'<div class="design-empty">Approved customer reviews will appear here.</div>')+'</div>';const comparisonSection=document.createElement('div');comparisonSection.className='comparison-section';comparisonSection.innerHTML='<h2>Before & after</h2><div class="compare-list">'+comparisons.map((c,i)=>comparisonMarkup(c,i)).join('')+'</div>';if(comparisons.length)gallery.appendChild(comparisonSection);
+if(jobflowShowcases.length){
+ const completed=document.createElement('div');completed.className='completed-projects';
+ completed.innerHTML='<h2>Completed projects</h2><div class="review-grid">'+
+ jobflowShowcases.map(x=>'<article class="review-card">'+(x.images?.length?'<div class="portfolio-images">'+x.images.slice(0,4).map(url=>'<img src="'+escapeHtml(url)+'" alt="Approved completed project photo" loading="lazy">').join('')+'</div>':'')+'<div class="portfolio-body"><strong>'+escapeHtml(x.title)+'</strong><p>'+escapeHtml(x.summary)+'</p></div></article>').join('')+'</div>';
+ gallery.appendChild(completed);
+}
+const trust=document.createElement('div');trust.className='site-section v4-section trust-section';trust.innerHTML='<h2>Why choose us</h2><div class="trust-grid">'+(design.trust.split('\n').map(x=>x.trim()).filter(Boolean).map(x=>'<div class="trust-chip">✓ '+escapeHtml(x)+'</div>').join('')||'<p class="muted">Add your genuine credentials and guarantees in Design Studio.</p>')+'</div>';
+site.classList.remove('service-cards','service-icons','service-list-style','nav-clean','nav-sticky','nav-dark');
+site.classList.add('service-'+design.serviceStyle,'nav-'+design.navStyle);
+const existingFooter=site.querySelector('.pro-footer');if(existingFooter)existingFooter.remove();
+const foot=document.createElement('footer');foot.className='pro-footer v4-section';
+const safeSocial=/^https:\/\/[^\s]+$/i.test(design.social)?design.social:'';
+foot.innerHTML='<div><strong>'+escapeHtml(data.name||'Your business')+'</strong><p>'+escapeHtml(data.description||'')+'</p></div><div><strong>Contact</strong><p>'+escapeHtml(data.phone||'')+'</p><p>'+escapeHtml(data.email||'')+'</p></div><div><strong>Service area</strong><p>'+escapeHtml(data.location||'')+'</p><p>'+escapeHtml(design.hours||'')+'</p>'+(safeSocial?'<a href="'+escapeHtml(safeSocial)+'" target="_blank" rel="noopener">Social profile ↗</a>':'')+'</div>';
+const sections={services:serviceSection,gallery,reviews,trust};
+const order=[...new Set([...(design.sectionOrder||[]),'services','gallery','reviews','trust'])].filter(x=>sections[x]);
+order.forEach(id=>site.insertBefore(sections[id],contact));site.appendChild(foot);polishCustomerSite(site);}
+function polishCustomerSite(site){
+ const hero=site.querySelector('.hero');
+ let copy=hero.querySelector('.hero-copy');
+ if(!copy){copy=document.createElement('div');copy.className='hero-copy';while(hero.firstChild)copy.appendChild(hero.firstChild);hero.append(copy)}
+ hero.querySelector('.customer-hero-photo')?.remove();
+ const photos=[...uploadedPhotos.map(p=>p.data),...safeImages()];
+ const showPhoto=photos.length>0 && design.hero!=='photo';
+ hero.classList.toggle('has-customer-photo',showPhoto);
+ if(showPhoto){const figure=document.createElement('figure');figure.className='customer-hero-photo';const img=document.createElement('img');img.src=photos[0];img.alt=(data.name||'Business')+' — our work';img.fetchPriority='high';img.decoding='async';figure.append(img);hero.append(figure)}
+ const services=$('pv-services').closest('.site-section');services.id='customer-services';
+ const gallery=site.querySelector('.gallery-grid').closest('.site-section');gallery.id='customer-work';gallery.hidden=!photos.length&&!comparisons.length&&!jobflowShowcases.length;
+ site.querySelector('#customer-reviews').hidden=!reviewItems().length;
+ site.querySelector('.trust-section').hidden=!design.trust.trim();
+ const nav=site.querySelector('.site-nav');nav.setAttribute('role','navigation');nav.setAttribute('aria-label','Website navigation');
+ nav.querySelector('.customer-links')?.remove();
+ nav.querySelector('a[href="#pv-contact"]')?.remove();
+ const links=document.createElement('div');links.className='customer-links';
+ for(const [label,target] of [['Services','#customer-services'],...(!gallery.hidden?[['Our work','#customer-work']]:[]),['Get a quote','#pv-contact']]){const a=document.createElement('a');a.textContent=label;a.href=target;if(target==='#pv-contact')a.className='nav-quote';links.append(a)}nav.append(links);
+ site.querySelectorAll('.pro-footer p').forEach(p=>{const value=p.textContent.trim();let href='';if(value && value===data.email.trim())href='mailto:'+value;else if(value && value===data.phone.trim())href='tel:'+value.replace(/[^+0-9]/g,'');if(href){const a=document.createElement('a');a.textContent=value;a.setAttribute('href',href);p.replaceChildren(a)}});
+}
+function renderDesign(){
+ ['layout','hero','font','surface','spacing','photos','reviews','cta'].forEach(k=>{
+  let el=$('design-'+k);if(el&&document.activeElement!==el)el.value=design[k]||'';
+ });
+ // Keep advanced controls in sync when changing between visual styles or custom layouts.
+ for(const key of ['serviceStyle','navStyle','trust','hours','social']){
+  const id='design-'+key.replace(/[A-Z]/g,c=>'-'+c.toLowerCase());
+  const el=$(id);if(el&&document.activeElement!==el)el.value=design[key]||'';
+ }
+ document.querySelectorAll('[data-template]').forEach(b=>{
+  const chosen=b.dataset.template===design.preset;
+  b.classList.toggle('selected',chosen);b.setAttribute('aria-pressed',String(chosen));
+ });
+ renderDesignPreview()
+}
+// Named presets are now declared with the shared structure above.
+document.querySelectorAll('[data-template]').forEach(button=>button.addEventListener('click',()=>{const preset=button.dataset.template;const chosen=premiumPresets[preset];if(!chosen)return;Object.assign(design,chosen,{preset});data.color=chosen.color;save();try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){}render();renderDesign();$('design-status').textContent=button.querySelector('strong').textContent+' applied. Your text and photos are unchanged.'}));
+// Keep each embedded preview's anchors local, with unique IDs across the builder.
+function customerPreviewClone(previewId){
+ const clone=$('site').cloneNode(true);clone.removeAttribute('id');
+ const targets=new Map();
+ clone.querySelectorAll('[id]').forEach(el=>{const oldId=el.id;el.id=previewId+'--'+oldId;targets.set(oldId,el)});
+ clone.querySelectorAll('a[href^="#"]').forEach(a=>{
+  const target=targets.get(a.getAttribute('href').slice(1));
+  if(!target)return;
+  a.setAttribute('href','#'+target.id);
+  a.addEventListener('click',e=>{e.preventDefault();target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start',inline:'nearest'})});
+ });
+ return clone;
+}
+function renderDesignPreview(){$('design-preview').replaceChildren(customerPreviewClone('design-preview'))}
+$('design-apply').onclick=()=>{['layout','hero','font','surface','spacing','photos','reviews','cta'].forEach(k=>design[k]=$('design-'+k).value);design.preset='custom';['serviceStyle','navStyle','trust','hours','social'].forEach(k=>design[k]=$('design-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())).value);try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){$('design-status').textContent='Storage is unavailable in this browser.'}renderDesignSite();renderDesignPreview();$('design-status').textContent='Design updated. Changes are saved locally.'};
+$('design-clear').onclick=async()=>{if(!confirm('Clear all uploaded photos, photo links and testimonials?'))return;uploadedPhotos=[];try{await savePhotos()}catch(e){}design.photos='';design.reviews='';try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){}refreshPhotos();renderDesign();$('design-status').textContent='Gallery and testimonials cleared.'};
+
+// Photo storage uses IndexedDB so images do not overflow localStorage.
+function openPhotoDb(){return new Promise((resolve,reject)=>{if(!('indexedDB' in window)){reject(new Error('This browser does not support photo storage.'));return}const req=indexedDB.open('launchpad-v41-photos',1);req.onupgradeneeded=()=>req.result.createObjectStore('gallery');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function savePhotos(){const db=await openPhotoDb();await new Promise((resolve,reject)=>{const tx=db.transaction('gallery','readwrite');tx.objectStore('gallery').put(uploadedPhotos,'photos');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});db.close()}
+async function loadPhotos(){try{const db=await openPhotoDb();uploadedPhotos=await new Promise((resolve,reject)=>{const tx=db.transaction('gallery','readonly');const req=tx.objectStore('gallery').get('photos');req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)});db.close();refreshPhotos()}catch(e){$('photo-status').textContent='Photo saving is unavailable in this browser. You can still try selecting photos, but they may not persist.'}}
+function refreshPhotos(){renderUploadedPhotos();renderDesignSite();renderDesignPreview()}
+function renderUploadedPhotos(){const box=$('uploaded-photos');box.replaceChildren();uploadedPhotos.forEach((photo,i)=>{const item=document.createElement('div');item.className='uploaded-item';const img=document.createElement('img');img.src=photo.data;img.alt=photo.name;const title=document.createElement('small');title.textContent=photo.name;const actions=document.createElement('div');actions.className='actions';[['↑',-1],['↓',1],['Remove',0]].forEach(([label,offset])=>{const btn=document.createElement('button');btn.textContent=label;btn.disabled=offset!==0&&(i+offset<0||i+offset>=uploadedPhotos.length);btn.onclick=async()=>{if(offset===0)uploadedPhotos.splice(i,1);else [uploadedPhotos[i],uploadedPhotos[i+offset]]=[uploadedPhotos[i+offset],uploadedPhotos[i]];try{await savePhotos();$('photo-status').textContent='Gallery updated.'}catch(e){$('photo-status').textContent='Could not save changes: '+e.message}refreshPhotos()};actions.appendChild(btn)});item.append(img,title,actions);box.appendChild(item)})}
+function resizePhoto(file){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{try{const scale=Math.min(1,1400/Math.max(img.naturalWidth,img.naturalHeight));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);const data=canvas.toDataURL('image/jpeg',0.78);URL.revokeObjectURL(url);resolve({name:file.name,data})}catch(e){URL.revokeObjectURL(url);reject(e)}};img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Cannot read this photo. Try a JPG or PNG instead.'))};img.src=url})}
+$('photo-upload').addEventListener('change',async e=>{const files=Array.from(e.target.files||[]);if(!files.length)return;const slots=Math.max(0,12-uploadedPhotos.length);if(!slots){$('photo-status').textContent='Gallery is full. Remove a photo before adding more.';e.target.value='';return}const selected=files.slice(0,slots);$('photo-status').textContent='Preparing '+selected.length+' photo(s)…';let count=0;for(const f of selected){try{if(!f.type.startsWith('image/'))throw new Error('Not an image');uploadedPhotos.push(await resizePhoto(f));count++}catch(err){$('photo-status').textContent='Some photos could not be opened. '+err.message}}try{await savePhotos();$('photo-status').textContent=count+' photo(s) added and saved on this device.'+(files.length>slots?' Gallery limit: 12.':'')}catch(err){$('photo-status').textContent='Photos previewed but not saved: '+err.message}e.target.value='';refreshPhotos()});
+loadPhotos();loadComparisons();
+function heading(){return data.headline||({'Lawn mowing & gardening':'A better-looking property starts here.','Exterior cleaning':'Make your property shine again.','Painting':'A fresh finish, done right.','Property maintenance':'The little jobs, taken care of.','General services':'Reliable local service you can count on.'})[data.type]||'Local service, done properly.'}
+fields.forEach(f=>$(f).addEventListener('input',()=>{data[f]=$(f).value;save();render()}));
+$('generate').onclick=()=>{const samples={'Lawn mowing & gardening':['Reliable lawn care with tidy results and friendly service. Get in touch for a straightforward quote.','Lawn mowing\nHedge trimming\nGarden tidy-ups\nGreen waste removal'],'Exterior cleaning':['Give your home or business a fresh look with careful, reliable exterior cleaning. Ask us for a free quote.','House washing\nDriveway cleaning\nGutter cleaning\nDeck and patio cleaning'],'Painting':['Refresh your space with quality preparation, clean finishes and dependable local service.','Interior painting\nExterior painting\nFence painting\nTouch-ups'],'Property maintenance':['From repairs to regular upkeep, we help keep your property looking its best.','General repairs\nProperty upkeep\nFence repairs\nGarden maintenance'],'General services':['Friendly, dependable local help with the jobs you need done. Contact us for a quote.','Residential services\nCommercial services\nOne-off jobs\nOngoing maintenance']};const type=(data.type||'').toLowerCase();let s=samples[data.type];if(!s){if(/lawn|mow|garden|landscap/.test(type))s=samples['Lawn mowing & gardening'];else if(/exterior|pressure|water blast|house wash|clean/.test(type))s=samples['Exterior cleaning'];else if(/paint/.test(type))s=samples['Painting'];else if(/property|maintenance|handyman|repair/.test(type))s=samples['Property maintenance'];else s=['Reliable local service with clear communication and straightforward quotes. Tell customers what makes your business different.',data.services||''];}data.description=s[0];if(s[1])data.services=s[1];save();render()};
+$('reset').onclick=()=>{if(confirm('Clear all website details?')){data={...defaults};localStorage.removeItem('ezysouth-guide-basics');localStorage.removeItem('ezysouth-guide-design');localStorage.removeItem('ezysouth-guide-skip-jobflow');save();render();window.dispatchEvent(new Event('ezy:state'))}};
+document.querySelectorAll('nav button[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelector('nav details')?.removeAttribute('open');['builder','design','assistant','leads','launch','projects','cloud'].forEach(id=>$(id).classList.toggle('hidden',id!==b.dataset.tab));if(b.dataset.tab==='assistant')renderChatPreview();if(b.dataset.tab==='design')renderDesign();if(b.dataset.tab==='leads')renderLeads();if(b.dataset.tab==='launch')renderChecklist();if(b.dataset.tab==='cloud')cloudRefresh()});
+function renderLeads(){$('count-new').textContent=leads.filter(l=>l.status==='New').length;$('count-quoted').textContent=leads.filter(l=>l.status==='Quote sent').length;$('count-won').textContent=leads.filter(l=>l.status==='Won').length;$('lead-list').innerHTML=leads.length?leads.map((l,i)=>'<div class="lead"><div class="lead-top"><strong>'+escapeHtml(l.name)+'</strong><span class="pill">'+escapeHtml(l.date)+'</span></div><p>'+escapeHtml(l.details)+'</p><p>'+escapeHtml(l.contact)+'</p><label>Status</label><select data-index="'+i+'">'+['New','Quote needed','Quote sent','Won','Lost'].map(s=>'<option '+(l.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select> <button class="btn secondary" data-delete="'+i+'">Remove</button></div>').join(''):'<p class="muted">No enquiries yet. Add a test enquiry to try JobFlow.</p>';$('lead-list').querySelectorAll('select').forEach(el=>el.onchange=()=>{leads[+el.dataset.index].status=el.value;persistLeads()});$('lead-list').querySelectorAll('[data-delete]').forEach(el=>el.onclick=()=>{leads.splice(+el.dataset.delete,1);persistLeads()})}
+function persistLeads(){localStorage.setItem('launchpad-v2-leads',JSON.stringify(leads));renderLeads()}
+$('add-lead').onclick=()=>{let name=$('lead-name').value.trim(),details=$('lead-details').value.trim();if(!name||!details){alert('Please enter a customer name and job details.');return}leads.unshift({name,details,contact:$('lead-contact').value.trim(),status:'New',date:new Date().toLocaleDateString('en-NZ')});['lead-name','lead-contact','lead-details'].forEach(id=>$(id).value='');persistLeads()};
+function renderChecklist(){let checks=[['Business name',!!data.name.trim()],['Service area',!!data.location.trim()],['Description',!!data.description.trim()],['At least one service',!!data.services.trim()],['Phone or email',!!(data.phone.trim()||data.email.trim())]];$('checklist').innerHTML=checks.map(([label,ok])=>'<p>'+ (ok?'✅':'⚪')+' '+escapeHtml(label)+'</p>').join('')}
+function installCustomerNavigation(){
+ document.addEventListener('click',event=>{
+  const link=event.target instanceof Element?event.target.closest('a[href^="#"]'):null;
+  if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+  let id;try{id=decodeURIComponent(link.getAttribute('href').slice(1))}catch{return}
+  const target=document.getElementById(id);if(!target)return;
+  event.preventDefault();
+  target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start',inline:'nearest'});
+ });
+}
+function exportSite(){
+ const clone=$('site').cloneNode(true);clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(x=>{if(x.id!=='pv-contact' && !clone.querySelector('a[href="#'+CSS.escape(x.id)+'"]'))x.removeAttribute('id')});clone.classList.remove('editable-preview','ezy-live-edit');
+ clone.querySelectorAll('[data-edit],[data-ezy-inline]').forEach(x=>{
+  x.removeAttribute('data-edit');x.removeAttribute('data-ezy-inline');x.removeAttribute('title');x.removeAttribute('aria-label');
+  if(x.getAttribute('role')==='button')x.removeAttribute('role');
+  x.removeAttribute('tabindex');
+ });
+ const title=escapeHtml(data.name||'Your business'),desc=escapeHtml(data.description||'Local services');
+ const liveForm=window.ezyLiveSiteId?`<section id="ezysouth-quote" style="max-width:720px;margin:24px auto;padding:24px;border:1px solid #dce3e7;border-radius:16px"><h2>Request a quote</h2><p>Send your enquiry directly to ${title}.</p><form id="ezysouth-enquiry"><label>Your name<input name="customer_name" maxlength="120" required style="display:block;width:100%;padding:12px;margin:8px 0 16px"></label><label>Email or phone<input name="customer_contact" maxlength="200" minlength="3" required style="display:block;width:100%;padding:12px;margin:8px 0 16px"></label><label>Tell us about your job<textarea name="message" minlength="5" maxlength="3000" required style="display:block;width:100%;padding:12px;margin:8px 0 16px"></textarea></label><div style="position:absolute;left:-10000px" aria-hidden="true"><label>Leave blank<input name="company_website" tabindex="-1" autocomplete="off"></label></div><button type="submit" style="padding:14px 24px;background:#183d50;color:white;border:0;border-radius:10px">Send enquiry</button><p id="ezysouth-enquiry-status" role="status"></p></form></section><script>(function(){const f=document.getElementById('ezysouth-enquiry'),out=document.getElementById('ezysouth-enquiry-status');if(!f)return;f.addEventListener('submit',async e=>{e.preventDefault();const b=f.querySelector('button');b.disabled=true;out.textContent='Sending…';const body={website_id:'${window.ezyLiveSiteId}',customer_name:f.elements.customer_name.value.trim(),customer_contact:f.elements.customer_contact.value.trim(),message:f.elements.message.value.trim(),company_website:f.elements.company_website.value.trim()};try{const r=await fetch('https://anldjuaqlpowwodlphqf.supabase.co/functions/v1/submit-enquiry',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'omit',body:JSON.stringify(body)});const result=await r.json().catch(()=>({}));if(!r.ok)throw Error(result.error||'Could not send your enquiry. Please contact the business directly.');f.reset();out.textContent=result.message||'Thank you! Your enquiry was sent.'}catch(err){out.textContent=err.message||'Could not send your enquiry. Please contact the business directly.'}finally{b.disabled=false}})})();<\/script>`:'';
+ const contact=clone.querySelector('#pv-contact');
+ if(contact){
+   const hint=contact.querySelector('.muted');
+   if(hint)hint.remove();
+   if(window.ezyLiveSiteId){
+     contact.insertAdjacentHTML('beforeend',liveForm);
+     clone.querySelectorAll('a[href="#pv-contact"]').forEach(a=>a.setAttribute('href','#ezysouth-quote'));
+   }else{
+     const p=document.createElement('p');
+     p.textContent='Call or email us to request a quote.';
+     contact.appendChild(p);
+   }
+ }
+ return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${desc}"><title>${title}</title><style>${document.querySelector('style').textContent} html{scroll-behavior:smooth}body{background:white}.site{width:100%;margin:auto}</style></head><body>${clone.outerHTML}<footer style="text-align:center;padding:30px">${title} · Made with EzySouth Web</footer><script>(${installCustomerNavigation.toString()})();(function(){function init(){document.querySelectorAll('.reveal-photo').forEach(el=>{if(!('IntersectionObserver' in window)){el.classList.add('is-visible');return}let o=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('is-visible',e.isIntersecting)),{threshold:.1});o.observe(el)});function move(){document.querySelectorAll('.compare-wrap').forEach(w=>{w.style.setProperty('--comparison-width',w.clientWidth+'px');if(w.dataset.manual)return;let r=w.getBoundingClientRect(),h=innerHeight,p=Math.max(0,Math.min(1,(h-r.top)/(h+r.height)));w.style.setProperty('--split',(8+84*p)+'%')})}addEventListener('scroll',move,{passive:true});addEventListener('resize',move);document.addEventListener('input',e=>{if(e.target.matches('.compare-wrap input')){let w=e.target.closest('.compare-wrap');w.dataset.manual='true';w.style.setProperty('--split',e.target.value+'%')}});move()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();<\/script></body></html>`;
+}
+$('export').onclick=()=>{let blob=new Blob([exportSite()],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ezysouth-'+(data.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')||'website')+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);$('launch-msg').textContent='Website HTML downloaded. You can open it in a browser or upload it to a hosting provider.'};
+$('copy').onclick=async()=>{let text=[data.name,data.location,data.description,data.services,data.phone,data.email].join('\n\n');try{await navigator.clipboard.writeText(text);$('launch-msg').textContent='Website text copied.'}catch(e){$('launch-msg').textContent='Copy unavailable in this browser. Select the text in the builder instead.'}};
+function renderChat(){const log=$('chat-log');log.innerHTML='';for(const msg of chatMessages){const div=document.createElement('div');div.className='chat-msg '+(msg.role==='user'?'user':'bot');div.textContent=msg.text;log.appendChild(div)}log.scrollTop=log.scrollHeight}
+function renderChatPreview(){$('chat-preview').replaceChildren(customerPreviewClone('chat-preview'))}
+function chatApply(raw){const message=raw.trim();if(!message)return;chatMessages.push({role:'user',text:message});const before=JSON.stringify(data);const changes=[];const apply=(key,value,label)=>{value=value.trim().replace(/[.!]+$/,'');if(value&&data[key]!==value){data[key]=value;changes.push(label)}};
+const colors={blue:'#1b5de2',green:'#207b67',orange:'#c2642a',terracotta:'#c2642a',black:'#202c44',charcoal:'#202c44',dark:'#202c44'};
+let m;
+if((m=message.match(/\b(?:blue|green|orange|terracotta|black|charcoal|dark)\b/i)) && /\b(colou?r|theme|site|website|background|make|change|switch|turn)\b/i.test(message))apply('color',colors[m[0].toLowerCase()],'website colour');
+if((m=message.match(/(?:business|company)\s+(?:is\s+)?(?:called|named)\s+([^.,!\n]+)/i))||(m=message.match(/(?:call|name)\s+(?:my\s+)?(?:business|company|website)\s+([^.,!\n]+)/i)))apply('name',m[1],'business name');
+if((m=message.match(/(?:my business is|my company is|business name is)\s+([^.,!\n]+)/i)))apply('name',m[1],'business name');
+if((m=message.match(/(?:change|set|make|update)\s+(?:the\s+)?(?:headline|heading|title)\s+(?:to|as|say)\s+["“]?([^\n"”]+)/i)))apply('headline',m[1],'headline');
+if((m=message.match(/(?:change|set|update)\s+(?:the\s+)?(?:phone|number|contact number)\s+(?:to|as)\s+([+\d][\d\s()-]{5,})/i)))apply('phone',m[1],'phone');
+if((m=message.match(/(?:change|set|update)\s+(?:the\s+)?(?:email|email address)\s+(?:to|as)\s+([\w.+-]+@[\w.-]+\.[a-z]{2,})/i)))apply('email',m[1],'email');
+if((m=message.match(/(?:change|set|update)\s+(?:the\s+)?(?:description|about text|intro)\s+(?:to|as|say)\s+["“]?([^\n"”]+)/i)))apply('description',m[1],'description');
+if((m=message.match(/(?:add|include)\s+(?:a\s+)?(?:new\s+)?service\s+(?:for\s+)?([^.!?\n]+)/i))||(m=message.match(/(?:add|include)\s+([^.!?\n]+?)\s+(?:as\s+)?(?:a\s+)?service/i))){const svc=m[1].trim();if(!data.services.toLowerCase().split('\n').includes(svc.toLowerCase()))apply('services',(data.services?data.services+'\n':'')+svc,'services')}
+if((m=message.match(/(?:remove|delete)\s+(?:the\s+)?service\s+([^.!?\n]+)/i))){const svc=m[1].trim().toLowerCase();const next=data.services.split('\n').filter(x=>x.trim().toLowerCase()!==svc).join('\n');if(next!==data.services)apply('services',next,'services')}
+if((m=message.match(/(?:based in|located in|serving|service area is|work in|operate in|in)\s+(Christchurch|Auckland|Wellington|Hamilton|Dunedin|Tauranga|Nelson|Queenstown|Invercargill|Timaru|Ashburton)(?:\b[^.!?,\n]*)/i)))apply('location',m[1],'service area');
+const industries=[[/\b(lawn|mowing|gardening|gardener|landscap)/i,'Lawn mowing & gardening'],[/\b(exterior clean|pressure wash|water blast|house wash)/i,'Exterior cleaning'],[/\b(painting|painter|paint business)/i,'Painting'],[/\b(property maintenance|handyman|repairs)/i,'Property maintenance']];
+if(/\b(i run|i own|my business|we are|we do|speciali[sz]e in)\b/i.test(message)){for(const [re,type] of industries){if(re.test(message)){apply('type',type,'business type');break}}}
+if((m=message.match(/(?:we offer|our services are|we provide)\s+([^.!?\n]+)/i))){const svcs=m[1].split(/,|\s+and\s+/i).map(x=>x.trim()).filter(Boolean);if(svcs.length)apply('services',svcs.join('\n'),'services')}
+if(changes.length){undoStack.push(before);save();render();renderChatPreview();chatMessages.push({role:'bot',text:'Updated: '+[...new Set(changes)].join(', ')+'. You can review the changes in the preview or undo them.'})}else{chatMessages.push({role:'bot',text:'I could not safely apply that request yet. Try “Make the website blue”, “Add service gutter cleaning”, “Set the headline to Your local experts”, or edit the field manually in Website Builder. More natural-language abilities will require a real AI connection.'})}renderChat()}
+$('chat-send').onclick=()=>{const msg=$('chat-input').value.trim();if(!msg){chatMessages.push({role:'bot',text:'Type an instruction first, then tap Apply changes.'});renderChat();return}try{chatApply(msg);$('chat-input').value=''}catch(err){console.error('Chat command failed',err);chatMessages.push({role:'bot',text:'Something went wrong applying that instruction. Your existing website is still here. Try a shorter command or use Website Builder.'});renderChat()}};
+$('chat-input').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey))$('chat-send').click()});
+$('chat-undo').onclick=()=>{if(!undoStack.length){chatMessages.push({role:'bot',text:'Nothing to undo yet.'});renderChat();return}data=JSON.parse(undoStack.pop());save();render();renderChatPreview();chatMessages.push({role:'bot',text:'Undid the last chat change.'});renderChat()};
+$('chat-clear').onclick=()=>{chatMessages=[{role:'bot',text:'Chat cleared. Your website details have not changed.'}];renderChat()};
+
+// V4.2: direct editing and responsive preview
+let editEnabled=false;
+document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b===btn));
+  $('builder-preview').classList.toggle('phone-mode',btn.dataset.view==='phone');
+}));
+const editableMap={'pv-name':'name','pv-heading':'headline','pv-desc':'description','pv-contact-details':'contact','pv-location':'location'};
+function refreshEditMarkers(){
+ const site=$('site');site.classList.toggle('editable-preview',editEnabled);
+ Object.keys(editableMap).forEach(id=>{const el=$(id);if(el)el.dataset.edit=editableMap[id]});
+}
+$('direct-edit').onclick=()=>{
+ editEnabled=!editEnabled;$('direct-edit').textContent='✏️ Tap to edit: '+(editEnabled?'On':'Off');
+ $('direct-edit').classList.toggle('active',editEnabled);
+ $('edit-hint').textContent=editEnabled?'Tap the business name, heading, description, service area or contact details in the preview.':'Switch on tap-to-edit, then tap text in the preview to change it.';
+ refreshEditMarkers();
+};
+$('site').addEventListener('click',e=>{
+ if(window.ezyPremiumInlineEditor)return;
+ if(!editEnabled)return;
+ const el=e.target.closest('[data-edit]');if(!el)return;
+ e.preventDefault();
+ const field=el.dataset.edit;
+ if(field==='contact'){const phone=prompt('Phone number',data.phone||'');if(phone===null)return;const email=prompt('Email address',data.email||'');if(email===null)return;data.phone=phone.trim();data.email=email.trim()}
+ else {const initial=field==='headline'?heading():field==='location'?data.location:data[field];const updated=prompt('Edit '+field,initial||'');if(updated===null)return;data[field]=updated.trim()}
+ save();render();renderDesignPreview();renderChatPreview();refreshEditMarkers();
+});
+refreshEditMarkers();
+
+// V4.2: before-and-after image comparison; browser-local persistence
+function comparisonMarkup(c,i){
+ return '<div class="compare-item"><div class="compare-wrap"><img src="'+escapeHtml(c.before)+'" alt="Before work"><div class="after-clip"><img src="'+escapeHtml(c.after)+'" alt="After work"></div><span class="compare-label before">Before</span><span class="compare-label after">After</span><input type="range" min="0" max="100" value="50" aria-label="Move before and after divider"></div><p class="muted">Drag the slider to compare</p></div>';
+}
+
+async function saveComparisons(){
+ const db=await openPhotoDb();
+ await new Promise((resolve,reject)=>{
+  const tx=db.transaction('gallery','readwrite');
+  tx.objectStore('gallery').put(comparisons,'comparisons');
+  tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);
+ });db.close();
+}
+async function loadComparisons(){
+ try{
+ const db=await openPhotoDb();
+ comparisons=await new Promise((resolve,reject)=>{
+  const tx=db.transaction('gallery','readonly');
+  const req=tx.objectStore('gallery').get('comparisons');
+  req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);
+ });db.close();renderComparisons();
+ }catch(err){$('compare-status').textContent='Comparison photos may not save on this browser.'}
+}
+function renderComparisons(){
+ $('compare-list').innerHTML=comparisons.map((c,i)=>'<div class="compare-item">'+comparisonMarkup(c,i)+'<button class="btn secondary" data-remove-compare="'+i+'">Remove pair</button></div>').join('');
+ $('compare-list').querySelectorAll('[data-remove-compare]').forEach(btn=>btn.onclick=async()=>{
+  comparisons.splice(Number(btn.dataset.removeCompare),1);
+  try{await saveComparisons()}catch(e){}
+  renderComparisons();renderDesignSite();renderDesignPreview();renderChatPreview();
+ });
+ renderDesignSite();renderDesignPreview();renderChatPreview();
+}
+$('before-file').onchange=async e=>{try{pendingBefore=await resizePhoto(e.target.files[0]);$('compare-status').textContent='Before photo ready.'}catch(err){$('compare-status').textContent='Could not read before photo: '+err.message}};
+$('after-file').onchange=async e=>{try{pendingAfter=await resizePhoto(e.target.files[0]);$('compare-status').textContent='After photo ready.'}catch(err){$('compare-status').textContent='Could not read after photo: '+err.message}};
+$('compare-add').onclick=async()=>{
+ if(!pendingBefore||!pendingAfter){$('compare-status').textContent='Choose both photos first.';return}
+ if(comparisons.length>=6){$('compare-status').textContent='Maximum six comparisons.';return}
+ comparisons.push({before:pendingBefore.data,after:pendingAfter.data});
+ try{await saveComparisons();$('compare-status').textContent='Comparison saved on this device.'}catch(err){$('compare-status').textContent='Preview added, but storage failed: '+err.message}
+ pendingBefore=pendingAfter=null;$('before-file').value='';$('after-file').value='';
+ renderComparisons();
+};
+
+function setupV43(root=document){
+ const imgs=root.querySelectorAll('.reveal-photo');
+ if('IntersectionObserver' in window){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{e.target.classList.toggle('is-visible',e.isIntersecting)})},{threshold:.12,rootMargin:'0px 0px -20px 0px'});imgs.forEach(x=>obs.observe(x))}else imgs.forEach(x=>x.classList.add('is-visible'));
+ root.querySelectorAll('.compare-wrap').forEach(w=>{w.style.setProperty('--comparison-width',w.clientWidth+'px');});
+}
+let scrollTick=false;
+function updateScrollComparisons(){
+ document.querySelectorAll('.compare-wrap').forEach(w=>{
+  w.style.setProperty('--comparison-width',w.clientWidth+'px');
+  if(w.dataset.manual==='true')return;
+  const r=w.getBoundingClientRect(),h=window.innerHeight||700;
+  const progress=Math.max(0,Math.min(1,(h-r.top)/(h+r.height)));
+  const pct=8+84*progress;
+  w.style.setProperty('--split',pct+'%');
+  const slider=w.querySelector('input');if(slider)slider.value=Math.round(pct);
+ });scrollTick=false;
+}
+function scheduleV43(){if(scrollTick)return;scrollTick=true;requestAnimationFrame(updateScrollComparisons)}
+window.addEventListener('scroll',scheduleV43,{passive:true});window.addEventListener('resize',scheduleV43,{passive:true});
+document.addEventListener('pointerdown',e=>{if(e.target.matches('.compare-wrap input'))e.target.closest('.compare-wrap').dataset.manual='true'});
+document.addEventListener('input',e=>{if(e.target.matches('.compare-wrap input')){const w=e.target.closest('.compare-wrap');w.dataset.manual='true';w.style.setProperty('--split',e.target.value+'%');w.style.setProperty('--comparison-width',w.clientWidth+'px')}});
+const v43Observer=new MutationObserver(()=>{setupV43();scheduleV43()});
+v43Observer.observe(document.querySelector('main'),{childList:true,subtree:true});
+setupV43();scheduleV43();
+
+
+function renderSortControls(){
+ const names={services:'🛠 Services',gallery:'📸 Work photos & comparisons',reviews:'⭐ Customer reviews',trust:'🛡 Trust & credentials'};
+ $('section-sort').innerHTML=design.sectionOrder.map((id,i)=>'<div class="sort-row"><span>'+names[id]+'</span><div><button type="button" data-move="'+i+':-1" '+(i===0?'disabled':'')+'>↑</button><button type="button" data-move="'+i+':1" '+(i===design.sectionOrder.length-1?'disabled':'')+'>↓</button></div></div>').join('');
+ $('section-sort').querySelectorAll('[data-move]').forEach(btn=>btn.onclick=()=>{
+  const [i,delta]=btn.dataset.move.split(':').map(Number),j=i+delta;
+  [design.sectionOrder[i],design.sectionOrder[j]]=[design.sectionOrder[j],design.sectionOrder[i]];
+  renderSortControls();
+ });
+}
+function openCustomerPreview(){
+ // Use the exact same standalone HTML generated for publishing, not a builder clone.
+ const html=exportSite();
+ $('customer-frame').srcdoc=html;
+ $('customer-modal').classList.remove('hidden');
+ document.body.style.overflow='hidden';
+}
+document.querySelectorAll('.customer-preview').forEach(btn=>btn.addEventListener('click',openCustomerPreview));
+$('v58-mobile-preview').addEventListener('click',openCustomerPreview);
+$('close-customer').onclick=()=>{
+ $('customer-modal').classList.add('hidden');$('customer-frame').srcdoc='';document.body.style.overflow='';
+};
+renderDesign();
+
+
+// V5.2.1: hardened local project actions; keep existing IndexedDB name to preserve data.
+window.addEventListener('unhandledrejection',e=>{const box=document.getElementById('project-message');if(box && !document.getElementById('projects').classList.contains('hidden'))box.textContent='Storage operation failed: '+(e.reason?.message||String(e.reason));});
+let activeProjectId=null;
+function projectDb(){
+ return new Promise((resolve,reject)=>{
+  const req=indexedDB.open('launchpad-projects-v1',1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('projects'))req.result.createObjectStore('projects',{keyPath:'id'});};
+  req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error||new Error('Browser storage could not be opened'));req.onblocked=()=>reject(new Error('Browser storage is busy. Close other tabs with EzySouth Web and retry.'));
+ });
+}
+async function projectAll(){
+ const db=await projectDb();
+ const result=await new Promise((resolve,reject)=>{
+  const req=db.transaction('projects','readonly').objectStore('projects').getAll();
+  req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);
+ });
+ db.close();return result.sort((a,b)=>b.updated-a.updated);
+}
+async function projectPut(record){
+ const db=await projectDb();
+ await new Promise((resolve,reject)=>{
+  const tx=db.transaction('projects','readwrite');tx.objectStore('projects').put(record);
+  tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);
+ });db.close();
+}
+async function projectDelete(id){
+ const db=await projectDb();
+ await new Promise((resolve,reject)=>{
+  const tx=db.transaction('projects','readwrite');tx.objectStore('projects').delete(id);
+  tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);
+ });db.close();
+}
+async function showProjects(){
+ const list=$('project-list');list.replaceChildren();
+ const all=await projectAll();
+ if(!all.length){list.textContent='No saved websites yet. Save your current design to create your first project.';return}
+ all.forEach(record=>{
+  const row=document.createElement('div');row.className='project-row';
+  const info=document.createElement('div'),name=document.createElement('strong'),meta=document.createElement('small');
+  name.textContent=record.name;meta.textContent='Updated '+new Date(record.updated).toLocaleString('en-NZ')+(activeProjectId===record.id?' · Currently open':'');
+  info.append(name,document.createElement('br'),meta);
+  const actions=document.createElement('div');actions.className='actions';
+  const open=document.createElement('button');open.className='btn secondary';open.textContent='Open';
+  open.onclick=async()=>{
+   if(!confirm('Open this project? Any unsaved changes to your current website will be lost.'))return;
+   try{activeProjectId=record.id;data={...defaults,...record.data};design={...designDefaults,...record.design};
+   if(!Array.isArray(design.sectionOrder))design.sectionOrder=['services','gallery','reviews','trust'];
+   uploadedPhotos=structuredClone(record.photos||[]);comparisons=structuredClone(record.comparisons||[]);
+   save();localStorage.setItem('launchpad-v4-design',JSON.stringify(design));
+   await savePhotos();await saveComparisons();
+   $('project-name').value=record.name;
+   render();renderDesign();refreshPhotos();renderComparisons();await showProjects();
+   $('project-message').textContent='Opened '+record.name+'.';
+   }catch(e){$('project-message').textContent='Could not open website: '+e.message;console.error(e)}
+  };
+  const del=document.createElement('button');del.className='btn secondary';del.textContent='Delete';
+  del.onclick=async()=>{
+   if(!confirm('Permanently delete saved project "'+record.name+'"?'))return;
+   try{await projectDelete(record.id);if(activeProjectId===record.id)activeProjectId=null;await showProjects();$('project-message').textContent='Deleted '+record.name+'.'}catch(e){$('project-message').textContent='Could not delete: '+e.message;console.error(e)}
+  };
+  actions.append(open,del);row.append(info,actions);list.appendChild(row);
+ });
+}
+$('project-save').onclick=async()=>{
+ const name=$('project-name').value.trim()||data.name.trim()||'Untitled website';
+ try{
+  const id=activeProjectId||('site-'+Date.now()+'-'+Math.random().toString(36).slice(2));
+  await projectPut({id,name,updated:Date.now(),data:structuredClone(data),design:structuredClone(design),photos:structuredClone(uploadedPhotos),comparisons:structuredClone(comparisons)});
+  activeProjectId=id;
+  $('project-name').value=name;$('project-message').textContent='Saved "'+name+'" on this device.';
+  await showProjects();
+ }catch(e){$('project-message').textContent='Could not save project: '+e.message}
+};
+$('project-new').onclick=async()=>{
+ const msg=$('project-message');
+ if(!confirm('Start a fresh website? Your saved websites will remain in My Websites. Unsaved changes will be lost.'))return;
+ activeProjectId=null;
+ data=structuredClone(defaults);
+ design=structuredClone(designDefaults);
+ uploadedPhotos=[];comparisons=[];pendingBefore=null;pendingAfter=null;
+ $('project-name').value='';
+ $('project-name').blur();
+ try{window.ezyLocalNewProject?.()}catch(e){console.warn('Cloud selection reset:',e)}
+ try{save();localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}
+ catch(e){console.warn('Draft reset persistence:',e)}
+ try{await Promise.all([savePhotos(),saveComparisons()])}
+ catch(e){console.warn('Photo reset persistence:',e)}
+ try{
+  document.activeElement?.blur?.();
+  render();renderDesign();refreshPhotos();renderComparisons();
+  await showProjects();
+  msg.textContent='New blank website started. Your other saved websites are untouched. Tap Save to store this as a separate project.';
+  document.querySelector('nav button[data-tab="builder"]')?.click();
+ }catch(e){msg.textContent='New website started, but the display could not refresh: '+e.message;console.error(e)}
+};
+document.querySelector('nav button[data-tab="projects"]').addEventListener('click',()=>showProjects().catch(e=>$('project-message').textContent='Could not load saved websites: '+e.message));
+function downloadPublishHtml(){
+ const html=exportSite(),blob=new Blob([html],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='index.html';document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),10000);
+ $('publish-message').textContent='Downloaded index.html. Upload this file to Netlify Drop to publish. Keep your original project saved in My websites.';
+}
+$('publish-download').onclick=downloadPublishHtml;
+
+render();renderLeads();renderChat();
+</script>
+<script>
+/* V5.9 release guard. Existing cloud and enquiry code is left unchanged. */
+(function(){
+ const $=id=>document.getElementById(id);
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function checks(){
+  const text=v=>String(v??'').trim();
+  const name=text(data.name),description=text(data.description),email=text(data.email),phone=text(data.phone);
+  const seo=(()=>{try{return JSON.parse(localStorage.getItem('ezysouth-v56-extra')||'{}')}catch(e){return {}}})();
+  const html=exportSite();
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  const links=[...doc.querySelectorAll('a[href]')];
+  const broken=links.filter(a=>{const h=a.getAttribute('href');if(!h||h==='#')return true;if(h.startsWith('#'))return !doc.getElementById(h.slice(1));if(/^https?:/i.test(h)){try{return !new URL(h).hostname}catch(e){return true}}return !/^(mailto:|tel:|https?:|\/)/i.test(h)});
+  const title=text(doc.title),meta=text(doc.querySelector('meta[name="description"]')?.content);
+  return [
+   ['Business name',name.length>=2,'Add a genuine business name',true],
+   ['Service area',!!text(data.location),'Add where the business operates',true],
+   ['Services',!!text(data.services),'List at least one real service',true],
+   ['Business description',description.length>=40,'Write at least 40 characters about the business',false],
+   ['Contact method',!!(phone||email),'Provide a phone number or email',true],
+   ['Email format',!email||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),'Correct the email address',true],
+   ['No placeholder contact details',!(/example\.(com|co\.nz)/i.test(email)||/^(000|12345)/.test(phone)),'Replace example contact information',true],
+   ['Page title',title.length>=10&&title.length<=70,'Keep the page title descriptive and under 70 characters',false],
+   ['Search description',meta.length>=50&&meta.length<=170,'Write a clear 50–170 character description',false],
+   ['Internal and contact links',broken.length===0,'Fix '+broken.length+' invalid or unresolved link(s)',true],
+   ['Photos loadable in export',!uploadedPhotos.length||uploadedPhotos.every(p=>!!p.data),'Remove incomplete uploaded photos',false],
+   ['JobFlow export connection',!window.ezyLiveSiteId||/^[0-9a-f-]{36}$/i.test(window.ezyLiveSiteId),'Re-enable JobFlow on the correct cloud project',true]
+  ];
+ }
+ function run(){const items=checks(),fails=items.filter(x=>!x[1]),hard=fails.filter(x=>x[3]);$('v59-results').innerHTML='<p><strong>'+ (items.length-fails.length)+'/'+items.length+' automatic checks passed</strong> · '+hard.length+' essential issue(s)</p>'+items.map(([label,ok,fix,critical])=>'<div style="padding:6px 0;border-bottom:1px solid #e1e9e7">'+(ok?'✅ ':'⚠️ ')+esc(label)+(ok?'':' <small style="display:block;margin-left:24px">'+esc(fix)+(critical?' · Required':' · Recommended')+'</small>')+'</div>').join('')+'<p class="muted">These checks inspect the current draft and exported HTML only. They do not confirm cloud permissions, hosting availability, real form delivery or mobile appearance.</p>';return {fails,hard}}
+ $('v59-run').onclick=run;
+ function approve(){const {hard,fails}=run();if(hard.length){alert('Launch audit found '+hard.length+' essential issue(s). Fix them before exporting or publishing.');return false}if(!$('v59-manual').checked){alert('Please acknowledge the manual live-site tests first.');return false}if(fails.length&&!confirm(fails.length+' recommended check(s) remain. Continue with this beta export anyway?'))return false;return true}
+ for(const id of ['publish-download','netlify-publish','export']){const el=$(id);const previous=el.onclick;el.onclick=function(e){if(!approve())return;return previous?.call(this,e)}}
+ const leadTab=document.querySelector('nav button[data-tab="leads"]');
+ if(leadTab)leadTab.addEventListener('click',()=>{const refresh=$('load-live-leads');if(refresh&&window.ezyLiveSiteId)refresh.click()});
+})();
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+ const url='https://anldjuaqlpowwodlphqf.supabase.co';
+ const publishable='sb_publishable_VMqyyOF5j2vNL4vOtW1_Og_w_wfUyKt';
+ const status=document.getElementById('cloud-status');
+ let client=null,user=null,cloudId=null; window.ezyLiveSiteId=null;window.ezyCloudUser=false;window.ezyCloudId=null;window.ezyPublishState='draft';window.ezyLiveUrl='';
+ const el=id=>document.getElementById(id);
+ const say=msg=>{status.textContent=msg};
+ const activeCloudKey=()=>user?'ezysouth-active-cloud:'+user.id:null;
+ async function persistActiveCloudId(id){
+   if(!client||!user)return;
+   const {error}=await client.from('builder_state').upsert({
+     owner_id:user.id,
+     active_website_id:id||null,
+     updated_at:new Date().toISOString()
+   },{onConflict:'owner_id'});
+   if(error)console.warn('Could not sync active cloud project:',error.message);
+ }
+ function rememberCloudId(id){
+   cloudId=id||null;window.ezyCloudId=cloudId;window.dispatchEvent(new Event('ezy:state'));
+   const key=activeCloudKey();
+   if(key){
+     if(cloudId)localStorage.setItem(key,cloudId);else localStorage.removeItem(key);
+   }
+ }
+ async function setActiveCloudId(id){
+   rememberCloudId(id);
+   await persistActiveCloudId(cloudId);
+ }
+ async function restoreCloudId(){
+   if(!user||cloudId)return cloudId;
+   const key=activeCloudKey();
+   let candidate=key?localStorage.getItem(key):null;
+
+   // Server-side fallback survives builder redeploys, new browser origins and other devices.
+   if(!candidate){
+     const {data:state,error:stateError}=await client.from('builder_state')
+       .select('active_website_id')
+       .eq('owner_id',user.id)
+       .maybeSingle();
+     if(!stateError&&state?.active_website_id)candidate=state.active_website_id;
+   }
+
+   // Brand-new accounts with exactly one project can be restored safely.
+   if(!candidate){
+     const {data:rows,error:rowsError}=await client.from('websites')
+       .select('id')
+       .order('updated_at',{ascending:false})
+       .limit(2);
+     if(!rowsError&&rows?.length===1)candidate=rows[0].id;
+   }
+
+   if(!candidate)return null;
+   const {data:record,error}=await client.from('websites')
+     .select('id,accepting_enquiries')
+     .eq('id',candidate)
+     .maybeSingle();
+   if(error||!record){
+     if(key)localStorage.removeItem(key);
+     await persistActiveCloudId(null);
+     return null;
+   }
+   cloudId=record.id;window.ezyCloudId=cloudId;
+   if(key)localStorage.setItem(key,cloudId);
+   window.ezyLiveSiteId=record.accepting_enquiries?record.id:null;window.dispatchEvent(new Event('ezy:state'));
+   await persistActiveCloudId(cloudId);
+   return cloudId;
+ }
+ window.ezyLocalNewProject=()=>{rememberCloudId(null);window.ezySetShowcases?.([]);void persistActiveCloudId(null);window.ezyLiveSiteId=null;el('cloud-name').value='';say('New local website started. Cloud project selection cleared.');};
+ if(!window.supabase?.createClient||url.includes('not-configured.invalid')){say('Staging database not connected yet. No production accounts or data are accessible from this preview.');return}
+ client=window.supabase.createClient(url,publishable,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ async function authRefresh(){
+   const {data:{user:u},error}=await client.auth.getUser();user=error?null:u;window.ezyCloudUser=!!user;window.ezyCloudId=cloudId;window.dispatchEvent(new Event('ezy:state'));
+   el('cloud-auth').classList.toggle('hidden',!!user);el('cloud-signed').classList.toggle('hidden',!user);
+   if(user){
+     el('cloud-user').textContent=user.email||'Customer';
+     await restoreCloudId();
+     say(cloudId?'Cloud connected. Your last open cloud project was restored.':'Cloud connected. Your local projects have not been uploaded automatically.');
+     await listCloud();
+     await refreshPublishState();
+   }
+   else{window.ezyLiveSiteId=null;cloudId=null;el('cloud-list').replaceChildren();renderPublishState('draft',{message:'Sign in and open a cloud project to check publishing status.'});say('Sign in or create an account to use cloud saving.')}
+ }
+ window.cloudRefresh=authRefresh;
+ async function action(fn){try{say('Working…');await fn()}catch(e){say('Cloud error: '+e.message)}}
+ el('cloud-signup').onclick=()=>action(async()=>{const email=el('cloud-email').value.trim(),password=el('cloud-password').value;if(!email||password.length<6)throw Error('Enter an email and password of at least 6 characters.');const {data,error}=await client.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});if(error)throw error;await authRefresh();say(data.session?'Account created and signed in.':'Account created. Open the confirmation email and follow its link before logging in. If the link fails, check Supabase Auth URL Configuration.')});
+ el('cloud-login').onclick=()=>action(async()=>{const {error}=await client.auth.signInWithPassword({email:el('cloud-email').value.trim(),password:el('cloud-password').value});if(error)throw Error(error.message==='Email not confirmed'?'Email not confirmed. Check your inbox, including spam, and open the verification link.':error.message);el('cloud-password').value='';await authRefresh();say('Successfully logged in as '+(user?.email||'customer')+'.')});
+ el('cloud-reset').onclick=()=>action(async()=>{const email=el('cloud-email').value.trim();if(!email)throw Error('Enter your email first.');const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;say('Password reset email requested. Check your inbox.');});
+ el('cloud-logout').onclick=()=>action(async()=>{const key=activeCloudKey();if(key)localStorage.removeItem(key);const {error}=await client.auth.signOut();if(error)throw error;cloudId=null;await authRefresh()});
+ async function listCloud(){if(!user)return;const {data:rows,error}=await client.from('websites').select('id,name,updated_at').order('updated_at',{ascending:false}).limit(100);if(error)throw error;const box=el('cloud-list');box.replaceChildren();if(!rows.length){box.textContent='No cloud projects yet. Save your current website above.';return}for(const item of rows){const row=document.createElement('div');row.className='project-row';const info=document.createElement('div');const strong=document.createElement('strong');strong.textContent=item.name;const small=document.createElement('small');small.textContent='Updated '+new Date(item.updated_at).toLocaleString('en-NZ')+(cloudId===item.id?' · Open cloud project':'');info.append(strong,document.createElement('br'),small);const actions=document.createElement('div');actions.className='actions';const open=document.createElement('button');open.className='btn secondary';open.textContent='Open';open.onclick=()=>action(async()=>{if(!confirm('Open this cloud website? Unsaved local edits will be replaced.'))return;const {data:record,error}=await client.from('websites').select('id,name,content,accepting_enquiries').eq('id',item.id).single();if(error)throw error;const c=record.content||{};data={...defaults,...c.data};design={...designDefaults,...c.design};if(!Array.isArray(design.sectionOrder))design.sectionOrder=['services','gallery','reviews','trust'];uploadedPhotos=structuredClone(c.photos||[]);comparisons=structuredClone(c.comparisons||[]);await setActiveCloudId(record.id);lastSeenId=null;window.ezyLiveSiteId=record.accepting_enquiries?record.id:null;activeProjectId=null;save();localStorage.setItem('launchpad-v4-design',JSON.stringify(design));await savePhotos();await saveComparisons();el('project-name').value=record.name;el('cloud-name').value=record.name;render();renderDesign();refreshPhotos();renderComparisons();await loadShowcases(record.id);await listCloud();await refreshPublishState();say('Opened '+record.name+'. Changes are not in the cloud until you save again.')});const del=document.createElement('button');del.className='btn secondary';del.textContent='Delete';del.onclick=()=>action(async()=>{const {data:session,error:sessionError}=await client.auth.getSession();if(sessionError||!session?.session?.access_token)throw Error('Your login expired. Sign in again.');const publishCheck=await fetch(url+'/functions/v1/publish-website?website_id='+encodeURIComponent(item.id),{method:'GET',headers:{'Authorization':'Bearer '+session.session.access_token,'apikey':publishable}});const publishInfo=await publishCheck.json().catch(()=>({}));if(publishCheck.ok&&publishInfo.url)throw Error('This project owns a reserved live URL. EzySouth blocked permanent project deletion so the address cannot be lost. Open it and use “Remove live site” instead.');if(!confirm('Permanently delete this unpublished cloud project? This cannot be undone.'))return;const {error}=await client.from('websites').delete().eq('id',item.id);if(error)throw error;if(cloudId===item.id){rememberCloudId(null);await persistActiveCloudId(null)}await listCloud();say('Cloud project deleted.')});actions.append(open,del);row.append(info,actions);box.append(row)}}
+ async function saveCloud(asNew){if(!user)throw Error('Sign in first.');const name=el('cloud-name').value.trim()||el('project-name').value.trim()||data.name||'Untitled website';const content={data:structuredClone(data),design:structuredClone(design),photos:structuredClone(uploadedPhotos),comparisons:structuredClone(comparisons)};const bytes=new Blob([JSON.stringify(content)]).size;if(bytes>5*1024*1024)throw Error('This project exceeds the 5 MB cloud beta limit. Remove some photos or use local saving.');let result;if(!asNew&&cloudId){result=await client.from('websites').update({name,content,updated_at:new Date().toISOString()}).eq('id',cloudId).select('id').single()}else{result=await client.from('websites').insert({owner_id:user.id,name,content}).select('id').single()}if(result.error)throw result.error;await setActiveCloudId(result.data.id);lastSeenId=null;if(asNew)window.ezyLiveSiteId=null;el('cloud-name').value=name;await listCloud();await refreshPublishState();say('Saved "'+name+'" to your private cloud account.');}
+ function setLiveSiteTools(liveUrl){
+   const tools=el('ezysouth-live-tools'),field=el('ezysouth-live-url'),open=el('ezysouth-live-open'),copyStatus=el('ezysouth-live-copy-status');
+   const valid=typeof liveUrl==='string'&&/^https:\/\//i.test(liveUrl);
+   if(!tools||!field||!open)return;
+   tools.classList.toggle('hidden',!valid);
+   if(!valid){field.value='';open.removeAttribute('href');if(copyStatus)copyStatus.textContent='Your customer-facing link will stay here after publishing.';return;}
+   field.value=liveUrl;open.href=liveUrl;
+   if(copyStatus)copyStatus.textContent='Share this link with customers or open it to check the live website.';
+ }
+ async function copyLiveSiteLink(){
+   const field=el('ezysouth-live-url'),status=el('ezysouth-live-copy-status');
+   const liveUrl=field?.value?.trim();
+   if(!liveUrl){if(status)status.textContent='Publish the website first to get a live link.';return;}
+   try{
+     if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(liveUrl)}
+     else{
+       const helper=document.createElement('textarea');helper.value=liveUrl;helper.setAttribute('readonly','');helper.style.position='fixed';helper.style.opacity='0';document.body.appendChild(helper);helper.select();helper.setSelectionRange(0,helper.value.length);if(!document.execCommand('copy'))throw Error('Copy was blocked');helper.remove();
+     }
+     if(status)status.textContent='✓ Link copied. Ready to send to a customer.';
+   }catch(e){
+     field.focus();field.select();field.setSelectionRange(0,field.value.length);
+     if(status)status.textContent='Automatic copy was blocked. The link is selected so you can copy it manually.';
+   }
+ }
+ function renderPublishState(state,info={}){
+   window.ezyPublishState=state;window.ezyLiveUrl=typeof info.url==='string'&&info.url?info.url:null;window.dispatchEvent(new Event('ezy:state'));
+   const card=el('ezysouth-state-card'),badge=el('ezysouth-state-badge'),title=el('ezysouth-state-title'),detail=el('ezysouth-state-detail');
+   if(!card||!badge||!title||!detail)return;
+   const states={
+     draft:{label:'DRAFT',title:'Draft',bg:'#fff8e8',border:'#ecd6a2',badgeBg:'#f4e0aa',badgeColor:'#634d10'},
+     publishing:{label:'PUBLISHING',title:'Publishing…',bg:'#edf5ff',border:'#b9d4f6',badgeBg:'#cfe2fb',badgeColor:'#214f84'},
+     live:{label:'LIVE',title:'Live',bg:'#edf9f1',border:'#b9dec4',badgeBg:'#ccebd5',badgeColor:'#1d6335'},
+     unpublished:{label:'OFFLINE',title:'Unpublished',bg:'#f5f6f6',border:'#d5dcda',badgeBg:'#e2e7e5',badgeColor:'#42504c'},
+     removed:{label:'REMOVED',title:'Live site removed',bg:'#fff4f1',border:'#edc9bf',badgeBg:'#f4d8d0',badgeColor:'#7a3929'},
+     error:{label:'ERROR',title:'Publish failed',bg:'#fff0f0',border:'#efc2c2',badgeBg:'#f4cccc',badgeColor:'#812d2d'}
+   };
+   const cfg=states[state]||states.draft;
+   setLiveSiteTools(info.url);
+   card.style.background=cfg.bg;card.style.borderColor=cfg.border;
+   badge.textContent=cfg.label;badge.style.background=cfg.badgeBg;badge.style.color=cfg.badgeColor;
+   title.textContent=cfg.title;
+   let message=info.message||(
+     state==='live'?'Your website is live and up to date.':
+     state==='publishing'?'Your website is being updated now.':
+     state==='unpublished'?'This website is offline. Its web address is reserved for when you publish again.':
+     state==='removed'?'The live website has been removed. Its web address is still reserved for this project.':
+     state==='error'?'The last publish attempt failed.':
+     info.url?'Your live website has unpublished changes.':'This website has not been published yet.'
+   );
+   detail.replaceChildren(document.createTextNode(message));
+   const unpublishBtn=el('ezysouth-unpublish'),removeBtn=el('ezysouth-remove-live');
+   if(unpublishBtn)unpublishBtn.disabled=!info.url||state==='publishing'||state==='unpublished'||state==='removed';
+   if(removeBtn)removeBtn.disabled=!info.url||state==='publishing'||state==='removed';
+   if(info.url&&/^https:\/\//.test(info.url)){
+     detail.append(document.createTextNode(' '));
+     const a=document.createElement('a');a.href=info.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open live site';detail.append(a);
+   }
+ }
+ async function refreshPublishState(){
+   // Check the staging publisher without blocking cloud saves on service errors.
+   if(!user||!cloudId){renderPublishState('draft',{message:'Save a test cloud website before publishing.'});return;}
+   try{
+     const {data,error:sessionError}=await client.auth.getSession();
+     const token=data?.session?.access_token;
+     if(sessionError||!token)throw Error('Please sign in again.');
+     const response=await fetch(url+'/functions/v1/publish-website?website_id='+encodeURIComponent(cloudId),{
+       method:'GET',headers:{'Authorization':'Bearer '+token,'apikey':publishable}
+     });
+     const info=await response.json().catch(()=>({}));
+     if(!response.ok)throw Error(info.error||'Preview status unavailable (HTTP '+response.status+').');
+     renderPublishState(info.status||'draft',info);
+   }catch(error){renderPublishState('error',{message:'Cloud saving still works. Preview status unavailable: '+error.message});}
+ }
+ async function publishEzySouth(){
+   const btn=el('ezysouth-oneclick'),status=el('ezysouth-oneclick-status');
+   if(!user){status.textContent='Sign in to EzySouth Cloud before publishing.';return;}
+   if(!data.name?.trim()){status.textContent='Add a business name before publishing.';return;}
+   if(!el('ezysouth-publish-confirm').checked){
+     status.textContent='Confirm the preview contains only fictional or approved details before publishing.';
+     el('ezysouth-publish-confirm').focus();return;
+   }
+   btn.disabled=true;status.textContent='Saving your website to cloud…';renderPublishState('publishing',{message:'Saving your latest changes before publishing…'});
+   try{
+     await restoreCloudId();
+     if(!cloudId){
+       // Never rely on a HEAD/count response here. If any cloud project exists,
+       // publishing must not silently create a second website/domain.
+       const {data:existingRows,error:existingError}=await client.from('websites')
+         .select('id,name,updated_at')
+         .order('updated_at',{ascending:false})
+         .limit(2);
+       if(existingError)throw existingError;
+       if(existingRows?.length){
+         throw Error('No active cloud project is selected. Open the cloud website you want to update first. EzySouth blocked a duplicate domain from being created.');
+       }
+     }
+     await saveCloud(false);
+     // An active cloud site must be linked to its public enquiry form.
+     const {data:site,error:siteError}=await client.from('websites').select('accepting_enquiries').eq('id',cloudId).single();
+     if(siteError)throw siteError;
+     window.ezyLiveSiteId=site.accepting_enquiries?cloudId:null;
+     // Always reload approved completed work before publishing, even when the cloud
+     // project was restored without opening it. Never silently omit featured work.
+     await loadShowcases(cloudId);
+     const html=exportSite();
+     status.textContent='Publishing your test preview…';renderPublishState('publishing',{message:'Updating the shareable staging preview…'});
+     const {data:session,error:sessionError}=await client.auth.getSession();
+     if(sessionError||!session?.session?.access_token)throw Error('Your login expired. Sign in again.');
+     const controller=new AbortController();
+     const timeout=setTimeout(()=>controller.abort(),25000);
+     let response;
+     try{
+       response=await fetch(url+'/functions/v1/publish-website',{
+         method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.session.access_token,'apikey':publishable},
+         body:JSON.stringify({website_id:cloudId,html,action:'publish'}),signal:controller.signal
+       });
+     }catch(networkError){
+       if(networkError.name==='AbortError')throw Error('Publishing request timed out after 25 seconds. No confirmed deployment. Check your connection or contact support.');
+       throw Error('Cannot reach publishing service ('+networkError.message+'). Check connection and browser restrictions.');
+     }finally{clearTimeout(timeout)}
+     const result=await response.json().catch(()=>({}));
+     if(!response.ok)throw Error(result.error||('Publishing service unavailable (HTTP '+response.status+'). Ask EzySouth support to configure hosting.'));
+     if(!result.url||!/^https:\/\//.test(result.url))throw Error('Publishing service returned no verified HTTPS address.');
+     status.replaceChildren(document.createTextNode('✓ Test website published: '));
+     const link=document.createElement('a');link.href=result.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=result.url;status.append(link);
+     renderPublishState('live',{url:result.url,message:'Test website published. Republishing updates this same URL.'});
+   }catch(e){
+     status.textContent='Not published: '+e.message;
+     try{await refreshPublishState()}catch(_){renderPublishState('error',{message:e.message})}
+   }
+   finally{btn.disabled=false;btn.textContent='🚀 Publish updates to test website';}
+ }
+ async function manageLiveSite(actionName){
+   const status=el('ezysouth-oneclick-status');
+   if(!user){status.textContent='Sign in to EzySouth Cloud first.';return;}
+   await restoreCloudId();
+   if(!cloudId){status.textContent='Open the cloud website you want to manage first.';return;}
+   const liveUrl=el('ezysouth-live-url')?.value?.trim()||'';
+   const removing=actionName==='remove';
+   if(removing){
+     if(!confirm('Remove this live website from public view? The editable cloud project and its web address will be kept.'))return;
+     if(!confirm('Final check: remove the live site content? Publishing again will restore it at the SAME reserved URL.'))return;
+   }else if(!confirm('Take this website offline temporarily? Its current URL will stay reserved and will be reused when you publish again.'))return;
+   const {data:session,error:sessionError}=await client.auth.getSession();
+   if(sessionError||!session?.session?.access_token){status.textContent='Your login expired. Sign in again.';return;}
+   const pendingMessage=removing?'Removing the live website while keeping its address reserved…':'Taking the website offline while keeping its address reserved…';
+   status.textContent=pendingMessage;renderPublishState('publishing',{url:liveUrl,message:pendingMessage});
+   try{
+     const response=await fetch(url+'/functions/v1/publish-website',{
+       method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.session.access_token,'apikey':publishable},
+       body:JSON.stringify({website_id:cloudId,action:actionName})
+     });
+     const result=await response.json().catch(()=>({}));
+     if(!response.ok)throw Error(result.error||('Website action failed (HTTP '+response.status+').'));
+     if(!result.url||!/^https:\/\//.test(result.url))throw Error('EzySouth could not confirm the reserved website address.');
+     const doneMessage=removing?'✓ Live website removed. The URL is still reserved for this project.':'✓ Website is offline. The URL is still reserved for this project.';
+     status.textContent=doneMessage;
+     renderPublishState(result.status|| (removing?'removed':'unpublished'),{url:result.url,message:doneMessage});
+   }catch(e){
+     status.textContent='Could not update live site: '+e.message;
+     try{await refreshPublishState()}catch(_){renderPublishState('error',{url:liveUrl,message:e.message})}
+   }
+ }
+ el('ezysouth-oneclick').onclick=publishEzySouth;
+ el('ezysouth-unpublish').onclick=()=>manageLiveSite('unpublish');
+ el('ezysouth-remove-live').onclick=()=>manageLiveSite('remove');
+ el('ezysouth-live-copy').onclick=copyLiveSiteLink;
+ el('ezysouth-live-url').onclick=()=>{const f=el('ezysouth-live-url');if(f?.value){f.select();f.setSelectionRange(0,f.value.length)}};
+ el('cloud-save').onclick=()=>action(()=>saveCloud(false));el('cloud-new').onclick=()=>action(()=>saveCloud(true));
+ async function toggleEnquiries(enabled){
+   if(!user)throw Error('Sign in to EzySouth Web Cloud first, then enable live JobFlow.');
+   const status=el('jobflow-publish-status');
+   if(enabled){
+     status.textContent='Saving your current website to cloud before enabling JobFlow…';
+     // Save first: a new local website gets a cloud ID, while an opened cloud website is updated.
+     // If saving fails, do not switch on JobFlow or claim success.
+     await saveCloud(false);
+   }else if(!cloudId){throw Error('Open the cloud website you want to disable JobFlow for first.');}
+   const {error}=await client.from('websites').update({accepting_enquiries:enabled}).eq('id',cloudId).select('id').single();
+   if(error)throw error;
+   window.ezyLiveSiteId=enabled?cloudId:null;window.dispatchEvent(new Event('ezy:state'));
+   status.textContent=enabled?'✓ JobFlow enabled for this test website. Open JobFlow to simulate a fictional enquiry.':'JobFlow enquiries disabled for this test website.';
+ }
+ el('enable-live-jobflow').onclick=()=>action(()=>toggleEnquiries(true));
+ el('disable-live-jobflow').onclick=()=>action(()=>toggleEnquiries(false));
+ async function loadShowcases(websiteId){
+   if(!user||!websiteId){window.ezySetShowcases?.([]);return}
+   const display=el('jobflow-showcase-list');
+   if(display)display.textContent='Checking approved JobFlow projects…';
+   const {data:rows,error}=await client.from('jobflow_showcases')
+     .select('id,enquiry_id,title,summary,image_paths').eq('website_id',websiteId).order('created_at',{ascending:false}).limit(18);
+   if(error){
+     window.ezySetShowcases?.([]);
+     if(error.code==='42P01'||error.code==='PGRST205'){
+       if(display)display.textContent='JobFlow showcase database not enabled yet. Existing website designs still work.';
+       return;
+     }
+     throw error;
+   }
+   const entries=rows||[];
+   if(!entries.length){window.ezySetShowcases?.([]);return}
+   const {data:enquiries,error:enquiryError}=await client.from('enquiries')
+      .select('id,status').eq('website_id',websiteId).in('id',entries.map(row=>row.enquiry_id));
+   if(enquiryError)throw enquiryError;
+   const completed=new Set((enquiries||[]).filter(e=>e.status==='Completed').map(e=>e.id));
+   window.ezySetShowcases?.(entries.filter(e=>completed.has(e.enquiry_id)).map(x=>({...x,images:(Array.isArray(x.image_paths)?x.image_paths:[]).filter(path=>typeof path==='string'&&path.startsWith(user.id+'/'+websiteId+'/')).slice(0,4).map(path=>client.storage.from('jobflow-portfolio').getPublicUrl(path).data.publicUrl)})));
+ }
+ el('jobflow-showcase-refresh').onclick=()=>action(async()=>{
+   if(!cloudId)throw Error('Open the cloud website you want to update first.');
+   await loadShowcases(cloudId);
+   say('Refreshed completed work for the selected cloud website. Review the preview before publishing.');
+ });
+ async function loadLiveLeads(){
+   if(!user||!cloudId)throw Error('Sign in and open a cloud website first.');
+   const {data:rows,error}=await client.from('enquiries').select('id,customer_name,customer_contact,message,status,created_at').eq('website_id',cloudId).order('created_at',{ascending:false}).limit(100);
+   if(error)throw error;
+   const items=rows||[];
+   el('live-count-new').textContent=items.filter(x=>x.status==='New'||x.status==='Quote needed').length;
+   el('live-count-quoted').textContent=items.filter(x=>x.status==='Quote sent').length;
+   el('live-count-won').textContent=items.filter(x=>x.status==='Won').length;
+   const box=el('live-leads-list');box.replaceChildren();
+   if(!items.length){box.textContent='No live enquiries yet. Publish with JobFlow enabled, then submit the form from the live website to test it.';return;}
+   for(const item of items){
+     const card=document.createElement('div');card.className='lead';
+     const title=document.createElement('strong');title.textContent=item.customer_name+' · '+new Date(item.created_at).toLocaleString('en-NZ');
+     const contact=document.createElement('p');contact.textContent=item.customer_contact;
+     const message=document.createElement('p');message.textContent=item.message;
+     const status=document.createElement('select');
+     for(const v of ['New','Quote needed','Quote sent','Won','Lost']){const o=document.createElement('option');o.value=v;o.textContent=v;o.selected=v===item.status;status.append(o);}
+     status.onchange=()=>action(async()=>{const {error}=await client.from('enquiries').update({status:status.value}).eq('id',item.id);if(error)throw error;await loadLiveLeads();});
+     card.append(title,contact,message,status);box.append(card);
+   }
+ }
+ el('load-live-leads').onclick=()=>action(loadLiveLeads);
+
+
+ let leadRows=[],lastSeenId=null,leadPolling=null,alertEnabled=false;
+ function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}
+ el('jobflow-export').onclick=()=>action(async()=>{
+  if(!user||!cloudId)throw Error('Sign in and open a cloud website first.');
+  const {data:rows,error}=await client.from('enquiries').select('customer_name,customer_contact,message,status,created_at').eq('website_id',cloudId).order('created_at',{ascending:false}).limit(1000);
+  if(error)throw error;
+  const csv=['Customer,Contact,Message,Status,Date',...(rows||[]).map(r=>[r.customer_name,r.customer_contact,r.message,r.status,r.created_at].map(csvCell).join(','))].join('\r\n');
+  const url=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='jobflow-enquiries.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
+  el('jobflow-alert-status').textContent='Exported '+rows.length+' enquiries.';
+ });
+ el('jobflow-alerts').onclick=async()=>{
+  if(!('Notification' in window)){el('jobflow-alert-status').textContent='Browser notifications are unavailable here. In-app alerts still work.';return}
+  const permission=await Notification.requestPermission();alertEnabled=permission==='granted';
+  el('jobflow-alert-status').textContent=alertEnabled?'Browser alerts enabled while the app is open.':'Permission not granted. In-app checks still work.';
+ };
+ async function pollLeads(){
+  if(!user||!cloudId||el('leads').classList.contains('hidden'))return;
+  const {data:rows,error}=await client.from('enquiries').select('id,customer_name,created_at').eq('website_id',cloudId).order('created_at',{ascending:false}).limit(1);
+  if(error||!rows?.length)return;
+  const newest=rows[0];
+  if(lastSeenId===null){lastSeenId=newest.id;return}
+  if(newest.id!==lastSeenId){lastSeenId=newest.id;el('jobflow-alert-status').textContent='🔔 New customer enquiry received! JobFlow refreshed.';
+   loadLiveLeads().catch(()=>{});
+   if(alertEnabled&&Notification.permission==='granted')try{new Notification('New JobFlow enquiry',{body:'New enquiry from '+newest.customer_name})}catch(e){}
+  }
+ }
+ leadPolling=setInterval(()=>pollLeads().catch(()=>{}),30000);
+ // JobFlow is now a separate page; there is no legacy nav button.
+ client.auth.onAuthStateChange(()=>{setTimeout(()=>authRefresh().catch(e=>say(e.message)),0)});
+ authRefresh().catch(e=>say('Cloud connection error: '+e.message));
+})();
+</script>
+<script>
+(function(){
+ const get=id=>document.getElementById(id);
+ const guide=get('ezy-onboarding'),open=get('ezy-guide-open'),hide=get('ezy-guide-hide'),next=get('ezy-guide-next'),skip=get('ezy-guide-skip');
+ if(!guide||!open||!hide||!next)return;
+ const hiddenKey='ezysouth-guide-hidden';
+ const skipKey='ezysouth-guide-skip-jobflow';
+ function goTab(tab){const b=document.querySelector('nav button[data-tab="'+tab+'"]');if(b)b.click()}
+ function pulse(el){if(!el)return;el.classList.remove('ezy-focus');void el.offsetWidth;el.classList.add('ezy-focus');setTimeout(()=>el.classList.remove('ezy-focus'),2800)}
+ function basicsValid(){return !!(window.data?true:true) && ['v57-name','v57-location','v57-services'].every(id=>get(id)?.value.trim()) && !!(get('v57-phone')?.value.trim()||get('v57-email')?.value.trim())}
+ function state(){
+   const cloud=!!window.ezyCloudId;
+   const basics=basicsValid()&&(localStorage.getItem('ezysouth-guide-basics')==='1'||cloud);
+   const design=localStorage.getItem('ezysouth-guide-design')==='1'||cloud;
+   const jobflow=!!window.ezyLiveSiteId||localStorage.getItem(skipKey)==='1';
+   const live=window.ezyPublishState==='live'&&!!window.ezyLiveUrl;
+   return {basics,design,cloud,jobflow,live,signedIn:!!window.ezyCloudUser,jobflowSkipped:localStorage.getItem(skipKey)==='1'};
+ }
+ const configs=[
+   {title:'Add your real business details',copy:'Enter your business name, service area, services and at least one phone number or email.',label:'Add business details →',run(){goTab('builder');document.querySelector('[data-v56-step="0"]')?.click();setTimeout(()=>{get('v56-hub')?.scrollIntoView({behavior:'smooth',block:'start'});get('v57-name')?.focus()},80)}},
+   {title:'Choose how the website should look',copy:'Pick a design preset, then preview it on mobile. You can fine-tune photos and styling later.',label:'Choose a design →',run(){goTab('builder');document.querySelector('[data-v56-step="1"]')?.click();setTimeout(()=>pulse(get('v56-template-grid')),80)}},
+   {title:'Save this website to your cloud account',copy:'This locks the project identity to the correct website so publishing and JobFlow do not drift onto another domain.',label:'Save to cloud →',run(){goTab('cloud');setTimeout(()=>{if(!window.ezyCloudUser){pulse(get('cloud-auth'));get('cloud-email')?.focus()}else{pulse(get('cloud-signed'));get('cloud-name')?.focus()}},80)}},
+   {title:'Turn on JobFlow enquiries',copy:'Recommended: customers can send quote requests from the live site straight into your private JobFlow dashboard.',label:'Turn on JobFlow →',run(){goTab('launch');setTimeout(()=>{get('jobflow-controls')?.scrollIntoView({behavior:'smooth',block:'center'});pulse(get('jobflow-controls'))},80)}},
+   {title:'Publish your test website',copy:'Share a preview URL. Republishing preserves the same address. This is private-beta staging, not production hosting.',label:'Publish preview →',run(){goTab('launch');setTimeout(()=>{get('ezysouth-publish-panel')?.scrollIntoView({behavior:'smooth',block:'center'});pulse(get('ezysouth-publish-panel'))},80)}}
+ ];
+ function goStep(i){configs[i]?.run()}
+ function update(){
+   const st=state(),done=[st.basics,st.design,st.cloud,st.jobflow,st.live],count=done.filter(Boolean).length;
+   get('ezy-guide-bar').style.width=(count/5*100)+'%';get('ezy-guide-progress-text').textContent=count+' of 5 steps complete';
+   const current=done.findIndex(v=>!v);
+   document.querySelectorAll('[data-ezy-guide-step]').forEach((b,i)=>{b.classList.toggle('done',done[i]);b.classList.toggle('current',i===current);const dot=b.querySelector('span');if(dot)dot.textContent=done[i]?'✓':String(i+1)});
+   skip.classList.add('hidden');guide.classList.toggle('ezy-guide-complete',count===5);
+   if(count===5){get('ezy-guide-title').textContent='Test website published ✓';get('ezy-guide-subtitle').textContent='Your staging preview is online at its reserved address. Updates keep the same URL.';get('ezy-guide-next-title').textContent='Ready to share the test preview';get('ezy-guide-next-copy').textContent=window.ezyLiveUrl||'Your published website is ready.';next.textContent='🌍 Open published preview';next.dataset.step='complete';}
+   else{const cfg=configs[current];get('ezy-guide-title').textContent='Set up your website';get('ezy-guide-subtitle').textContent='Build, design, save, connect JobFlow and publish your test preview.';get('ezy-guide-next-title').textContent=cfg.title;get('ezy-guide-next-copy').textContent=cfg.copy;next.textContent=cfg.label;next.dataset.step=String(current);if(current===3)skip.classList.remove('hidden');if(current===2&&!st.signedIn)get('ezy-guide-next-copy').textContent='Create or log in to your EzySouth account, then save this website. The guide will automatically move on once the cloud project exists.';if(current===4&&['unpublished','removed'].includes(window.ezyPublishState))get('ezy-guide-next-copy').textContent='This project already owns a reserved web address. Publish again to put the full website back online on that same URL.';}
+   const hidden=localStorage.getItem(hiddenKey)==='1';guide.classList.toggle('hidden',hidden);open.textContent=hidden?'🧭 Setup guide':'🧭 Guide open';
+ }
+ next.onclick=()=>{const step=next.dataset.step;if(step==='complete'){if(window.ezyLiveUrl)window.open(window.ezyLiveUrl,'_blank','noopener,noreferrer');else goTab('launch');return}goStep(Number(step))};
+ skip.onclick=()=>{localStorage.setItem(skipKey,'1');update()};
+ hide.onclick=()=>{localStorage.setItem(hiddenKey,'1');update()};
+ open.onclick=()=>{localStorage.removeItem(hiddenKey);update();guide.scrollIntoView({behavior:'smooth',block:'start'})};
+ document.querySelectorAll('[data-ezy-guide-step]').forEach((b,i)=>b.onclick=()=>goStep(i));
+ window.addEventListener('ezy:state',update);
+ document.addEventListener('input',e=>{if(e.target?.id?.startsWith('v57-'))setTimeout(update,0)});
+ document.addEventListener('click',e=>{if(e.target?.closest?.('[data-v56-template]')){localStorage.setItem('ezysouth-guide-design','1');setTimeout(update,0)}});
+ setInterval(update,2500);setTimeout(update,100);
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+(function(){
+ const $=id=>document.getElementById(id);
+ $('netlify-clear').onclick=()=>{$('netlify-token').value='';$('netlify-status').textContent='Token cleared from the input.'};
+ $('netlify-publish').onclick=async()=>{$('netlify-status').textContent='Direct Netlify deployment disabled in staging.';return;
+  const btn=$('netlify-publish'),status=$('netlify-status');
+  const siteId=$('netlify-site-id').value.trim(),token=$('netlify-token').value.trim();
+  if(!/^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(siteId)){status.textContent='Enter the Netlify Site ID (UUID), not the website URL.';return}
+  if(!token){status.textContent='Enter a temporary Netlify personal access token.';return}
+  if(!window.JSZip){status.textContent='ZIP library failed to load. Check internet and use manual publishing.';return}
+  if(!confirm('Deploy the CURRENT preview to your selected Netlify site? This will replace its published content.'))return;
+  btn.disabled=true;status.textContent='Preparing index.html…';
+  try{
+   const zip=new JSZip();zip.file('index.html',exportSite());
+   const payload=await zip.generateAsync({type:'blob',compression:'DEFLATE'});
+   status.textContent='Uploading to Netlify…';
+   const response=await fetch('https://api.netlify.com/api/v1/sites/'+encodeURIComponent(siteId)+'/deploys',{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/zip'},body:payload});
+   const body=await response.text();let result={};try{result=JSON.parse(body)}catch(e){}
+   if(!response.ok)throw Error((result.message||result.error||body.slice(0,220)||'Netlify rejected deployment')+' (HTTP '+response.status+')');
+   const link=result.ssl_url||result.url||'';
+   status.textContent='Deployment accepted by Netlify ('+(result.state||'processing')+'). '+(link?'Site: '+link:'Check Netlify dashboard for the live URL.')+' Wait for processing before testing.';
+  }catch(e){status.textContent='Direct publishing failed: '+e.message+'. If the browser reports Failed to fetch, Netlify may block cross-origin uploads. Manual Netlify Drop still works.'}
+  finally{btn.disabled=false}
+ };
+})();
+</script>
+<script>
+/* V5.6 additive features; JobFlow and cloud integrations are not modified. */
+(function(){
+ const $=id=>document.getElementById(id);
+ const safe=(x)=>escapeHtml(String(x??''));
+ const key56='ezysouth-v56-extra';
+ let extra={sections:[],logo:'',seoTitle:'',seoDesc:''};
+ try{extra={...extra,...JSON.parse(localStorage.getItem(key56)||'{}')}}catch(e){}
+ const store=()=>{try{localStorage.setItem(key56,JSON.stringify(extra))}catch(e){console.warn('V5.6 local storage unavailable',e)}};
+ const snapshotKey='ezysouth-v56-history';
+ let history=[];try{history=JSON.parse(localStorage.getItem(snapshotKey)||'[]')}catch(e){}
+ const persistHistory=()=>{try{localStorage.setItem(snapshotKey,JSON.stringify(history.slice(0,12)))}catch(e){alert('Not enough browser storage for another snapshot.')}};
+ function drawSections(){
+   const site=$('site');if(!site)return;
+   site.querySelectorAll('.v56-extra').forEach(el=>el.remove());
+   const contact=site.querySelector('#pv-contact');
+   for(const item of extra.sections){
+     const section=document.createElement('section');section.className='site-section v56-extra';
+     const h=document.createElement('h2');h.textContent=item.title;section.appendChild(h);
+     if(item.type==='faq'){
+       const wrap=document.createElement('div');wrap.className='v56-faq';
+       item.body.split('\n').filter(x=>x.trim()).forEach(line=>{const [question,...rest]=line.split('|');const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent=question.trim();const answer=document.createElement('p');answer.textContent=rest.join('|').trim()||'Contact us for details.';details.append(summary,answer);wrap.appendChild(details)});section.appendChild(wrap);
+     }else{const p=document.createElement('p');p.textContent=item.body;section.appendChild(p)}
+     if(contact)site.insertBefore(section,contact);else site.appendChild(section);
+   }
+   const logo=site.querySelector('.v56-brand-logo');if(logo)logo.remove();
+   if(extra.logo){const nav=site.querySelector('.site-nav');if(nav){const img=document.createElement('img');img.className='v56-brand-logo';img.src=extra.logo;img.alt='Business logo';img.style.cssText='width:auto;max-width:125px;max-height:56px;object-fit:contain;margin-right:10px';nav.prepend(img)}}
+ }
+ const previousRender=renderDesignSite;
+ renderDesignSite=function(){previousRender.apply(this,arguments);drawSections();};
+ drawSections();
+ const presets=[
+ ['coastal','Coastal Clean','Cleaning · Bright and welcoming','#e6f4eb','#26735c'],
+ ['studio','Modern Studio','Creative · Calm and editorial','#f1efe7','#3c584b'],
+ ['trade','Trade Pro','Trades · Bold and dependable','#192634','#f4a14e'],
+ ['midnight','Midnight Luxe','Premium · Rich and refined','#1b1b21','#d7ba86'],
+ ['landscape','Field & Form','Outdoors · Warm and organic','#e5ecdc','#4b714e'],
+ ['automotive','Auto Works','Automotive · Dark and precise','#161c24','#ea6d4d'],
+ ['professional','Clearpoint','Professional · Clean confidence','#edf3fa','#365c86']
+];
+ const templateGrid=$('v56-template-grid');
+ function drawTemplates(){templateGrid.innerHTML=presets.map(([id,name,sub,bg,fg])=>`<button type="button" class="v56-template ${design.preset===id?'selected':''}" data-v56-template="${id}"><div class="v56-mock" style="background:${bg};color:${fg}"><span></span><span></span><span></span><em></em></div><strong>${name}</strong><small>${sub}</small></button>`).join('');templateGrid.querySelectorAll('[data-v56-template]').forEach(b=>b.onclick=()=>{const existing=document.querySelector('[data-template="'+b.dataset.v56Template+'"]');if(existing)existing.click();drawTemplates();updatePreview()})}
+ function syncGuided(){guidedFields.forEach(f=>{const el=$('v57-'+f);if(el&&document.activeElement!==el)el.value=data[f]||'';});}
+ const oldGuidedRender=render;render=function(){oldGuidedRender.apply(this,arguments);syncGuided();};
+ function updatePreview(){const container=$('v56-live-preview');if(!container)return;container.replaceChildren(customerPreviewClone('v56-live-preview'))}
+ const guidedFields=['name','type','location','services','description','phone','email'];
+ guidedFields.forEach(f=>{const el=$('v57-'+f);if(!el)return;el.value=data[f]||'';el.addEventListener('input',()=>{data[f]=el.value;const original=$(f);if(original)original.value=el.value;save();render();if($('v57-step-error'))$('v57-step-error').textContent='';});});
+ $('v57-continue').onclick=()=>{const name=$('v57-name').value.trim(),location=$('v57-location').value.trim(),services=$('v57-services').value.trim(),phone=$('v57-phone').value.trim(),email=$('v57-email').value.trim();if(!name||!location||!services){$('v57-step-error').textContent='Add your business name, service area and at least one service before continuing.';return;}if(!phone&&!email){$('v57-step-error').textContent='Add a phone number or email so customers have a way to contact you.';return;}if(email&&!$('v57-email').checkValidity()){$('v57-step-error').textContent='Please enter a valid email address.';return;}localStorage.setItem('ezysouth-guide-basics','1');window.dispatchEvent(new Event('ezy:state'));setStep(1);};
+ $('v57-advanced').onclick=()=>{const editor=$('v57-advanced-editor');editor.hidden=!editor.hidden;$('v57-advanced').textContent=editor.hidden?'Advanced editor ↓':'Hide advanced editor ↑';if(!editor.hidden)editor.scrollIntoView({behavior:'smooth',block:'start'});};
+ function setStep(n){document.querySelectorAll('[data-v56-panel]').forEach(p=>p.classList.toggle('active',Number(p.dataset.v56Panel)===n));document.querySelectorAll('[data-v56-step]').forEach(b=>b.classList.toggle('selected',Number(b.dataset.v56Step)===n));if(n===1)drawTemplates();if(n===2){localStorage.setItem('ezysouth-guide-design','1');window.dispatchEvent(new Event('ezy:state'));updatePreview()}}
+ document.querySelectorAll('[data-v56-step],[data-v56-next]').forEach(b=>b.onclick=()=>setStep(Number(b.dataset.v56Step??b.dataset.v56Next)));
+ document.querySelectorAll('[data-v56-device]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-v56-device]').forEach(x=>x.classList.toggle('active',x===b));$('v56-preview-frame').classList.toggle('phone',b.dataset.v56Device==='phone')});
+ $('v56-open-launch').onclick=()=>document.querySelector('nav button[data-tab="launch"]').click();
+ $('v56-color').value=data.color||'#207b67';
+ $('v56-brand-apply').onclick=()=>{data.color=$('v56-color').value;save();render();updatePreview()};
+ $('v56-logo').onchange=()=>{const f=$('v56-logo').files[0];if(!f)return;if(f.size>1200000){alert('Please choose a logo under 1.2 MB.');return}if(!['image/png','image/jpeg','image/webp'].includes(f.type)){alert('Please use a PNG, JPG or WebP logo.');return}const reader=new FileReader();reader.onload=()=>{extra.logo=reader.result;store();drawSections();drawLogo()};reader.readAsDataURL(f)};
+ function drawLogo(){$('v56-logo-preview').innerHTML=extra.logo?'<img alt="Current business logo" style="max-height:75px;max-width:200px;object-fit:contain;margin:6px 0" src="'+extra.logo+'"><button type="button" id="v56-remove-logo" class="btn secondary">Remove logo</button>':'';const b=$('v56-remove-logo');if(b)b.onclick=()=>{extra.logo='';store();drawSections();drawLogo()}}
+ drawLogo();
+ const titles={about:'About us',faq:'Frequently asked questions',pricing:'Pricing guide',area:'Areas we serve',team:'Meet the team'};
+ $('v56-section-type').onchange=()=>{if(!$('v56-section-title').value.trim())$('v56-section-title').value=titles[$('v56-section-type').value]};
+ $('v56-add-section').onclick=()=>{const type=$('v56-section-type').value,title=$('v56-section-title').value.trim()||titles[type],body=$('v56-section-body').value.trim();if(!body){alert('Add some section text first.');return}extra.sections.push({id:Date.now()+'-'+Math.random().toString(36).slice(2,7),type,title,body});store();drawSections();drawSectionList();$('v56-section-body').value='';$('v56-section-title').value=''};
+ function drawSectionList(){const box=$('v56-section-list');box.replaceChildren();extra.sections.forEach((item,i)=>{const row=document.createElement('div');row.className='v56-item';const name=document.createElement('span');name.textContent=item.title;const buttons=document.createElement('div');[['↑',-1],['↓',1],['Remove',0]].forEach(([label,offset])=>{const b=document.createElement('button');b.textContent=label;b.disabled=offset!==0&&(i+offset<0||i+offset>=extra.sections.length);b.onclick=()=>{if(offset===0)extra.sections.splice(i,1);else [extra.sections[i],extra.sections[i+offset]]=[extra.sections[i+offset],extra.sections[i]];store();drawSections();drawSectionList()};buttons.appendChild(b)});row.append(name,buttons);box.appendChild(row)})}drawSectionList();
+ $('v56-seo-title').value=extra.seoTitle;$('v56-seo-desc').value=extra.seoDesc;
+ $('v56-seo-suggest').onclick=()=>{$('v56-seo-title').value=(data.name||'Local business')+' | '+(data.location||'New Zealand');$('v56-seo-desc').value=(data.description||'Friendly local services')+' Serving '+(data.location||'New Zealand')+'.';$('v56-seo-desc').value=$('v56-seo-desc').value.slice(0,170)};
+ $('v56-seo-save').onclick=()=>{extra.seoTitle=$('v56-seo-title').value.trim();extra.seoDesc=$('v56-seo-desc').value.trim();store();$('v56-seo-msg').textContent='SEO details saved on this device and will be included in exported HTML.'};
+ const originalExport=exportSite;
+ exportSite=function(){let html=originalExport();if(extra.seoTitle){html=html.replace(/<title>[\s\S]*?<\/title>/,'<title>'+safe(extra.seoTitle)+'</title>')}if(extra.seoDesc){html=html.replace(/<meta name="description" content="[^"]*">/,'<meta name="description" content="'+safe(extra.seoDesc)+'">')}return html};
+ function drawHistory(){const box=$('v56-history-list');box.replaceChildren();history.forEach((item,i)=>{const row=document.createElement('div');row.className='v56-item';const name=document.createElement('span');name.textContent=item.name+' · '+new Date(item.time).toLocaleDateString('en-NZ');const b=document.createElement('button');b.textContent='Restore';b.onclick=()=>{if(!confirm('Restore this snapshot? Your current unsaved changes will be replaced.'))return;data=JSON.parse(JSON.stringify(item.data));design=JSON.parse(JSON.stringify(item.design));extra=JSON.parse(JSON.stringify(item.extra));save();try{localStorage.setItem('launchpad-v4-design',JSON.stringify(design))}catch(e){}store();render();renderDesign();drawSections();drawSectionList();drawLogo();drawTemplates();alert('Snapshot restored. Photos stored separately are not included in snapshots.')};row.append(name,b);box.appendChild(row)})}drawHistory();
+ $('v56-snapshot').onclick=()=>{const name=prompt('Snapshot name','Design '+new Date().toLocaleDateString('en-NZ'));if(name===null)return;history.unshift({name:(name.trim()||'Saved design').slice(0,60),time:Date.now(),data:JSON.parse(JSON.stringify(data)),design:JSON.parse(JSON.stringify(design)),extra:JSON.parse(JSON.stringify(extra))});history=history.slice(0,12);persistHistory();drawHistory()};
+ $('v56-check').onclick=()=>{const checks=[['Business name',!!data.name.trim()],['Service area',!!data.location.trim()],['Description (at least 40 characters)',(data.description||'').trim().length>=40],['At least one service',!!(data.services||'').trim()],['Phone or email',!!((data.phone||'').trim()||(data.email||'').trim())],['Search title',!!(extra.seoTitle||data.name).trim()],['Search description',!!(extra.seoDesc||data.description).trim()],['No example email address',!(/example\.(com|co\.nz)/i.test(data.email||''))],['Gallery photos have real content',!uploadedPhotos.length||uploadedPhotos.every(p=>!!p.data)]];const box=$('v56-check-results');box.innerHTML='<p><strong>'+checks.filter(c=>c[1]).length+' / '+checks.length+' checks passed</strong></p>'+checks.map(([label,ok])=>'<div class="v56-check '+(ok?'':'warn')+'">'+(ok?'✓ ':'! ')+safe(label)+'</div>').join('')+'<p class="muted">Automated checks only. Always manually test links, layout and enquiries before publishing.</p>'};
+ drawTemplates();
+})();
+</script>
+<script src="./ezy-premium-editor.js?v=2"></script>
+</body></html>
