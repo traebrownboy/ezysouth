@@ -43,7 +43,7 @@ function snapshot(d, recipient, mode) {
   return {
     number:d.number, type:d.document_type, business_name:d.business_name,
     business_gst_number:d.business_gst_number||"", customer_name:d.customer_name,
-    customer_email:recipient, description:d.description, due_date:d.due_date,
+    customer_email:recipient || d.customer_email || "", description:d.description, due_date:d.due_date,
     created_at:d.created_at, line_items:items, discount_cents:Number(d.discount_cents||0),
     subtotal_cents:d.subtotal_cents==null?null:Number(d.subtotal_cents),
     gst_cents:d.gst_cents==null?null:Number(d.gst_cents),
@@ -116,7 +116,8 @@ Deno.serve(async req => {
     if(!/^[a-f0-9-]{36}$/i.test(String(body.documentId||"")))return json(req,{error:"Invalid document ID."},400);
     if(action==="send"&&!emailReady)return json(req,{error:"Direct email is not configured. Use a secure link or your own email app until the sending domain is connected.",code:"EMAIL_NOT_CONFIGURED"},503);
     const email=String(body.email||"").trim().toLowerCase();
-    if(email.length>254||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return json(req,{error:"Enter a valid customer email address."},400);
+    // A private link can be copied without a recipient email. Direct email needs one.
+    if((email||action==="send")&&(email.length>254||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))return json(req,{error:"Enter a valid customer email address before sending."},400);
     const db=await ownedClient(req);
     const {data:d,error:docError}=await db.from("jobflow_documents").select("*")
       .eq("owner_id",user.id).eq("id",body.documentId).maybeSingle();
@@ -140,7 +141,7 @@ Deno.serve(async req => {
     const info=snapshot(d,email,action);
     const link=VIEW_BASE+"?token="+access;
     const {data:record,error:insertError}=await service.from("jobflow_document_deliveries").insert({
-      owner_id:user.id,document_id:d.id,recipient_email:email,
+      owner_id:user.id,document_id:d.id,recipient_email:email||null,
       token_hash:tokenHash,document_snapshot:info,status:action==="send"?"pending":"prepared",
       expires_at:expires
     }).select("id").single();
