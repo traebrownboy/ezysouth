@@ -3,7 +3,7 @@
 // Do not deploy to the primary production project without security review.
 import { createClient } from "npm:@supabase/supabase-js@2.57.0";
 
-const URL = Deno.env.get("SUPABASE_URL") || "";
+const SUPABASE_PROJECT_URL = Deno.env.get("SUPABASE_URL") || "";
 const PUBLIC_KEY = Deno.env.get("SUPABASE_ANON_KEY") || "";
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 const API_KEY = Deno.env.get("RESEND_API_KEY") || "";
@@ -11,8 +11,8 @@ const SENDER = Deno.env.get("JOBFLOW_FROM_EMAIL") || "";
 const ORIGIN = "https://ezysouth-jobflow-test.netlify.app";
 const VIEW_BASE = ORIGIN + "/jobflow-view.html";
 const emailReady = Boolean(API_KEY && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(SENDER));
-const service = createClient(URL, SERVICE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
-const anon = createClient(URL, PUBLIC_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+const service = createClient(SUPABASE_PROJECT_URL, SERVICE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+const anon = createClient(SUPABASE_PROJECT_URL, PUBLIC_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 const e = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
 const usd = (n) => new Intl.NumberFormat("en-NZ", {style:"currency", currency:"NZD"}).format(Number(n||0)/100);
 const iso = () => new Date().toISOString();
@@ -73,12 +73,12 @@ async function owner(req) {
 }
 async function ownedClient(req) {
   const bearer=req.headers.get("authorization");
-  return createClient(URL, PUBLIC_KEY, {global:{headers:{Authorization: bearer||""}},auth:{persistSession:false,autoRefreshToken:false}});
+  return createClient(SUPABASE_PROJECT_URL, PUBLIC_KEY, {global:{headers:{Authorization: bearer||""}},auth:{persistSession:false,autoRefreshToken:false}});
 }
 Deno.serve(async req => {
   try {
     if(req.method==="OPTIONS") return new Response(null,{status:204,headers:headers(req)});
-    if(!URL||!SERVICE_KEY||!PUBLIC_KEY) return json(req,{error:"Document service is not configured."},503);
+    if(!SUPABASE_PROJECT_URL||!SERVICE_KEY||!PUBLIC_KEY) return json(req,{error:"Document service is not configured."},503);
     const url=new URL(req.url);
     if(req.method==="GET"){
       if(url.searchParams.get("capabilities")==="1")return json(req,{emailEnabled:emailReady,secureLinks:true});
