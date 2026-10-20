@@ -26,15 +26,15 @@ async function request(action,options){
 async function loadHistory(){
  if(!current||!user)return;
  const {data,error}=await client.from('jobflow_document_deliveries')
-  .select('id,recipient_email,status,created_at,expires_at,revoked_at,opened_at')
+  .select('id,recipient_email,status,created_at,expires_at,revoked_at,opened_at,quote_response,quote_response_name,quote_responded_at')
   .eq('owner_id',user.id).eq('document_id',current.id).order('created_at',{ascending:false}).limit(25);
  if(error)throw error;
  $('share-history').innerHTML=!data?.length?'<p class="share-helper">No sharing history yet.</p>':data.map(d=>{
   const revoked=!!d.revoked_at,expired=new Date(d.expires_at).getTime()<Date.now();
-  const label=revoked?'Revoked':expired?'Expired':d.status==='sent'?'Email accepted':d.status==='prepared'?'Link created':d.status==='pending'?'Sending…':'Failed';
+  const label=d.quote_response?'Quote '+d.quote_response.toLowerCase():revoked?'Revoked':expired?'Expired':d.status==='sent'?'Email accepted':d.status==='prepared'?'Link created':d.status==='pending'?'Sending…':'Failed';
   const right=!revoked&&!expired&&['sent','prepared'].includes(d.status)?'<button class="mini" data-revoke="'+esc(d.id)+'" type="button">Revoke</button>':'';
   return '<div class="share-row"><div><strong>'+esc(label)+'</strong> · '+esc(d.recipient_email||'Copyable link')+
-   '<small>'+esc(new Date(d.created_at).toLocaleString('en-NZ'))+(d.opened_at?' · Opened':'')+'</small></div>'+right+'</div>';
+   '<small>'+esc(d.quote_response_name&&d.quote_response?d.quote_response_name+' · ':'')+esc(d.quote_responded_at?new Date(d.quote_responded_at).toLocaleString('en-NZ'):new Date(d.created_at).toLocaleString('en-NZ'))+(d.opened_at?' · Opened':'')+'</small></div>'+right+'</div>';
  }).join('');
 }
 async function perform(action){
@@ -134,6 +134,8 @@ $('share-history').addEventListener('click',e=>{
   finally{busy=false}
  })();
 });
+// Keep the owner-facing share history fresh while the panel is open.
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&current&&!busy)void loadHistory().catch(()=>{})});
 fetch(API+'?capabilities=1',{cache:'no-store'})
 .then(async r=>{const d=await r.json();emailEnabled=r.ok&&d.emailEnabled===true;if(current&&!modal.hidden)$('share-send').hidden=!emailEnabled})
 .catch(()=>{emailEnabled=false});
