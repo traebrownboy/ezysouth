@@ -111,6 +111,8 @@ textarea{min-height:90px;resize:vertical}input:disabled{background:#edf2ee}
     <button type="button" class="tab active" data-view="week">Week</button>
     <button type="button" class="tab" data-view="month">Month</button>
     <button type="button" class="tab" data-view="day">Day</button>
+    <button type="button" class="tab" data-view="all">All jobs</button>
+    <button type="button" class="tab" data-view="completed">Completed</button>
     <button type="button" class="tab" data-view="archive">Archived</button>
     <button type="button" class="tab" data-view="trash">Trash</button>
    </div>
@@ -252,13 +254,13 @@ function renderDay(){
 }
 function renderSpecial(){
  $('date-controls').hidden=true;
- const items=jobs.filter(j=>view==='trash'?Boolean(j.deleted_at):Boolean(j.archived_at)&&!j.deleted_at)
-  .sort((a,b)=>String(b[view==='trash'?'deleted_at':'archived_at']).localeCompare(String(a[view==='trash'?'deleted_at':'archived_at'])));
+ const items=jobs.filter(j=>view==='trash'?Boolean(j.deleted_at):view==='archive'?Boolean(j.archived_at)&&!j.deleted_at:view==='completed'?Boolean(!j.deleted_at&&!j.archived_at&&j.status==='Completed'):Boolean(!j.deleted_at&&!j.archived_at))
+  .sort((a,b)=>String(b[view==='trash'?'deleted_at':view==='archive'?'archived_at':'updated_at']).localeCompare(String(a[view==='trash'?'deleted_at':view==='archive'?'archived_at':'updated_at'])));
  const wrap=document.createElement('div');wrap.className='agenda';
- if(!items.length){const msg=document.createElement('div');msg.className='empty';msg.textContent=view==='trash'?'Nothing in Trash.':'No archived jobs.';wrap.append(msg)}
+ if(!items.length){const msg=document.createElement('div');msg.className='empty';msg.textContent=view==='trash'?'Nothing in Trash.':view==='archive'?'No archived jobs.':view==='completed'?'No completed jobs yet.':'No active jobs yet.';wrap.append(msg)}
  items.forEach(j=>{
   const b=document.createElement('button');b.className='agenda-row';b.type='button';
-  b.innerHTML='<span class="agenda-time">'+e(view==='trash'?'In Trash':'Archived')+'</span><span><strong>'+e(j.title)+'</strong><small>'+e(j.customer_name||'Customer')+' · '+e(statusName(j.status))+'</small></span>';
+  b.innerHTML='<span class="agenda-time">'+e(view==='trash'?'In Trash':view==='archive'?'Archived':j.scheduled_start?readable(dayFor(j))+' · '+timeFor(j):'To schedule')+'</span><span><strong>'+e(j.title)+'</strong><small>'+e(j.customer_name||'Customer')+' · '+e(statusName(j.status))+'</small></span>';
   b.addEventListener('click',()=>openJob(j.id));wrap.append(b);
  });
  $('calendar').replaceChildren(wrap);
@@ -280,9 +282,9 @@ function render(){
  if(!user)return;
  renderStats();
  document.querySelectorAll('[data-view]').forEach(t=>{const active=t.dataset.view===view;t.classList.toggle('active',active);t.setAttribute('aria-selected',String(active))});
- $('date-controls').hidden=['archive','trash'].includes(view);$('ready-panel').hidden=['archive','trash'].includes(view);
+ $('date-controls').hidden=['archive','trash','all','completed'].includes(view);$('ready-panel').hidden=['archive','trash','all','completed'].includes(view);
  if(view==='week')renderWeek();else if(view==='month')renderMonth();else if(view==='day')renderDay();else renderSpecial();
- if(!['archive','trash'].includes(view))renderReady();
+ if(!['archive','trash','all','completed'].includes(view))renderReady();
 }
 async function refresh(){
  const {data,error}=await client.from('jobflow_jobs')
@@ -378,7 +380,7 @@ async function saveJob(event){
     client.from('jobflow_jobs').insert({...values,owner_id:user.id});
   const {data,error}=await q.select('id');if(error)throw error;
   if(!data?.length)throw Error('Job was not saved.');
-  const wasNew=!original;closeJob(true);await refresh();notice('✓ '+(wasNew?'Job created.':'Job updated.')+(scheduled_start?' Saved to your calendar.':''));
+  const wasNew=!original;if(scheduled_start){date=dateValue.slice(0,10);view='week'}else if(['trash','archive','completed'].includes(view)){view='all'}closeJob(true);await refresh();notice('✓ '+(wasNew?'Job created.':'Job updated.')+(scheduled_start?' Saved to your calendar.':''));
  });
 }
 async function mutate(action,job){
