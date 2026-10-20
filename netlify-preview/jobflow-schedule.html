@@ -190,6 +190,7 @@ function nzToUtc(value){
 const timeFor=(job)=>job.scheduled_start?localParts(job.scheduled_start).time:'';
 const dayFor=(job)=>job.scheduled_start?localParts(job.scheduled_start).day:'';
 const statusName=s=>['New','Quote needed','Quote sent','Won'].includes(s)?'Unscheduled':s==='Lost'?'Cancelled':s;
+const requestedQuote=new URLSearchParams(location.search).get('quote');
 let client=null,user=null,jobs=[],view='week',date=todayNZ(),editingId=null,busy=false,photoBusy=false;
 let photoUrls=[];
 function notice(msg,error=false){const node=$('notice');node.textContent=msg;node.classList.toggle('error',error);if(msg)node.scrollIntoView({behavior:'smooth',block:'nearest'})}
@@ -310,7 +311,8 @@ async function start(){
  if(!data?.user){showGate();return}
  user=data.user;$('loading').hidden=true;$('gate').hidden=true;$('workspace').hidden=false;$('new-job').hidden=false;$('refresh-jobs').hidden=false;
  await refresh();
- client.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){closeJob();showGate()}});
+ if(requestedQuote){const linked=jobs.find(j=>j.source_quote_id===requestedQuote&&!j.deleted_at);if(linked)openJob(linked.id);else notice('Linked job is not ready to view. Refresh the schedule to check again.',true)}
+ client.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){closeJob(true);showGate()}});
 }
 function clearPhotoURLs(){for(const u of photoUrls)URL.revokeObjectURL(u);photoUrls=[]}
 function resetDialog(){
