@@ -40,6 +40,11 @@ function equalToSnapshot(d,s){
    "discount_cents","subtotal_cents","gst_cents","amount_cents","gst_treatment"];
  return fields.every(key=>JSON.stringify(d[key]??null)===JSON.stringify(s[key]??null));
 }
+function nzDateString(){
+ const parts=new Intl.DateTimeFormat('en-NZ',{timeZone:'Pacific/Auckland',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const values=Object.fromEntries(parts.map(p=>[p.type,p.value]));
+ return values.year+'-'+values.month+'-'+values.day;
+}
 function humanReason(code){
  return {
   invalid_input:"Enter your name and choose Accept or Decline.",
@@ -77,7 +82,7 @@ Deno.serve(async request=>{
    let reason=null;
    if(!delivery.quote_response){
     if(!equalToSnapshot(d,delivery.document_snapshot))reason="quote_changed";
-    else if(d.due_date&&d.due_date<new Date().toISOString().slice(0,10))reason="quote_expired";
+    else if(d.due_date&&d.due_date<nzDateString())reason="quote_expired";
     else if(!["Draft","Sent"].includes(d.status))reason="quote_already_closed";
     else if(!Number.isFinite(Number(d.amount_cents))||Number(d.amount_cents)<=0)reason="quote_not_ready";
    }
