@@ -323,7 +323,7 @@ function openJob(id=null){
  const job=id?getJob(id):null;
  if(id&&!job){notice('Job is not available.',true);return}
  $('drawer-title').textContent=job?'Job details':'New job';
- $('job-origin').textContent=job?.source_quote_id?'Created from an accepted quote.':'Save once and see it across your schedule.';
+ $('job-origin').textContent=job?.deleted_at?'In Trash · '+(job.customer_name||'Customer'):job?.source_quote_id?'Created from an accepted quote.':job?'Customer: '+(job.customer_name||'Customer'):'Save once and see it across your schedule.';
  $('job-title').value=job?.title||'';
  $('job-customer').value=job?.customer_name||'';
  $('job-contact').value=job?.customer_contact||'';
@@ -339,9 +339,9 @@ function openJob(id=null){
  $('job-management').hidden=!job;
  if(job){buildActions(job);if(!job.deleted_at)void loadPhotos(job).catch(err=>{$('photo-status').textContent='Photos unavailable: '+err.message})}
  $('job-modal').hidden=false;
- $('job-title').focus();
+ if(!job?.deleted_at)$('job-title').focus();
 }
-function closeJob(){if(busy||photoBusy)return;$('job-modal').hidden=true;editingId=null;clearPhotoURLs();resetDialog()}
+function closeJob(force=false){if(!force&&(busy||photoBusy))return;$('job-modal').hidden=true;editingId=null;clearPhotoURLs();resetDialog()}
 function button(label,style,onClick){const b=document.createElement('button');b.type='button';b.className='btn '+style;b.textContent=label;b.addEventListener('click',onClick);return b}
 function buildActions(job){
  const box=$('management-actions');box.replaceChildren();
@@ -378,7 +378,7 @@ async function saveJob(event){
     client.from('jobflow_jobs').insert({...values,owner_id:user.id});
   const {data,error}=await q.select('id');if(error)throw error;
   if(!data?.length)throw Error('Job was not saved.');
-  const wasNew=!original;closeJob();await refresh();notice('✓ '+(wasNew?'Job created.':'Job updated.')+(scheduled_start?' Saved to your calendar.':''));
+  const wasNew=!original;closeJob(true);await refresh();notice('✓ '+(wasNew?'Job created.':'Job updated.')+(scheduled_start?' Saved to your calendar.':''));
  });
 }
 async function mutate(action,job){
@@ -406,7 +406,7 @@ async function mutate(action,job){
    const {data,error}=await client.from('jobflow_jobs').delete().eq('id',id).eq('owner_id',user.id).select('id');
    if(error)throw error;if(!data?.length)throw Error('Job could not be deleted.');
   }else throw Error('Unknown action');
-  closeJob();await refresh();notice(action==='archive'?'✓ Job archived.':action==='trash'?'✓ Job moved to Trash.':action==='permanent'?'✓ Job deleted permanently.':'✓ Job restored.');
+  closeJob(true);await refresh();notice(action==='archive'?'✓ Job archived.':action==='trash'?'✓ Job moved to Trash.':action==='permanent'?'✓ Job deleted permanently.':'✓ Job restored.');
  });
 }
 async function compressImage(file){
