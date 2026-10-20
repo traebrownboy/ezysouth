@@ -73,6 +73,7 @@ window.jobflowShare=async id=>{
  $('share-email').value='';
  $('share-prepare').disabled=true;
  $('share-send').hidden=true;
+ $('share-edit').hidden=true;
  $('share-history').innerHTML='<p class="share-helper">Loading sharing history…</p>';
  message('Checking your document…');
  try{
@@ -95,6 +96,7 @@ window.jobflowShare=async id=>{
    doc.status==='Void'?'This document is void and cannot be shared.':'';
   $('share-prepare').disabled=!!issue;
   $('share-send').disabled=!!issue;
+  $('share-edit').hidden=!issue||!(doc.status==='Draft'||(doc.document_type==='quote'&&doc.status==='Sent'&&doc.source_enquiry_id&&doc.amount_cents===null));
   message(issue||'Document ready. Choose Create secure link. A customer email is optional for copying the link.',!!issue);
   try{await loadHistory()}catch(historyError){message((issue?issue+'\n':'')+'Sharing history unavailable: '+historyError.message,!!issue)}
   if(!issue)$('share-email').focus();
@@ -108,6 +110,13 @@ window.jobflowShare=async id=>{
 $('share-prepare').addEventListener('click',()=>void perform('prepare'));
 $('share-send').addEventListener('click',()=>void perform('send'));
 $('share-close').addEventListener('click',close);
+$('share-edit').addEventListener('click',()=>{
+ if(!current)return;
+ const id=current.id;
+ close();
+ const editButton=[...document.querySelectorAll('#records button[data-action="edit"]')].find(button=>button.dataset.id===id);
+ if(editButton){editButton.click()}else{const top=document.getElementById('message');if(top){top.textContent='This document cannot be edited in its current status.';top.scrollIntoView({block:'center',behavior:'smooth'})}}
+});
 modal.addEventListener('click',e=>{if(e.target===modal)close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)close()});
 $('share-copy').addEventListener('click',async()=>{
