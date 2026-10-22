@@ -1,0 +1,37 @@
+name: Safe V7 preview build check
+
+on:
+  push:
+    branches: [development/preview]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate preview builder syntax
+        run: node --check scripts/build-preview.js
+      - name: Build safe V7 playground
+        run: node scripts/build-preview.js
+      - name: Verify development output and isolation
+        run: |
+          test -s preview-dist/index.html
+          grep -q 'ezy-v7-growth-core' preview-dist/index.html
+          grep -q 'ezy-v7-jobflow' preview-dist/index.html
+          grep -q 'ezysouth-preview-safety' preview-dist/index.html
+          if grep -q 'https://ezcmfbaoivdwkgayznbt.supabase.co' preview-dist/index.html; then
+            echo "FAILED: production backend URL found in preview"
+            exit 1
+          fi
+          if grep -q 'supabase.min.js' preview-dist/index.html; then
+            echo "FAILED: production cloud SDK found in preview"
+            exit 1
+          fi
+          echo "Safe V7 preview checks passed."
