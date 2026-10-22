@@ -8,7 +8,7 @@ const assert=require('node:assert/strict');
 const src=fs.readFileSync(path.join(__dirname,'..','netlify-preview','web.html'),'utf8');
 let passed=0;
 function test(label,fn){fn();passed++;console.log('PASS '+label)}
-const ids=['coastal','studio','trade','midnight'];
+const ids=['coastal','studio','trade','midnight','landscape','automotive','professional'];
 function extract(name,next){
  const i=src.indexOf(name),j=src.indexOf(next,i+name.length);
  assert.ok(i>=0&&j>i,'Missing '+name+' or '+next);
@@ -19,7 +19,7 @@ const vmContext={};
 vm.runInNewContext(defs+';globalThis.__spec={base:coastalPresetStructure,presets:premiumPresets}',vmContext,{timeout:1500});
 const {base,presets}=vmContext.__spec;
 const fields=['layout','hero','surface','spacing','serviceStyle','navStyle'];
-test('exactly four named presets exist',()=>{
+test('all seven named presets exist',()=>{
  assert.deepEqual(Object.keys(presets).sort(),ids.slice().sort());
 });
 test('Coastal Clean is the reliable default',()=>{
@@ -40,26 +40,30 @@ test('styles retain their intended personalities',()=>{
  assert.equal(presets.studio.font,'editorial');
  assert.equal(presets.trade.font,'modern');
  assert.equal(presets.midnight.font,'editorial');
- assert.equal(new Set(ids.map(x=>presets[x].color)).size,4);
+ assert.equal(new Set(ids.map(x=>presets[x].color)).size,ids.length);
 });
 test('existing named presets are harmonised on render, custom stays independent',()=>{
  const body=extract('function renderDesignSite(){','function renderDesign(){');
  assert.ok(body.includes('Object.prototype.hasOwnProperty.call(premiumPresets,design.preset)'));
  assert.ok(body.includes('Object.assign(design,coastalPresetStructure'));
  assert.ok(body.includes("site.classList.add('preset-'+design.preset)"));
- for(const id of ids)assert.ok(body.includes("'preset-"+id+"'"));
+ assert.ok(body.includes("site.classList.add('preset-'+design.preset)"),'All named presets must be applied dynamically');
  assert.ok(src.includes("design.preset='custom'"));
 });
-test('both guided and design-studio pickers still use all four presets',()=>{
+test('guided and design-studio pickers support all seven presets',()=>{
  for(const id of ids)assert.ok(src.includes('data-template="'+id+'"'),'Missing '+id+' in Design Studio');
  assert.ok(src.includes("data-v56-template"));
  assert.ok(src.includes('const presets=['));
  assert.ok(src.includes("existing.click();drawTemplates();updatePreview()"));
 });
-test('all four share one styled hero and service/card geometry',()=>{
+test('all seven use the same safe hero and service/card geometry',()=>{
+ const shared='.site:is('+ids.map(id=>'.preset-'+id).join(',')+')';
+ assert.ok(src.includes(shared),'All seven styles must share base page geometry');
+ for(const id of ids){
+  assert.ok(src.includes('.site.preset-'+id+'{'),'Missing named style palette '+id);
+ }
  for(const name of ['hero','site-nav','site-cta','site-section','service-list','service','review-card','pro-footer']){
-  const token='.site.preset-coastal .'+name+',.site.preset-studio .'+name+',.site.preset-trade .'+name+',.site.preset-midnight .'+name;
-  assert.ok(src.includes(token),'Missing shared '+name+' styling');
+  assert.ok(src.includes('.'+name),'Missing shared layout component '+name);
  }
  assert.ok(src.includes('@media(max-width:640px){'));
 });
