@@ -30,6 +30,12 @@ jobs:
         run: node scripts/jobflow-auth-flow-test.js
       - name: Validate staging-only release assets
         run: node scripts/jobflow-release-preflight.js
+      - name: Check Cloudflare Pages staging build
+        env:
+          CF_PAGES_BRANCH: development/jobflow-test-preview
+        run: |
+          node --check scripts/cloudflare-preview-build.js
+          node scripts/cloudflare-preview-build.js
       - name: Package JobFlow Test (not deployed)
         run: |
           cd netlify-preview
