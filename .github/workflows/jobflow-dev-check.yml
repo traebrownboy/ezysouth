@@ -28,3 +28,17 @@ jobs:
         run: node scripts/jobflow-preset-consistency-test.js
       - name: Check existing shared login flow
         run: node scripts/jobflow-auth-flow-test.js
+      - name: Validate staging-only release assets
+        run: node scripts/jobflow-release-preflight.js
+      - name: Package JobFlow Test (not deployed)
+        run: |
+          cd netlify-preview
+          zip -q -r ../ezysouth-jobflow-test-ready.zip .
+      - name: Save release bundle for later Netlify deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: ezysouth-jobflow-test-ready
+          path: |
+            ezysouth-jobflow-test-ready.zip
+            release-check/manifest.json
+          retention-days: 14
