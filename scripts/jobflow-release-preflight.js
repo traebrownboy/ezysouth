@@ -16,7 +16,6 @@ for(const name of routes){
  assert.match(html,/noindex/i,'Staging must prevent indexing: '+name);
 }
 for(const name of ['jobflow-search.js','jobflow-view.html','jobflow-delivery.js','jobflow-schedule.html']){
- if(name==='jobflow-view.html')continue; // Existing view filenames vary between revisions.
  assert(listing.includes(name),'Missing expected asset '+name);
 }
 const siteText=listing.filter(x=>/\.(?:html|js|css|txt)$/.test(x)).map(file).join('\n');
