@@ -35,3 +35,15 @@ jobs:
             exit 1
           fi
           echo "Safe V7 preview checks passed."
+      - name: Install V7 test tools
+        run: npm install --no-save jsdom@25 puppeteer-core@24
+      - name: Run V7 core smoke test
+        run: node scripts/v7-smoke-test.js
+      - name: Run website layout regression audit
+        run: node scripts/v7-layout-browser-test.js
+      - name: Upload safe V7 playground for manual testing
+        uses: actions/upload-artifact@v4
+        with:
+          name: ezysouth-v7-playground
+          path: preview-dist/
+          retention-days: 14
