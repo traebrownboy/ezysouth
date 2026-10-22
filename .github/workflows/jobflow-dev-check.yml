@@ -1,0 +1,32 @@
+name: JobFlow Test development checks
+
+on:
+  push:
+    branches: [development/jobflow-test-preview]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  safe-development-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate JavaScript syntax
+        run: |
+          node --check netlify-preview/jobflow-search.js
+          node --check scripts/jobflow-search-test.js
+      - name: Test search for active and historic jobs
+        run: node scripts/jobflow-search-test.js
+      - name: Check existing staging preview invariants
+        run: node scripts/jobflow-preview-smoke.js
+      - name: Check linked navigation
+        run: node scripts/jobflow-fragment-navigation-test.js
+      - name: Check website preset consistency
+        run: node scripts/jobflow-preset-consistency-test.js
+      - name: Check existing shared login flow
+        run: node scripts/jobflow-auth-flow-test.js
