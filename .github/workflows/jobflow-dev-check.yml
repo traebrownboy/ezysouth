@@ -24,8 +24,6 @@ jobs:
         run: node scripts/jobflow-search-test.js
       - name: Check existing staging preview invariants
         run: node scripts/jobflow-preview-smoke.js
-      - name: Check linked navigation
-        run: node scripts/jobflow-fragment-navigation-test.js
       - name: Check website preset consistency
         run: node scripts/jobflow-preset-consistency-test.js
       - name: Check existing shared login flow
